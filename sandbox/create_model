@@ -1,0 +1,2 @@
+ruby -I../brewery/lib sandbox/create_model.rb && \
+    ruby -I../brewery/lib sandbox/describe_model.rb
