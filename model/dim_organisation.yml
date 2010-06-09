@@ -1,0 +1,19 @@
+name: obstaravatel
+label: Obstarávateľ
+table: dm_organisation
+levels:
+    sector:
+        label: Sektor
+        fields:
+            - account_sector_code
+            - account_sector
+    organisation:
+        label: Spoločnosť
+        fields:
+            - ico
+            - name
+hierarchies:
+    default:
+        levels:
+            - sector
+            - organisation

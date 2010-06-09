@@ -1,0 +1,27 @@
+name: date
+label: Dátum
+table: dm_date
+levels:
+    year:
+        label: Rok
+        fields:
+            - year
+    month:
+        label: Mesiac
+        fields:
+            - month
+            - month_name
+            - month_sname
+    day:
+        label: Deň
+        fields:
+            - day
+            - week_day
+            - week_day_name
+            - week_day_sname
+hierarchies:
+    default:
+        levels:
+            - year
+            - month
+            - day

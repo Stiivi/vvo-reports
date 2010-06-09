@@ -1,0 +1,6 @@
+name: vvo
+files:
+    - dim_cpv.yml
+    - dim_date.yml
+    - vvo_cube.yml
+    

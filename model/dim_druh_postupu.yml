@@ -1,0 +1,12 @@
+name: druh_postupu
+label: Druh postupu
+table: dm_druh_postupu
+levels:
+    druh_postupu:
+        label: druh_postupu
+        fields:
+            - druh_postupu
+hierarchies:
+    default:
+        levels:
+            - druh_postupu

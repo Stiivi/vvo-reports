@@ -1,0 +1,15 @@
+name: vvo
+label: "Uzatvorené zmluvy verejného obstarávania"
+description: "Uzatvorené zmluvy verejného obstarávania Slovenskej Republiky"
+fact_table: ft_vvo_vysledky
+dimensions:
+    date:
+        fact_key: vestnik_datum_id
+    cpv:
+        fact_key: cpv_kod_id
+    obstaravatel:
+        fact_key: obstaravatel_org_id
+    dodavatel:
+        fact_key: dodavatel_id
+    druh_postupu:
+        fact_key: druh_postupu_id

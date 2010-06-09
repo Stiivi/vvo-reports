@@ -1,0 +1,46 @@
+type: dimension
+name: cpv
+label: "Predmet obstarávania"
+description: "Predmet obstarávania podľa kódu spoločného slovníka obstarávania (CPV)"
+table: dm_cpv
+levels:
+    division:
+        label: oddiel
+        fields:
+            - cpv_division
+            - cpv_division_desc
+        description_field: cpv_division_desc
+    group:
+        label: skupina
+        fields:
+            - cpv_group
+            - cpv_group_desc
+        description_field: cpv_group_desc
+    class:
+        label: trieda
+        fields:
+            - cpv_class
+            - cpv_class_desc
+        description_field: cpv_class_desc
+    category:
+        label: kategória
+        fields:
+            - cpv_category
+            - cpv_category_desc
+        description_field: cpv_category_desc
+    detail:
+        label: detail
+        fields:
+            - cpv_detail
+            - cpv_detail_desc
+        description_field: cpv_detail_desc
+hierarchies:
+    default:
+        levels:
+            - division
+            - group
+            - class
+            - category
+            - detail
+    
+
