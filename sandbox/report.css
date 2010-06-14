@@ -1,0 +1,16 @@
+* {
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+table {
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+th {
+	background-color: #aebbc2;
+}
+
+tr.even {
+	background-color: #e6eaf4;
+}

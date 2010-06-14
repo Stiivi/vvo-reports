@@ -1,7 +1,10 @@
+# encoding: utf-8
 # input: obdobie
 
 require 'rubygems'
 require 'brewery'
+require 'haml'
+require 'brewery/presenters/data_table_presenter'
 
 module Brewery
 
@@ -16,8 +19,20 @@ def run
     initialize_model
     
     time = Time.now
-    # top_level_report([2009])
-    report_obstaravatel([2010], '30416094')
+
+    report = top_level_report([2009])
+
+    # Write report to HTML
+    template = File.read('sandbox/templates/whole.haml')
+    haml_engine = Haml::Engine.new(template)
+    report_body = haml_engine.render(Object.new, report)
+    
+    template = File.read('sandbox/templates/report.haml')
+    haml_engine = Haml::Engine.new(template)
+    output = haml_engine.render(Object.new, { :report => report_body })
+    File.open("report.html", 'w') {|f| f.write(output) }
+
+    # report_obstaravatel([2010], '30416094')
 
 #    for i in 0..100
 #        speed_test([2009])
@@ -38,6 +53,7 @@ def initialize_model
 end
 
 def top_level_report(report_date)
+    report = Hash.new
 
     ################################################################
     # Main slice
@@ -53,10 +69,8 @@ def top_level_report(report_date)
     puts "\n== Summary"
     puts "-- Hodnota zmluv: #{hodnota_zmluv}"
     puts "-- Pocet zmluv  : #{pocet_zmluv}"
-
-    
-    ################################################################
-    # Add computed slice
+    report[:hodnota_zmluv] = hodnota_zmluv
+    report[:pocet_zmluv] = pocet_zmluv
     
     slice.add_computed_field(:podiel) { |record|
         record[:sum] / hodnota_zmluv
@@ -65,34 +79,25 @@ def top_level_report(report_date)
     ################################################################
     # Top 10 dodavatel
 
-    result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :dodavatel, 
-    			                        :row_levels => [:organisation],
-    			                        :limit => :rank,
-    			                        :limit_value => 10,
-    			                        :limit_sort => :top})
+    table = top_10_dodavatelia(slice)
+    
+    presenter = DataTablePresenter.new
+    presenter.format_column(0) { | cell |
+        "<a href='dodavatel/#{cell.value}'>#{cell.formatted_value}</a>"
+    }
+    report[:top_dodavatelia] = table
 
-    puts
-    puts "== Dodavatel"
-
-    result.each { |row|
-        puts "-- #{row[:name]}: #{row[:sum].to_f} #{row[:record_count]} #{row[:podiel]}"
+    table = top_10_obstaravatelia(slice)
+    report[:top_obstaravatelia] = table
+    
+    presenter = DataTablePresenter.new
+    presenter.format_column(0) { | cell |
+        "<a href='obstaravatel/#{cell.value}'>#{cell.formatted_value}</a>"
     }
 
-    ################################################################
-    # Top 10 orgs - obstaravatel
-
-    result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :obstaravatel, 
-    			                        :row_levels => [:organisation],
-    			                        :limit => :rank,
-    			                        :limit_value => 10,
-    			                        :limit_sort => :top})
-
-    puts
-    puts "== Obstaravatel"
-
-    result.each { |row|
-        puts "-- #{row[:name]}: #{row[:sum].to_f} #{row[:record_count]} #{row[:podiel]}"
-    }
+    report[:presenter] = presenter
+    
+    return report
 
     ################################################################
     # CPV
@@ -144,6 +149,41 @@ def top_level_report(report_date)
     }
 
     return
+end
+
+def top_10_dodavatelia(slice)
+    result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :dodavatel, 
+    			                        :row_levels => [:organisation],
+    			                        :limit => :rank,
+    			                        :limit_value => 10,
+    			                        :limit_sort => :top})
+
+    table = DataTable.new
+    table.add_column(:text, "Firma", :firma)
+    table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€', :alignment => :right})
+    table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
+    
+    result.each { |row|
+        table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
+    }
+    return table
+end
+def top_10_obstaravatelia(slice)
+    result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :obstaravatel, 
+    			                        :row_levels => [:organisation],
+    			                        :limit => :rank,
+    			                        :limit_value => 10,
+    			                        :limit_sort => :top})
+
+    table = DataTable.new
+    table.add_column(:text, "Obstarávateľ", :org)
+    table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€', :alignment => :right})
+    table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
+    
+    result.each { |row|
+        table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
+    }
+    return table
 end
 
 def report_obstaravatel(report_date, obstaravatel_ico)

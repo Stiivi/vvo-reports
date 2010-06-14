@@ -1,0 +1,19 @@
+%h1 Vsetky obstaravania
+%table
+    %tr
+        %th Suma spolu
+        %td= hodnota_zmluv
+    %tr
+        %th Pocet spolu
+        %td= pocet_zmluv
+
+%h1 Najvacsi dodavatelia
+
+#top_dodavatelia= presenter.present_as_html(top_dodavatelia)
+
+%h1 Najvacsi obstaravatelia
+
+#top_obstaravatelia= presenter.present_as_html(top_obstaravatelia)
+
+%h1 Graph
+#p= top_dodavatelia.column_values(1).join(',')
