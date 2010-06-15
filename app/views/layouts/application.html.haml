@@ -1,0 +1,22 @@
+!!!
+%html
+  %head
+    %title Procurement reports
+    = stylesheet_link_tag "blueprint", "inscription", "application"
+    = csrf_meta_tag
+
+  %body
+    #header
+      %ul.links
+        = link_to "O projekte", "#", :class => "light"
+        |
+        = link_to "Právne informácie", "#", :class => "light"
+        |
+        = link_to "Mapa stránky", "#", :class => "light"
+        |
+        = link_to "Kontakt", "#", :class => "light"
+    #container
+      #navigation
+      #content
+        = yield
+      #footer

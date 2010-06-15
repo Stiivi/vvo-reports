@@ -1,0 +1,390 @@
+/* @group Other */
+
+/* @group Special */
+
+.hidden {
+  display: none; }
+
+.fl {
+  float: left; }
+
+.fr {
+  float: right !important; }
+
+.fn {
+  float: none; }
+
+.tr {
+  text-align: right; }
+
+.tc { text-align: center; }
+
+.relative {
+  position: relative; }
+
+.inline {
+  display: inline !important;
+  float: none !important; }
+
+input.inline, select.inline {
+  width: 40px !important; }
+
+
+
+/* @end */
+
+/* @group Lists */
+
+/* @group Basic List */
+
+ul { margin: 0; margin-right: 10px; list-style-type: none; }
+
+ul li { margin-bottom: 5px; }
+
+ul li:last-child { border-bottom: none; margin-bottom: 0px; }
+
+ul li.with_form { padding-bottom: 0px; }
+
+ul li strong.fl { padding-top: 5px; }
+
+ul > li { padding: 7px; }
+
+ul.bordered { border-top: 5px solid #eaeaea; padding-top: 5px; }
+
+
+
+/* @end */
+
+/* @group Menu */
+
+ul.menu {  }
+
+ul.menu li { float: left; }
+
+
+
+/* @end */
+
+/* @end */
+
+/* @group Tabs */
+
+ul.tabs { list-style-type: none; margin: 5px 0px; border-bottom: 1px solid #dedede; margin-right: 20px; margin-left: -1px; }
+
+ul.tabs.small { border-bottom: none; }
+
+ul.tabs li { float: left; padding: 4px 8px; margin-right: 4px; position: relative; top: 2px; background: #686d70; color: #fff; border: 1px solid #dedede; border-bottom: #686d70; }
+
+ul.tabs li a { text-decoration: none; color: #fff; padding-bottom: 2px; }
+
+ul.tabs li.active { background: #fff; border-bottom: 1px solid #fff; top: 2px; }
+
+ul.tabs li.active a { color: #444; }
+
+ul.tabs.frontend { background: url(../images/frontend_tabs.png) 0px 3px no-repeat; border: none; width: 920px; padding-left: 10px; margin-bottom: 15px; }
+
+ul.tabs.frontend li { background: transparent; border: none; padding: 0px 0px; margin: 0px; }
+
+ul.tabs.frontend li a { display: block; padding: 10px; padding-top: 11px; padding-bottom: 11px; font-size: 12px; font-weight: bold; color: #6e6e6e; text-shadow: 1px 1px 0px #fff; margin-left: 3px; }
+
+ul.tabs.frontend li.active { background: #fff url(../images/frontend_tab_active.png) 0px 0px no-repeat; }
+
+ul.tabs.frontend li.active a { background: url(../images/frontend_tab_active.png) top right no-repeat; }
+
+div.tab { padding-top: 10px; }
+
+/* @end */
+
+/* @group Tooltip */
+
+div.tooltip { font-size: 11px; font-weight: bold; background: url(../images/tooltip.png) repeat-x !important; _background: #000; padding: 7px !important; -webkit-border-radius: 5px; -moz-border-radius: 5px; }
+
+
+
+/* @end */
+
+/* @group Locale switcher */
+
+ul.locale_switcher li { width: 40px; padding: 0px; height: 29px; background: url(../images/language_switcher.png) no-repeat -40px -31px; border: none; margin: 0px; }
+
+ul.locale_switcher li a { border: none; padding: 5px; padding-top: 6px; text-align: center; display: block; color: #8e8e8e; font-weight: bold; font-size: 12px; }
+
+ul.locale_switcher li.active { background: url(../images/language_switcher.png) no-repeat -40px 0px; }
+
+ul.locale_switcher li.active a { color: #fff; }
+
+ul.locale_switcher li:first-child { background-position: 0px -31px; }
+
+ul.locale_switcher li:first-child.active { background-position: 0px 0px; }
+
+ul.locale_switcher li:last-child { background-position: -81px -31px; }
+
+ul.locale_switcher li:last-child.active { background-position: -81px 0px; }
+
+/* @end */
+
+/* @group Box */
+
+div.box { background-color: #fefefe; border: 1px solid #dedede; margin-right: 15px; margin-bottom: 15px; padding: 10px; width: 910px; }
+
+body.frontend div.box { width: 100%; border: none; padding: 20px; padding-top: 15px; padding-bottom: 40px; margin-left: -15px; margin-top: -9px; width: 865px; position: relative; }
+
+body.frontend div.box .actions { position: absolute; bottom: 7px; right: 25px; text-align: right; }
+
+body.frontend div.box .actions a { font-size: 11px; }
+
+/* @end */
+
+/* @group Notices, Flags */
+
+.notice, .error, .success { margin-right: 15px; padding: 10px; }
+
+.warning { color: #ba0c0c; font-weight: bold; font-size: 11px; }
+
+.empty { color: #ddd; }
+
+.content p.notice, .content p.error, .content p.success, .content div.notice, .content div.error, .content div.success { margin-left: -1px; margin-top: 10px; }
+
+p.notice, p.error, p.success, div.notice, div.error, div.success { -webkit-border-radius: 3px; -moz-border-radius: 3px; margin-right: 0px; }
+
+p.notice, div.notice { background: #ffe972; border: 1px solid #f0cf17; color: #313131; }
+
+p.error, div.error { border: none; background: #910000; color: #fff; }
+
+.flags .error { background: #b80505; color: #fff; border: none; padding: 3px; margin: 0px 3px 0px 0px; font-size: 9px; text-transform: uppercase; }
+
+.flags .success { background: #024700; color: #fff; border: none; padding: 3px; margin: 0px 3px 0px 0px; font-size: 9px; text-transform: uppercase; }
+
+.flags .success a, .flags .error a { color: #fff; text-decoration: none; }
+
+.action_box { padding: 15px; background: #eaeced; font-size: 11px; border-bottom: 5px solid #d4d6d8; }
+
+.action_box.notice { border: none; color: #363636; background: #feed79; margin: auto; margin-top: 15px; }
+
+.help { text-align: justify; color: #666; }
+
+.padded { padding: 20px 5px 5px !important; }
+
+/* @end */
+
+/* @group Buttons */
+
+a.delete { display: block; width: 16px; height: 16px; background-image: url(../images/icons/delete.png); text-indent: 9999px; margin-top: 2px; }
+
+a.delete:hover { background-position: 0 -16px; }
+
+
+
+/* @end */
+
+
+
+/* @end */
+
+/* @group Typo */
+
+html, body.inscription { font: 11px "Lucida Grande"; color: #4d4d4d; min-height: 100%; }
+
+body.inscription h1 { font-size: 16px; color: #262626; font-weight: bold; }
+
+body.inscription .h1.fl { background-color: transparent; }
+
+body.inscription h2 { font-weight: bold; color: #525252; font-size: 15px; border-bottom: 1px solid #b8b8b8; }
+
+body.inscription h3 { font-size: 13px; font-weight: bold; color: #212121; margin-bottom: 5px; }
+
+body.inscription a { color: #204a81; }
+
+
+
+/* @end */
+
+/* @group Layout */
+
+/* Basic */
+
+body.inscription { background: #cecece url(../images/background.png) repeat; min-height: 100%; }
+
+body.inscription div.wrapper { background: transparent url(../images/background_top.png) repeat-x; position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; }
+
+/* Window */
+
+body.inscription div.window { background-color: #f5f5f5; width: 100%; -webkit-border-radius: 4px; margin-right: auto; margin-left: auto; }
+
+
+body.inscription div.window div.content { margin-right: 0; min-height: 100%; padding: 10px 20px; }
+
+body.inscription div.window div.content_header { margin-right: 0; background-color: #ececec; padding: 20px; background-image: url(../images/content_header.png); }
+
+body.inscription div.window div.content_header h1 { margin-bottom: 0px !important; }
+
+body.inscription div.window div.content_header a { color: #b43a28; }
+
+div.container { width: 100%; background-color: #e1e7eb; }
+
+/* Primary/Secondary */
+
+div.primary { float: left; width: 73%; background-color: #fff; margin-top: 10px; margin-left: 10px; margin-bottom: 10px; -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.1); }
+
+div.secondary { float: left; width: 25%; -webkit-border-bottom-right-radius: 3px; background-repeat: repeat-y; background-position: left; }
+
+/* Header */
+
+body.inscription div.header {  width: 100%; background-image: url(../images/header_background.png); height: 53px; position: relative; }
+
+body.inscription div.footer { height: 40px; width: 960px; margin: auto; }
+
+/* Navigation */
+
+body.inscription div.sidebar { background-color: #d2deea; }
+
+/* @group Horizontal Navigation */
+
+ul.horizontal_navigation { margin: 0; -webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; position: absolute; bottom: 0px; }
+
+ul.horizontal_navigation li { margin-left: 5px; float: left; background-image: url(../images/navigation_item_horizontal.png); margin-bottom: 0; }
+
+ul.horizontal_navigation li.active { background: #e1e7eb; }
+
+ul.horizontal_navigation li a { color: #fff; text-shadow: rgba(0,0,0,0.4) 0 1px 0; font-weight: bold; text-decoration: none; font-size: 12px; padding-right: 5px; padding-left: 5px; }
+
+ul.horizontal_navigation li.active a { text-shadow: none; color: #080808; }
+
+
+/* @end */
+
+/* @group Vertical Navigation */
+
+ul.vertical_navigation { margin: 0; }
+
+ul.vertical_navigation li { padding: 0; }
+
+ul.vertical_navigation li.active { background-image: url(../images/navigation_active.png); }
+
+ul.vertical_navigation li a { color: #515151; font-size: 13px; text-transform: uppercase; text-decoration: none; font-weight: bold; display: block; padding-top: 20px; padding-bottom: 20px; padding-left: 60px; background-repeat: no-repeat; background-position: 12px 15px; }
+
+ul.vertical_navigation li.active a { color: #fff; text-shadow: rgba(0, 0, 0, 0.3) 0 1px 0; }
+
+/* @end */
+
+
+
+/* @end */
+
+/* @group Modal */
+
+/* Shadow Overlay */
+
+body.inscription div.overlay { position: fixed; _position: absolute; top: 0px; left: 0px; width: 100%; min-height: 100%; background: #000; }
+
+/* Generic */
+
+body.inscription div.modal { }
+
+body.inscription div.modal .inner { padding: 40px 40px 45px; }
+
+/* Window */
+
+body.inscription div.modal.window { width: 568px; height: 326px; margin-top: -163px; margin-left: -284px; background-image: url(../images/modal_window.png); }
+
+body.inscription div.modal.window .inner {  }
+
+/* Tooltip (Bottom) */
+
+body.inscription div.modal.tooltip_bottom {  }
+
+body.inscription div.modal.tooltip_bottom .inner {  }
+
+/* Tooltip (Right) */
+
+body.inscription div.modal.tooltip_right {  }
+
+body.inscription div.modal.tooltip_right .inner {  }
+
+/* Elements Inside */
+
+body.inscription div.modal h1 { margin: 0; }
+
+
+
+/* @end */
+
+/* @group Lists */
+
+/* @group Page */
+
+.page_header { margin-bottom: 10px; }
+
+
+
+/* @end */
+
+/* @group Collection */
+
+ul.collection { background: #fff; -webkit-border-radius: 3px; -moz-border-radius: 3px; -webkit-box-shadow: 0px 2px 3px rgba(0,0,0,0.15); margin: 0 0 15px; }
+
+ul.collection li { margin: 0; padding: 10px 15px; border-bottom: 1px solid #ddd; position: relative; }
+
+ul.collection li:first-child { -webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; }
+
+ul.collection li:last-child { -webkit-border-bottom-left-radius: 3px; -webkit-border-bottom-right-radius: 3px; border-bottom: none; }
+
+ul.collection h2 { margin: 0; padding: 0; font-size: 14px; font-weight: bold; text-decoration: none; border: none; }
+
+ul.collection h2 a { margin: 0; padding: 0; font-size: 14px; font-weight: bold; color: #373637; text-decoration: none; }
+
+ul.collection li a.badge { display: block; position: absolute; right: 10px; top: 12px; background-color: #97a9c5; font-weight: bold; color: #fff; -webkit-border-radius: 15px; -moz-border-radius: 15px; padding: 1px 8px; text-decoration: none; }
+
+ul.collection li.active { background-color: #2b74d6; color: #fff !important; }
+
+ul.collection li.active h2, ul.collection li.active a { color: #fff !important; }
+
+ul.collection li div.avatar { border: 1px solid #d2d2d2; }
+
+ul.collection li div.avatar img { border: 2px solid #fff; }
+
+
+
+/* @end */
+
+
+
+/* @end */
+
+/* @group Forms */
+
+form.inscription {  }
+
+form.inscription input { position: static !important; }
+
+form.inscription ul li > label { display: block; width: 120px; font-weight: bold; font-size: 11px; color: #414141; float: left; padding-top: 10px; }
+
+form.inscription input[type=text], form.inscription textarea { display: block; font-size: 13px; font-weight: bold; padding: 3px; width: 250px; float: left; }
+
+form.inscription select { display: block; }
+
+form.inscription textarea { font-size: 13px; font-weight: normal; font-style: normal; height: 80px; }
+
+form.inscription div.actions { margin-top: 10px; }
+
+
+
+/* @end */
+
+/* @group Button */
+
+a.inscription_button { display: block; text-decoration: none; background: url(../images/button_blue.png) right -60px; padding-right: 12px; float: left; margin-left: 5px; }
+
+a.inscription_button span { display: block; background: url(../images/button_blue.png) 0 0; text-decoration: none; color: #fff; font-weight: bold; text-transform: uppercase; font-size: 12px; padding-left: 12px; padding-top: 6px; padding-bottom: 6px; text-shadow: rgba(0,0,0,0.3) 0 1px 0; }
+
+a.inscription_button.silver { background-image: url(../images/button_silver.png); }
+
+a.inscription_button.silver span { background-image: url(../images/button_silver.png); text-shadow: none; color: #494949; }
+
+a.inscription_button.red { background-image: url(../images/button_red.png); }
+
+a.inscription_button.red span { background-image: url(../images/button_red.png); text-shadow: rgba(0,0,0,0.3) 0 1px 0; color: #fff; }
+
+
+
+/* @end */

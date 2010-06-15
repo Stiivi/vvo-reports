@@ -1,0 +1,35 @@
+/* @group Typo */
+
+body { font: 11px "Lucida Grande"; }
+
+h1 { color: #232323; font-size: 17px; font-weight: bold; }
+
+h2 { font-size: 16px; color: #0f5a9f; }
+
+a { color: #383838; }
+
+a.light { color: #a8aeb2; text-decoration: none; }
+
+
+
+/* @end */
+
+/* @group Layout */
+
+body { background: #ececec url(../images/background.png) repeat-x; }
+
+#header { height: 30px; background: url(../images/logo.png) no-repeat 30px 2px; text-align: right; width: 996px; margin: 10px auto auto; }
+
+#header ul.links { padding-top: 10px; padding-right: 24px; color: #bec5c9; }
+
+#container { width: 996px; margin: 10px auto auto; }
+
+#navigation { background-image: url(../images/navigation_background.png); height: 45px; }
+
+#content { padding: 20px 40px; background-image: url(../images/container_background.png); }
+
+#footer { height: 35px; background-image: url(../images/footer_background.png); }
+
+
+
+/* @end */
