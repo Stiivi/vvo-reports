@@ -42,7 +42,7 @@ end
 
 def initialize_model
     store_manager = Brewery::data_store_manager
-    @connection = store_manager.create_connection("default")
+    @connection = store_manager.create_connection("vvo_data")
 
     @model = Model.first(:name => "vvo")
     @cube = @model.cubes.first( :name => "vvo" )

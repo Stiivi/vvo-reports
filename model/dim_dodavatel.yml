@@ -1,6 +1,6 @@
 name: dodavatel
 label: Dodávateľ
-table: dm_organisation
+table: dm_supplier
 levels:
     region:
         label: Región

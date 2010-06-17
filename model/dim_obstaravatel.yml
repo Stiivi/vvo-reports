@@ -1,6 +1,6 @@
 name: obstaravatel
 label: Obstarávateľ
-table: dm_organisation
+table: dm_procurer
 levels:
     sector:
         label: Sektor

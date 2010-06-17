@@ -12,10 +12,10 @@ class ReportsController < ApplicationController
 
   def index
     slice = @cube.whole.cut_by_point(:date, [2009])
-    result = slice.aggregate(:zmluva_hodnota)[0]
+    result = slice.aggregate(:zmluva_hodnota)
     
-    @hodnota_zmluv = result[:sum].to_f
-    @pocet_zmluv = result[:record_count]
+    @hodnota_zmluv = result.summary[:sum].to_f
+    @pocet_zmluv = result.summary[:record_count]
 
     slice.add_computed_field(:podiel) { |record|
       record[:sum] / @hodnota_zmluv
@@ -40,9 +40,11 @@ class ReportsController < ApplicationController
       table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€', :alignment => :right})
       table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
 
-      result.each { |row|
+      result.rows.each { |row|
           table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
       }
+      row = result.remainder
+      table.add_row(["Ostatne", row[:sum], row[:podiel]])
       
       table
   end
@@ -59,9 +61,11 @@ class ReportsController < ApplicationController
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€', :alignment => :right})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
     
-    result.each { |row|
+    result.rows.each { |row|
         table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
     }
+      row = result.remainder
+      table.add_row(["Ostatne", row[:sum], row[:podiel]])
     return table
   end
   
@@ -77,9 +81,11 @@ class ReportsController < ApplicationController
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
-    result.each { |row|
+    result.rows.each { |row|
         table.add_row([[row[:cpv_division], row[:cpv_division_desc]], row[:sum], row[:podiel]])
     }
+      row = result.remainder
+      table.add_row(["Ostatne", row[:sum], row[:podiel]])
     return table
   end
   
@@ -95,7 +101,7 @@ class ReportsController < ApplicationController
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
-    result.each { |row|
+    result.rows.each { |row|
         table.add_row([[row[:druh_postupu], row[:druh_postupu]], row[:sum], row[:podiel]])
     }
     return table
@@ -113,8 +119,8 @@ class ReportsController < ApplicationController
     result = year_slice.aggregate(:zmluva_hodnota, {:row_dimension => :date, 
     			                        :row_levels => [:year, :month]})
 
-    result.collect do |item|
-      ["#{item[:month_name]}/#{item[:year]}", item[:sum]]
+    result.rows.collect do |item|
+      ["#{item[:month_name]} #{item[:year]}", item[:sum]]
     end
   end
 end
