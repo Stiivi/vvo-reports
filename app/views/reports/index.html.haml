@@ -1,5 +1,21 @@
 %h1 Verejné obstarávania
 
-== Hodnota zmluv: #{@report[:hodnota_zmluv]}
+== Hodnota zmlúv: #{@hodnota_zmluv}
+%br
+== Počet zmlúv: #{@pocet_zmluv}
+%br
+%br
 
-= @table.html_safe
+.clearfix
+  .left_column
+    %h2 Top dodávatelia
+    = render :partial => "data_views/table", :object => @top_10_dodavatelia
+  .right_column
+    %h2 Top obstáravatelia
+    = render :partial => "data_views/table", :object => @top_10_obstaravatelia
+
+.clearfix
+  .left_column
+    = render :partial => "data_views/pie_chart", :object => @top_10_dodavatelia, :as => :table
+  .right_column
+    = render :partial => "data_views/pie_chart", :object => @top_10_obstaravatelia, :as => :table

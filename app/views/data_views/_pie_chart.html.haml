@@ -1,0 +1,28 @@
+- values, labels = [], []
+- table.rows.each_index do |row|
+  - values << table.value_at(row, 1)
+  - labels << table.formatted_value_at(row, 0)
+      
+:javascript
+  (function(){
+    var json_data = #{table.to_json};
+    json_data = json_data['rows'];
+    var data = [];
+    for(i in json_data) {
+      data.push([json_data[i][0]['formatted_value'], parseInt(json_data[i][1]['value'])]);
+    }
+    google.setOnLoadCallback(function(){
+      var table = new google.visualization.DataTable();
+      table.addColumn('string', 'Label');
+      table.addColumn('number', 'Value');
+      table.addRows(data);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_#{table.object_id}'));
+      chart.draw(table, {width: 450, height: 240, is3D: true, legend: 'none'});
+    });
+  })();
+  
+  
+          
+%div{:id => "chart_#{table.object_id}"}

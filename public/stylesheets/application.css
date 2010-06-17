@@ -28,7 +28,39 @@ body { background: #ececec url(../images/background.png) repeat-x; }
 
 #content { padding: 20px 40px; background-image: url(../images/container_background.png); }
 
+#content .left_column, #content .right_column { float: left; width: 450px; }
+
+#content .left_column { margin-right: 15px; }
+
 #footer { height: 35px; background-image: url(../images/footer_background.png); }
+
+
+
+/* @end */
+
+/* @group Data Views */
+
+/* @group Table */
+
+table.data_table { border: 1px solid #e1e5e8; -webkit-border-radius: 3px; -moz-border-radius: 3px;  }
+
+table.data_table th { background-color: #81a3ca; padding: 7px 12px; font-size: 12px; color: #fff; text-shadow: #6782a2 0 1px 0; }
+
+table.data_table th:first-child { -webkit-border-top-left-radius: 3px; -moz-border-radius-topleft: 3px; }
+
+table.data_table th:last-child { -webkit-border-top-right-radius: 3px; -moz-border-radius-topright: 3px; }
+
+table.data_table td { padding: 7px 12px; }
+
+/* Particular columns */
+
+table.data_table th.suma { width: 90px; }
+
+table.data_table th.podiel { width: 50px; }
+
+
+
+/* @end */
 
 
 
