@@ -1,10 +1,9 @@
 :javascript
   (function(){
     var json_data = #{table.to_json};
-    json_data = json_data['rows'];
     var data = [];
     for(i in json_data) {
-      data.push([json_data[i][0]['formatted_value'], parseInt(json_data[i][1]['value'])]);
+      data.push([json_data[i][0], parseInt(json_data[i][1])]);
     }
     google.setOnLoadCallback(function(){
       var table = new google.visualization.DataTable();
@@ -13,8 +12,8 @@
       table.addRows(data);
 
       // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('chart_#{table.object_id}'));
-      chart.draw(table, {width: 450, height: 240, is3D: true, legend: 'none'});
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_#{table.object_id}'));
+      chart.draw(table, {width: 900, height: 240, is3D: true, legend: 'none'});
     });
   })();
   

@@ -19,3 +19,32 @@
     = render :partial => "data_views/pie_chart", :object => @top_10_dodavatelia, :as => :table
   .right_column
     = render :partial => "data_views/pie_chart", :object => @top_10_obstaravatelia, :as => :table
+
+%br
+%br
+    
+.clearfix
+  .left_column
+    %h2 Typy tovarov
+    = render :partial => "data_views/table", :object => @typy_tovarov
+  .right_column
+    %h2 Typy tovarov (graf)
+    = render :partial => "data_views/pie_chart", :object => @typy_tovarov, :as => :table
+
+%br
+%br
+
+.clearfix
+  .left_column
+    %h2 Druhy postupov
+    = render :partial => "data_views/table", :object => @druh_postupu
+  .right_column
+    %h2 Druhy postupov (graf)
+    = render :partial => "data_views/pie_chart", :object => @druh_postupu, :as => :table
+    
+%br
+%br
+
+%h2 Vývoj v priebehu roka 
+
+= render :partial => "data_views/bar_chart", :locals => {:table => @posledny_rok}
