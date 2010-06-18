@@ -2,19 +2,20 @@
 
 require "brewery"
 
-class ReportsController < ApplicationController
+class OrganisationsController < ApplicationController
   
   include Brewery
   include Reports
   
   before_filter :find_cube
 
-  def index
+  def show    
     slice = @cube.whole.cut_by_point(:date, [2009])
-    result = slice.aggregate(:zmluva_hodnota)
+    # CUT BY organisation_id = params[:id]
+    result = slice.aggregate(:zmluva_hodnota)[0]
     
-    @hodnota_zmluv = result.summary[:sum].to_f
-    @pocet_zmluv = result.summary[:record_count]
+    @hodnota_zmluv = result[:sum].to_f
+    @pocet_zmluv = result[:record_count]
 
     slice.add_computed_field(:podiel) { |record|
       record[:sum] / @hodnota_zmluv
