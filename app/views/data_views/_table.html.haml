@@ -6,4 +6,5 @@
   - table.rows.each_index do |row|
     %tr{:class => cycle("even", "odd")}
       - table.rows[row].each_index do |col|
-        %td= table.formatted_value_at(row, col)
+        %td
+          = table.formatted_value_at(row, col)
