@@ -1,4 +1,4 @@
-name: vvo
+name: zmluvy
 label: "Uzatvorené zmluvy verejného obstarávania"
 description: "Uzatvorené zmluvy verejného obstarávania Slovenskej Republiky"
 fact_table: ft_vvo_zmluvy

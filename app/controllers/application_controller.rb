@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     Brewery::load_rails_configuration
     Brewery::crate_default_workspace(:default)
     
-    @model = Brewery::Model.model_with_name("vvo")
-    @cube = @model.cube_with_name("vvo")
+    @model = Brewery::Model.model_with_name("verejne_obstaravania")
+    @cube = @model.cube_with_name("zmluvy")
   end
 end
