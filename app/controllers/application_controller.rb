@@ -4,14 +4,11 @@ class ApplicationController < ActionController::Base
   
   protected
   
-  def find_cube
+  def initialize_model
     Brewery::load_rails_configuration
-    @connection = Brewery::data_store_manager.create_connection(:default)
-
-
-    @model = Brewery::Model.first(:name => "vvo")
-    @cube = @model.cubes.first( :name => "vvo" )
-    table = @connection[@cube.fact_table.to_sym]
-    @cube.dataset = Brewery::Dataset.dataset_from_database_table(table)
+    Brewery::crate_default_workspace(:default)
+    
+    @model = Brewery::Model.model_with_name("vvo")
+    @cube = @model.cube_with_name("vvo")
   end
 end

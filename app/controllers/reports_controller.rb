@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
   
   include Brewery
   
-  before_filter :find_cube
+  before_filter :initialize_model
 
   def index
     slice = @cube.whole.cut_by_point(:date, [2009])
