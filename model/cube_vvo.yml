@@ -2,6 +2,33 @@ name: zmluvy
 label: "Uzatvorené zmluvy verejného obstarávania"
 description: "Uzatvorené zmluvy verejného obstarávania Slovenskej Republiky"
 fact_table: ft_vvo_zmluvy
+fields:
+    -
+        name: document_id
+        label: ID dokumentu E-Vestníka
+    -
+        name: vestnik_cislo
+        label: Číslo vestníka
+    -
+        name: zakazka_nazov
+        label: Názov zákazky
+    -
+        name: elektronicka_aukcia_flag
+        label: Elektronická aukcia
+    -
+        name: zakazka_eurofondy_flag
+        label: Eurofondy
+    -
+        name: pocet_zmluv
+        label: Počet zmlúv obstarávania
+    -
+        name: zmluva_hodnota
+        field_type: measure
+        label: Hodnota zmluvy
+    -
+        name: zakazka_hodnota
+        field_type: measure
+        label: Hodnota zákazky
 dimensions:
     date:
         fact_key: vestnik_datum_id
