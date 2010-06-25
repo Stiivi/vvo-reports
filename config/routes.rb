@@ -1,5 +1,5 @@
 Vvo::Application.routes.draw do |map|
  resources :reports
- resources :organisations
+ resources :facts
  root :to => "reports#index"
 end
