@@ -32,7 +32,7 @@ levels:
         label: detail
         fields:
             - cpv_detail
-            - cpv_detail_desc
+            - description
         description_field: cpv_detail_desc
 hierarchies:
     default:
