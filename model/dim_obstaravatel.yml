@@ -12,6 +12,7 @@ levels:
         fields:
             - ico
             - name
+            - address
 hierarchies:
     default:
         levels:

@@ -1,5 +1,20 @@
-%table.data_table
-  - @test_hash.each do |k, v|
-    %tr
-      %td= k
-      %td= link_to v, "#"
+%h1 Informacie o zmluve
+%p Názov zákazky: #{@fact['zakazka_nazov']}
+%p Hodnota zákazky: #{@fact['zakazka_hodnota']}
+%h2 Oznamenie
+%p Číslo vestníka: #{@fact['vestnik_cislo']}
+
+- cut_y = "cut=date:#{@fact['date.year']}"
+- link_y = link_to @fact['date.year'], cut_y
+- cut_m = "cut=date:#{@fact['date.year']},#{@fact['date.month']}"
+- link_m = link_to @fact['date.month_name'], cut_m
+%p Dátum oznámenia: #{@fact['date.day']}. #{link_m} #{link_y} 
+
+- cut = "cut=druh_postupu:#{@fact['druh_postupu.id']}"
+%p Druh postupu: #{link_to @fact['druh_postupu.druh_postupu'], cut}
+
+- cut = "cut=kriteria_vyhodnotenia:#{@fact['kriteria_vyhodnotenia.id']}"
+%p Kriteria vyhodnotenia: #{link_to @fact['kriteria_vyhodnotenia.kriteria_vyhodnotenia'], cut}
+
+- cut = "cut=cpv_kod:#{@fact['cpv.id']}"
+%p Predmet obstarávania (CPV): #{link_to @fact['cpv.description'], cut}

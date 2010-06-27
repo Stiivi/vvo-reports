@@ -1,0 +1,12 @@
+name: kriteria_vyhodnotenia
+label: Druh postupu
+table: dm_kriteria_vyhodnotenia
+levels:
+    kriteria_vyhodnotenia:
+        label: kriteria_vyhodnotenia
+        fields:
+            - kriteria_vyhodnotenia
+hierarchies:
+    default:
+        levels:
+            - kriteria_vyhodnotenia

@@ -22,6 +22,9 @@ fields:
         name: pocet_zmluv
         label: Počet zmlúv obstarávania
     -
+        name: vestnik_datum
+        label: Dátum oznámenia
+    -
         name: zmluva_hodnota
         field_type: measure
         label: Hodnota zmluvy
@@ -40,3 +43,5 @@ dimensions:
         fact_key: dodavatel_id
     druh_postupu:
         fact_key: druh_postupu_id
+    kriteria_vyhodnotenia:
+        fact_key: kriteria_vyhodnotenia_id
