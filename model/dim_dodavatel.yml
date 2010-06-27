@@ -12,6 +12,11 @@ levels:
             - ico
             - name
             - address
+            - country
+            - date_start
+            - date_end
+            - legal_form
+            - ownership
 hierarchies:
     default:
         levels:

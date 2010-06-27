@@ -1,20 +1,47 @@
 %h1 Informacie o zmluve
 %p Názov zákazky: #{@fact['zakazka_nazov']}
-%p Hodnota zákazky: #{@fact['zakazka_hodnota']}
+- zmluva_hodnota = @fact['zmluva_hodnota']
+- zakazka_hodnota = @fact['zakazka_hodnota']
+%h3 Hodnota zmluvy: #{number_to_currency(zmluva_hodnota)}
+%p Počet zmlúv vrámci zákazky: #{@fact['pocet_zmluv']}
+%p Celková hodnota zákazky: #{number_to_currency(zakazka_hodnota)} (podiel tejto zmluvy: #{number_to_percentage(zmluva_hodnota/zakazka_hodnota*100, :precision => 1)})
+%p
+  %em ^^ toto zobrazit iba ak je pocet zmluv > 1
+
 %h2 Oznamenie
 %p Číslo vestníka: #{@fact['vestnik_cislo']}
 
-- cut_y = "cut=date:#{@fact['date.year']}"
-- link_y = link_to @fact['date.year'], cut_y
-- cut_m = "cut=date:#{@fact['date.year']},#{@fact['date.month']}"
-- link_m = link_to @fact['date.month_name'], cut_m
+- link_m = link_to_cut('date', @fact['date.month_name'], [@fact['date.year'], @fact['date.month']])
+- link_y = link_to_cut('date', @fact['date.year'], [@fact['date.year']])
 %p Dátum oznámenia: #{@fact['date.day']}. #{link_m} #{link_y} 
 
-- cut = "cut=druh_postupu:#{@fact['druh_postupu.id']}"
-%p Druh postupu: #{link_to @fact['druh_postupu.druh_postupu'], cut}
 
-- cut = "cut=kriteria_vyhodnotenia:#{@fact['kriteria_vyhodnotenia.id']}"
-%p Kriteria vyhodnotenia: #{link_to @fact['kriteria_vyhodnotenia.kriteria_vyhodnotenia'], cut}
+- link = link_to_cut('druh_postupu', @fact['druh_postupu.druh_postupu'], [@fact['druh_postupu.id']])
+%p Druh postupu: #{link}
 
-- cut = "cut=cpv_kod:#{@fact['cpv.id']}"
-%p Predmet obstarávania (CPV): #{link_to @fact['cpv.description'], cut}
+- link = link_to_cut('kriteria_vyhodnotenia', @fact['kriteria_vyhodnotenia.kriteria_vyhodnotenia'], [@fact['kriteria_vyhodnotenia.id']])
+%p Kriteria vyhodnotenia: #{link}
+
+- link = link_to_cut('cpv', @fact['cpv.description'], [@fact['cpv.cpv_code']])
+%p Predmet obstarávania (CPV): #{link}
+
+%h2 Dodávateľ
+- link = link_to_cut('dodavatel', @fact['dodavatel.name'], [@fact['dodavatel.ico']])
+%h3 #{link} #{image_tag("icons/zoom.png", :alt => "Explore")}
+%p IČO: #{@fact['dodavatel.ico']}
+%p Adresa: #{@fact['dodavatel.address']}
+- link = link_to_cut('dodavatel', @fact['dodavatel.region'], [@fact['dodavatel.region']])
+%p Region: #{link}
+%p Krajina: #{@fact['dodavatel.country']}
+%p Dátum vzniku: #{@fact['dodavatel.date_start']}
+- datum_oznamenia = @fact['vestnik_datum']
+- datum_vzniku = @fact['dodavatel.date_start']
+%p Spoločnosť vznikla pred #{distance_of_time_in_words(datum_vzniku, datum_oznamenia)} od dátumu zveréjnenia.
+
+%h2 Obstarávateľ
+- link = link_to_cut('obstaravatel', @fact['obstaravatel.name'], [@fact['obstaravatel.ico']])
+%h3 #{link} #{image_tag("icons/zoom.png", :alt => "Explore")}
+%p Adresa: #{@fact['obstaravatel.address']}
+- link = link_to_cut('obstaravatel', @fact['obstaravatel.account_sector'], [@fact['obstaravatel.account_sector_code']])
+%p Sektor: #{link}
+
