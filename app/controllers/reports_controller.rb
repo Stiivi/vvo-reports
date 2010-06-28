@@ -10,6 +10,16 @@ class ReportsController < ApplicationController
   before_filter :initialize_model
 
   def index
+    load_all_views
+  end
+  
+  def show
+    report_type = params[:id]
+    load_all_views
+    render :action => report_type
+  end
+  
+  def load_all_views
     # Default slice
     @slicer = Brewery::CubeSlicer.new
     @slicer.update_from_param("date:2009")
@@ -35,7 +45,7 @@ class ReportsController < ApplicationController
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
     @dodavatelia_table.add_cell_presenter(
       {:col => [:firma], :row => :all},
-      DataView::Presenter::SliceCut.new(@slicer, :dodavatel, 1)
+      DataView::Presenter::SliceCut.new(@slicer, :dodavatel, :level => 1, :base_url => report_path(:dodavatel))
     )
     @dodavatelia_table.remove_cell_presenter({:col => :all, :row => :last})
     @dodavatelia_chart = DataView::PieChart.new(@dodavatelia, {:labels => 0, :series => 1})
@@ -44,7 +54,7 @@ class ReportsController < ApplicationController
     @obstaravatelia = top_10_obstaravatelia(slice)
     @obstaravatelia_table = DataView::Table.new(@obstaravatelia)
     @obstaravatelia_table.add_cell_presenter({:col => [:org], :row => :all},
-      DataView::Presenter::SliceCut.new(@slicer, :obstaravatel, 1))
+      DataView::Presenter::SliceCut.new(@slicer, :obstaravatel, :level => 1, :base_url => report_path(:obstaravatel)))
     @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
       
     # Typy tovarov
