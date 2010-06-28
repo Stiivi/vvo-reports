@@ -1,8 +1,17 @@
 module DataView
   class ColorCenter
-    include Singleton
-    
+    # FIXME: this is causing ActionView::Template::Error (DataView is not missing constant ColorCenter!)
+    # include Singleton
+    @@__instance__ = nil
+
     PALETTE = %w{b3121a ee2029 e90b8e a60d67 ce0beb 9409a9 6e0ce7 4f0aa5 0f57eb 0640b6 04baf6 0788b2 06ea4c 0b9c37 7be707 478504 e0dd05 e3751c db3716}
+    
+    def self.instance
+        if !@@__instance__
+            @@__instance__ = self.new
+        end
+        return @@__instance__
+    end
     
     def initialize
       @generated_colors = {}
