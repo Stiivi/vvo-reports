@@ -1,10 +1,15 @@
-%h1 Verejné obstarávania
+.header
+  %h1 Verejné obstarávania
 
-== Hodnota zmlúv: #{@hodnota_zmluv}
-%br
-== Počet zmlúv: #{@pocet_zmluv}
-%br
-%br
+= render :partial => "reports/slicer"
+
+.details
+  %dl.clearfix
+    %dt Hodnota zmlúv
+    %dd= @hodnota_zmluv
+  %dl.clearfix
+    %dt Počet zmlúv
+    %dd= @pocet_zmluv
 
 .clearfix
   .left_column

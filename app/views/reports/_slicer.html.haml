@@ -1,0 +1,7 @@
+.status.clearfix
+  - @slicer.cuts.each do |cut|
+    .fl.cut
+      %em= cut[0]
+      = cut[1].join(" ")
+      %a{:href => url_for(:cut => @slicer.without(cut[0]).to_param)}
+        = image_tag "status_remove.png"

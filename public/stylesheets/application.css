@@ -1,4 +1,8 @@
-/* @override http://localhost:3000/stylesheets/application.css?1277735010 */
+/* @override 
+	http://localhost:3000/stylesheets/application.css?1277735010
+	http://localhost:3000/stylesheets/application.css?1277756348
+	http://localhost:3000/stylesheets/application.css?1277756483
+*/
 
 /* @group Typo */
 
@@ -65,6 +69,42 @@ table.data_table th.podiel { width: 50px; }
 
 
 /* @end */
+
+
+
+/* @end */
+
+/* @group Details */
+
+.details dd {  }
+
+.details dt { float: left; font-size: 15px; color: #8d8d8d; font-weight: normal; width: 200px; }
+
+.details dd { float: left; font-size: 15px; color: #3c3c3c; }
+
+
+
+/* @end */
+
+/* @group Header */
+
+.header { margin-bottom: 20px; }
+
+
+
+/* @end */
+
+/* @group Status */
+
+.status { margin-left: -22px; padding: 20px; background: #f3f3f3 url(../images/status_background.png) repeat-x; width: 920px; margin-bottom: 15px; color: #898989; font-size: 11px; }
+
+.status em { color: #b3b3b3; font-style: normal; }
+
+.status .cut { margin-right: 20px; }
+
+.status .dimension { margin-right: 5px; }
+
+.status a img { position: relative; top: 2px; }
 
 
 

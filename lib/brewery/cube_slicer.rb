@@ -10,6 +10,8 @@ module Brewery
   # @author Vojto Rinik <vojto@rinik.net>
   
   class CubeSlicer
+    attr_reader :cuts
+    
     # Separator for cuts.
     CUT_SEPARATOR = "/"
     
@@ -58,6 +60,19 @@ module Brewery
           @cuts << [dimension, path]
         end
       end
+    end
+    
+    def remove_cut(dim)
+      cut_index = @cuts.find_index { |c| 
+        c[0] == dim
+      }
+      @cuts.delete_at(cut_index)
+    end
+    
+    def without(dim)
+      alter_ego = Marshal.load(Marshal.dump(self))
+      alter_ego.remove_cut(dim)
+      alter_ego
     end
     
     # Creates slice from cuts stored in CubeSlicer.
