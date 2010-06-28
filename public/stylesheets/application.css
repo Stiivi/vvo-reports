@@ -1,3 +1,5 @@
+/* @override http://localhost:3000/stylesheets/application.css?1277735010 */
+
 /* @group Typo */
 
 body { font: 11px "Lucida Grande"; }
@@ -21,6 +23,8 @@ body { background: #ececec url(../images/background.png) repeat-x; }
 #header { height: 30px; background: url(../images/logo.png) no-repeat 30px 2px; text-align: right; width: 996px; margin: 10px auto auto; }
 
 #header ul.links { padding-top: 10px; padding-right: 24px; color: #bec5c9; }
+
+#header a.header { display: block; height: 35px; width: 300px; }
 
 #container { width: 996px; margin: 10px auto auto; }
 

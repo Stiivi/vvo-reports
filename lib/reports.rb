@@ -18,6 +18,9 @@ module Reports
       result.rows.each { |row|
           table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
       }
+      remainder_row = result.remainder
+      table.add_row(["Ostatne", remainder_row[:sum], remainder_row[:podiel]])
+      
       
       table
   end
@@ -66,7 +69,7 @@ module Reports
     			                        :limit_sort => :top})
 
     table = DataTable.new
-    table.add_column(:text, "Typ tovaru", :druh_postupu)
+    table.add_column(:text, "Druh postupu", :druh_postupu)
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     

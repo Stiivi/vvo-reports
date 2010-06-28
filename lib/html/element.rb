@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Html
   class Element
     attr_accessor :text
