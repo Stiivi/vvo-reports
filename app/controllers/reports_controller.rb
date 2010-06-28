@@ -47,7 +47,8 @@ class ReportsController < ApplicationController
       {:col => [:firma], :row => :all},
       DataView::Presenter::SliceCut.new(@slicer, :dodavatel, :level => 1, :base_url => report_path(:dodavatel))
     )
-    @dodavatelia_table.remove_cell_presenter({:col => :all, :row => :last})
+    @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
+      DataView::Presenter::SliceCut.new(@slicer, :dodavatel, :link => false))
     @dodavatelia_chart = DataView::PieChart.new(@dodavatelia, {:labels => 0, :series => 1})
       
     # Obstaravatelia

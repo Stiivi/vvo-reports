@@ -19,7 +19,7 @@ module Reports
           table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
       }
       remainder_row = result.remainder
-      table.add_row(["Ostatne", remainder_row[:sum], remainder_row[:podiel]])
+      table.add_row([["ostatne", "Ostatne"], remainder_row[:sum], remainder_row[:podiel]])
       
       
       table

@@ -2,6 +2,7 @@
 	http://localhost:3000/stylesheets/application.css?1277735010
 	http://localhost:3000/stylesheets/application.css?1277756348
 	http://localhost:3000/stylesheets/application.css?1277756483
+	http://localhost:3000/stylesheets/application.css?1277759566
 */
 
 /* @group Typo */
@@ -105,6 +106,14 @@ table.data_table th.podiel { width: 50px; }
 .status .dimension { margin-right: 5px; }
 
 .status a img { position: relative; top: 2px; }
+
+
+
+/* @end */
+
+/* @group Other */
+
+span.color { width: 15px; height: 15px; padding-right: 10px; margin-right: 10px; }
 
 
 
