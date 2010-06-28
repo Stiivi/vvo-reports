@@ -11,7 +11,7 @@ module Reports
       			                        :limit_sort => :top})
 
       table = DataTable.new
-      table.add_column(:text, "Firma", :firma, :link => :organisation_path)
+      table.add_column(:text, "Firma", :firma)
       table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€', :alignment => :right})
       table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
 

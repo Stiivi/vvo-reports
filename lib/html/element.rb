@@ -1,5 +1,7 @@
 module Html
   class Element
+    attr_accessor :text
+    
     def initialize(type, text = "", options = {})
       @type = type
       @text = text
@@ -30,6 +32,10 @@ module Html
       child = Element.new(type, text, options)
       @children << child
       child
+    end
+    
+    def []= (option, value)
+      @options[option] = value
     end
   end
 end

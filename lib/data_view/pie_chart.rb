@@ -3,17 +3,17 @@ module DataView
     def initialize(data, options)
       @data = data
       @options = options
-      raise "Missing option :legend" unless options.has_key?(:legend)
-      raise "Missing option :value" unless options.has_key?(:legend)
+      raise "Missing option :labels" unless options.has_key?(:labels)
+      raise "Missing option :series" unless options.has_key?(:labels)
     end
     
     def as_html
       data_for_chart = []
       
       @data.rows.each_index do |row|
-        legend = @data.formatted_value_at(row, @options[:legend])
-        value = @data.value_at(row, @options[:value])
-        data_for_chart << [legend, value.to_f]
+        labels = @data.formatted_value_at(row, @options[:labels])
+        series = @data.value_at(row, @options[:series])
+        data_for_chart << [labels, series.to_f]
       end
       
       chart_container_id = "chart_#{self.object_id}"
@@ -25,7 +25,7 @@ module DataView
         google.setOnLoadCallback(function(){
           var table = new google.visualization.DataTable();
           table.addColumn('string', 'Label');
-          table.addColumn('number', 'Value');
+          table.addColumn('number', 'series');
           table.addRows(json_data);
           var chart = new google.visualization.PieChart(document.getElementById('#{chart_container_id}'));
           chart.draw(table, {width: 450, height: 240, is3D: true, legend: 'none'});
