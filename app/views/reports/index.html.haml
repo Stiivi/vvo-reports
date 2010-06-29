@@ -6,7 +6,7 @@
 .details
   %dl.clearfix
     %dt Hodnota zmlúv
-    %dd= @hodnota_zmluv
+    %dd= number_to_currency(@hodnota_zmluv)
   %dl.clearfix
     %dt Počet zmlúv
     %dd= @pocet_zmluv

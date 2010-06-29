@@ -38,6 +38,14 @@ def run
 
     facts = slice.facts
     puts "==> count: #{facts.count}"
+    fact = facts.first
+    # puts fact
+    # puts fact[:"obstaravatel.name" ]
+    
+    dim = @cube.dimension_with_name("dodavatel")
+    puts dim.all_fields.join(',')
+    detail = dim.detail_for_path([:all, "44229143"])
+    puts detail[:name]
 end
 
 end #class
