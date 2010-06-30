@@ -1,5 +1,12 @@
 Vvo::Application.routes.draw do |map|
- resources :reports
- resources :facts
- root :to => "reports#index"
+  # General routes
+  resources :reports
+  resources :facts
+  
+  # Entities
+  resources :suppliers
+  resources :procurers
+  
+  # Root path
+  root :to => "reports#index"
 end

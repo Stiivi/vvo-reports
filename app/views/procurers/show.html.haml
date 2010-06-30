@@ -1,0 +1,52 @@
+.header
+  %h1
+    %em Dodávateľ:
+    = @detail[:name]
+    
+= render :partial => "reports/slicer"
+
+.details
+  %dl.clearfix
+    %dt Hodnota zmlúv
+    %dd= @hodnota_zmluv
+  %dl.clearfix
+    %dt Počet zmlúv
+    %dd= @pocet_zmluv
+
+.clearfix
+  .left_column
+    %h2 Top dodávatelia
+    = @dodavatelia_table.as_html
+  .right_column
+    %h2 Top dodávatelia (graf)
+    = @dodavatelia_chart.as_html
+
+
+%br
+%br
+    
+.clearfix
+  .left_column
+    %h2 Typy tovarov
+    = @typy_tovarov_table.as_html
+  .right_column
+    %h2 Typy tovarov (graf)
+    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
+
+%br
+%br
+
+.clearfix
+  .left_column
+    %h2 Druhy postupov
+    = @druhy_postupov_table.as_html
+  .right_column
+    %h2 Druhy postupov (graf)
+    = @druhy_postupov_chart.as_html
+    
+%br
+%br
+
+%h2 Vývoj v priebehu roka 
+
+= DataView::BarChart.new(@posledny_rok, {:labels => 0, :series => 1}).as_html

@@ -5,15 +5,15 @@ module DataView
     class SliceCut
       
       # Initializes new SliceCut
-      # @param [Brewery::CubeSlicer] Slicer to be used to build URL.
-      # @param [Symbol] Dimension that Presenter presents.
-      # @param [Hash] Additional options.
-      def initialize(slicer, dimension, options = {})
-        @slicer = slicer
-        @dimension = dimension
+      # @param [Hash] Options
+      def initialize(options = {})
+        @slicer = Presenter.slicer
+        @controller = Presenter.controller
+        @dimension = options[:dimension]
         @level = options[:level] || 0
-        @base_url = options[:base_url] || ""
+        @base_url = options[:base_url] || nil
         @link = options.has_key?(:link) ? options[:link] : true
+        @link_method = options[:link_method]
         @legend = options.has_key?(:legend) ? options[:legend] : true
       end
       
@@ -37,10 +37,18 @@ module DataView
             path = (["*"]*@level + [data_cell.value]).join("-")
           end
           
-          current_slicer.
-            update_from_param("#{@dimension}:#{path}")
-
-          a_element[:href] = "#{@base_url}?cut=#{current_slicer.to_param}"
+          if @dimension
+            current_slicer.
+              update_from_param("#{@dimension}:#{path}")
+          end
+          
+          if @base_url
+            base_url = @base_url
+          elsif @link_method
+            base_url = @controller.send(@link_method, data_cell.value)
+          end
+          
+          a_element[:href] = "#{base_url}?cut=#{current_slicer.to_param}"
         else
           html_cell.new_child(:span, data_cell.formatted_value)
         end
