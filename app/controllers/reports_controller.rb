@@ -56,7 +56,7 @@ class ReportsController < ApplicationController
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
     @dodavatelia_table.add_cell_presenter(
       {:col => [:firma], :row => :all},
-      DataView::Presenter::Report.new(:report => :supplier)
+      DataView::Presenter::Report.new(:report => :supplier, :dimension => :dodavatel, :level => 1)
     )
     @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
       DataView::Presenter::Report.new(:link => false))
@@ -66,7 +66,7 @@ class ReportsController < ApplicationController
     @obstaravatelia = top_10_obstaravatelia(slice)
     @obstaravatelia_table = DataView::Table.new(@obstaravatelia)
     @obstaravatelia_table.add_cell_presenter({:col => [:org], :row => :all},
-      DataView::Presenter::Report.new(:report => :procurer))
+      DataView::Presenter::Report.new(:report => :procurer, :dimension => :obstaravatel, :level => 1))
     @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
       
     # Typy tovarov
