@@ -2,7 +2,7 @@ module DataView
   module Presenter
     
     # Presents link causing adding a new cut to existing slice.
-    class SliceCut
+    class Report
       
       # Initializes new SliceCut
       # @param [Hash] Options
@@ -11,10 +11,9 @@ module DataView
         @controller = Presenter.controller
         @dimension = options[:dimension]
         @level = options[:level] || 0
-        @base_url = options[:base_url] || nil
         @link = options.has_key?(:link) ? options[:link] : true
-        @link_method = options[:link_method]
         @legend = options.has_key?(:legend) ? options[:legend] : true
+        @report = options[:report]
       end
       
       def present(html_cell, data_cell)
@@ -42,13 +41,18 @@ module DataView
               update_from_param("#{@dimension}:#{path}")
           end
           
-          if @base_url
-            base_url = @base_url
-          elsif @link_method
-            base_url = @controller.send(@link_method, data_cell.value)
+          params = {:cut => current_slicer.to_param}
+          
+          # We want to render particular report template, if chosen so.
+          if @report
+            report_params = {:id => data_cell.value}.merge(params)
+            url = @controller.report_path(@report, report_params)
+          # Otherwise we want to render general report with no template.
+          else
+            url = @controller.reports_path
           end
           
-          a_element[:href] = "#{base_url}?cut=#{current_slicer.to_param}"
+          a_element[:href] = url
         else
           html_cell.new_child(:span, data_cell.formatted_value)
         end
