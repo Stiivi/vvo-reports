@@ -2,6 +2,8 @@
   - @slicer.cuts.each do |dim, path|
     .fl.cut
       %em= "%s:" % dim.label
-      = dim.detail_for_path(path)[:name] || path.join(" ")
+      - level = dim.default_hierarchy.levels[path.count-1]
+      = "(%s)" % level.label
+      = dim.detail_for_path(path)[level.short_description_field.to_sym]
       %a{:href => create_report_path(params.merge(:cut => @slicer.without(dim).to_param))}
         = image_tag "status_remove.png"
