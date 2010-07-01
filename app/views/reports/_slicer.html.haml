@@ -1,7 +1,7 @@
 .status.clearfix
-  - @slicer.cuts.each do |cut|
+  - @slicer.cuts.each do |dim, path|
     .fl.cut
-      %em= cut[0]
-      = cut[1].join(" ")
-      %a{:href => create_report_path(params.merge(:cut => @slicer.without(cut[0]).to_param))}
+      %em= "%s:" % dim.label
+      = dim.detail_for_path(path)[:name] || path.join(" ")
+      %a{:href => create_report_path(params.merge(:cut => @slicer.without(dim).to_param))}
         = image_tag "status_remove.png"

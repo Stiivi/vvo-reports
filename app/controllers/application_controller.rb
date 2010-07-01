@@ -6,9 +6,11 @@ class ApplicationController < ActionController::Base
   
   def create_report_path(opts)
     if opts[:report]
+      opts.merge({:controller => "reports", :action => "show"})
       report_path(opts)
     else
-      reports_path
+      opts.merge({:controller => "reports", :action => "index"})
+      url_for(opts)
     end
     
   end

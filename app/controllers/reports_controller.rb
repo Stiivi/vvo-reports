@@ -89,7 +89,7 @@ class ReportsController < ApplicationController
   
   def find_slice
     # Default slice
-    @slicer = Brewery::CubeSlicer.new
+    @slicer = Brewery::CubeSlicer.new(@cube)
     @slicer.update_from_param("date:2009")
     
     # Update from params
@@ -98,7 +98,7 @@ class ReportsController < ApplicationController
     end
     
     # Create slice
-    @slicer.to_slice(@cube)
+    @slicer.to_slice
   end
   
 end

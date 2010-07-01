@@ -22,7 +22,9 @@ module Brewery
     PATH_SEPARATOR = "-"
     
     # Initializes new empty CubeSlicer.
-    def initialize
+    # @param [Cube] Cube which will be used to create dimensions/slices
+    def initialize(cube)
+      @cube = cube
       @cuts = []
     end
     
@@ -43,8 +45,9 @@ module Brewery
       
       cuts.each do |d|
         dimension, value = d.split(DIMENSION_SEPARATOR)
+        dimension = @cube.dimension_with_name(dimension)
         path = value.split(PATH_SEPARATOR).collect { |v|
-          v == "*" ? nil : v
+          v == "*" ? :all : v
         }
         # Find cut with same dimension
         cut_index = @cuts.find_index { |c| c[0] == dimension }
@@ -76,14 +79,12 @@ module Brewery
     end
     
     # Creates slice from cuts stored in CubeSlicer.
-    # @param [Cube] Cube that will be used to create slices.
     # @return [Slice] Slice with cuts stored in CubeSlicer.
-    def to_slice(cube)
-      slice = cube.whole
-      @cuts.each do |dimension, path|
-        path = path.collect { |s| s == nil ? :all : s }
-        # path = path.collect { |s| s =~ /\d+/ ? s.to_i : s }
-        cut = Cut.point_cut(cube.dimension_object(dimension), path)
+    def to_slice
+      slice = @cube.whole
+      self.cuts.each do |dimension, path|
+        puts "#{dimension.to_s} → #{path.to_s}"
+        cut = Cut.point_cut(dimension, path)
         slice = slice.cut_by(cut)
       end
       slice
@@ -93,13 +94,20 @@ module Brewery
     # @return [String] Parameter to be used in URL.
     def to_param
       @cuts.collect do |dim, val|
+        dim = dim.name
         path = val.collect { |p| 
-          p == nil ? "*" : p
+          p == :all ? "*" : p
         }.collect { |p|
-          URI.escape(p)
+          URI.escape(p.to_s)
         }.join(PATH_SEPARATOR)
         "#{dim}#{DIMENSION_SEPARATOR}#{path}"
       end.join(CUT_SEPARATOR)
+    end
+    
+    def cuts
+      @cuts.collect do |dimension, path|
+        [dimension, path]
+      end
     end
   end
 end
