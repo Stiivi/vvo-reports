@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout 'application'
   
-  helper_method :create_report_path
+  helper_method :create_report_path,
+                :additional_params
   
   def create_report_path(opts)
     if opts[:report]
@@ -12,7 +13,13 @@ class ApplicationController < ActionController::Base
       opts.merge({:controller => "reports", :action => "index"})
       url_for(opts)
     end
-    
+  end
+  
+  def additional_params
+    additional = params.clone
+    additional.delete(:controller)
+    additional.delete(:action)
+    additional
   end
   
   protected
@@ -24,5 +31,7 @@ class ApplicationController < ActionController::Base
     @model = Brewery::Model.model_with_name("verejne_obstaravania")
     @cube = @model.cube_with_name("zmluvy")
   end
+  
+  
   
 end

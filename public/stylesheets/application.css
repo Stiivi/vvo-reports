@@ -3,6 +3,8 @@
 	http://localhost:3000/stylesheets/application.css?1277756348
 	http://localhost:3000/stylesheets/application.css?1277756483
 	http://localhost:3000/stylesheets/application.css?1277759566
+	http://localhost:3000/stylesheets/application.css?1277986270
+	http://localhost:3000/stylesheets/application.css?1277986583
 */
 
 /* @group Typo */
@@ -69,6 +71,10 @@ table.data_table th.suma { width: 90px; }
 
 table.data_table th.podiel { width: 50px; }
 
+table.data_table a.detail { display: block; width: 16px; height: 16px; background: url(../images/table_arrow.png) 0 -16px; }
+
+table.data_table tr:hover a.detail { display: block; width: 16px; height: 16px; background: url(../images/table_arrow.png) 0 0; }
+
 
 
 /* @end */
@@ -99,7 +105,7 @@ table.data_table th.podiel { width: 50px; }
 
 /* @group Status */
 
-.status { margin-left: -22px; padding: 20px; background: #f3f3f3 url(../images/status_background.png) repeat-x; width: 920px; margin-bottom: 15px; color: #898989; font-size: 11px; }
+.status { margin-left: -22px; padding: 20px; background: #f3f3f3 url(../images/status_background.png) repeat-x; width: 920px; margin-bottom: 15px; color: #898989; font-size: 11px; border-bottom: 1px solid #dedede; }
 
 .status em { color: #b3b3b3; font-style: normal; }
 
@@ -116,6 +122,18 @@ table.data_table th.podiel { width: 50px; }
 /* @group Other */
 
 span.color { width: 15px; height: 15px; padding-right: 10px; margin-right: 10px; }
+
+
+
+/* @end */
+
+/* @group Buttons */
+
+a.button { float: left; display: block; padding: 8px; border: 1px solid #cdcdcd; background-image: url(../images/button_regular.png); font-size: 13px; font-weight: bold; color: #727272; text-decoration: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; margin-left: 5px; }
+
+a.button:active { background-image: url(../images/button_active.png); }
+
+a.button.highlighted { background-image: url(../images/button_highligted.png); border: 1px solid #bec8d2; color: #8295a4; }
 
 
 

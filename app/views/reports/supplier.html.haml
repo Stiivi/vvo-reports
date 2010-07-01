@@ -1,7 +1,10 @@
-.header
-  %h1
-    %em Dodávateľ:
-    = @detail[:name]
+.header.clearfix
+  .fl
+    %h1
+      %em Dodávateľ:
+      = @detail[:name]
+  .fr.clearfix
+    = render :partial => "reports/buttons"
 
 = render :partial => "reports/slicer"
 

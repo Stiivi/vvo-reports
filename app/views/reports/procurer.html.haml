@@ -1,7 +1,8 @@
-.header
-  %h1
+.header.clearfix
+  %h1.fl
     %em Obstáravateľ:
     = @detail[:name]
+  .fr= render :partial => "reports/buttons"
     
 = render :partial => "reports/slicer"
 

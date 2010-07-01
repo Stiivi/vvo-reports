@@ -10,32 +10,46 @@ class ReportsController < ApplicationController
   before_filter :initialize_model
 
   def index
-    slice = find_slice
-    load_all_views(slice)
+    redirect_to :action => "show", :id => "all"
+  end
+
+  def show
+    report = params[:id]
+    if report
+      self.send(report)
+      return render :action => report
+    else
+      self.all
+      return render :action => "all"
+    end
   end
   
-  def show
-    self.send(params[:report])
-    render :action => params[:report]
+  def all
+    initialize_slicer
+    load_all_views(@slicer.to_slice)
   end
   
   def supplier
     dimension = @cube.dimension_with_name(:dodavatel)
-    path = [:all, params[:id]]
+    path = [:all, params[:object_id]]
     @detail = dimension.detail_for_path(path)
     
-    slice = find_slice
-    slice = slice.cut_by_point(:dodavatel, path)
+    initialize_slicer
+    @slicer.update_from_param("dodavatel:*-#{params[:object_id]}")
+    slice = @slicer.to_slice
+    
     load_all_views(slice)
   end
   
   def procurer
     dimension = @cube.dimension_with_name(:obstaravatel)
-    path = [:all, params[:id]]
+    path = [:all, params[:object_id]]
     @detail = dimension.detail_for_path(path)
     
-    slice = find_slice
-    slice = slice.cut_by_point(:obstaravatel, path)
+    initialize_slicer
+    @slicer.update_from_param("obstaravatel:*-#{params[:object_id]}")
+    slice = @slicer.to_slice
+    
     load_all_views(slice)
   end
   
@@ -87,8 +101,7 @@ class ReportsController < ApplicationController
     @posledny_rok = posledny_rok(slice)
   end
   
-  def find_slice
-    # Default slice
+  def initialize_slicer
     @slicer = Brewery::CubeSlicer.new(@cube)
     @slicer.update_from_param("date:2009")
     
@@ -96,9 +109,6 @@ class ReportsController < ApplicationController
     if params[:cut]
       @slicer.update_from_param(params[:cut])
     end
-    
-    # Create slice
-    @slicer.to_slice
   end
   
 end

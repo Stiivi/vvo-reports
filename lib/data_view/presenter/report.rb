@@ -51,7 +51,7 @@ module DataView
           if @report
             report_params = {:id => data_cell.value}.merge(params)
             report_params.delete(:cut)
-            url = @controller.create_report_path(report_params.merge(:report => @report))
+            url = @controller.report_path(@report, :object_id => data_cell.value)
           # Otherwise we want to render general report with no template.
           else
             url = @controller.reports_path(params)
@@ -67,9 +67,8 @@ module DataView
         base_url = @controller.request.env['PATH_INFO']
         button = right.new_child(:a, "")
         button.new_child(:img, "", :src => "/images/plus_blue.png")
-        base_params = @controller.params
-        params = base_params.merge({:cut => current_slicer.to_param})
-        button[:href] = @controller.create_report_path(params)
+        report_template = @controller.params[:id] || "all"
+        button[:href] = @controller.report_path(report_template, :cut => current_slicer.to_param, :object_id => @controller.params[:object_id])
       end
     end
   end

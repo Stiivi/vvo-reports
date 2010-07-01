@@ -1,0 +1,21 @@
+.header.clearfix
+  .fl
+    %h1
+      Zoznam zmlúv
+      %em== (#{@facts.count} zmlúv)
+  .fr
+    = render :partial => "reports/buttons"
+
+= render :partial => "reports/slicer"
+
+%table.data_table
+  %tr
+    - @fields.each do |key, label|
+      %th= label
+    %th
+  - @facts.each do |fact|
+    %tr{:class => cycle("even", "odd")}
+      - @fields.each do |key, label|
+        %td= fact[key]
+      %td
+        %a.detail{:href => fact_path(fact[:id], :cut => params[:cut])}
