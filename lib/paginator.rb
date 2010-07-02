@@ -10,4 +10,8 @@ class Paginator
   def total_pages
     @total.to_i / @page_size.to_i
   end
+  
+  def paginate?
+    @total > @page_size
+  end
 end
