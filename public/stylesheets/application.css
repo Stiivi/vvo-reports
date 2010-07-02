@@ -59,6 +59,10 @@ table.data_table { border: 1px solid #e1e5e8; -webkit-border-radius: 3px; -moz-b
 
 table.data_table th { background-color: #81a3ca; padding: 7px 12px; font-size: 12px; color: #fff; text-shadow: #6782a2 0 1px 0; }
 
+table.data_table th a { font-size: 12px; color: #fff; text-shadow: #6782a2 0 1px 0; text-decoration: none; }
+
+table.data_table th a:hover { text-decoration: underline; }
+
 table.data_table th:first-child { -webkit-border-top-left-radius: 3px; -moz-border-radius-topleft: 3px; }
 
 table.data_table th:last-child { -webkit-border-top-right-radius: 3px; -moz-border-radius-topright: 3px; }
@@ -136,5 +140,23 @@ a.button:active { background-image: url(../images/button_active.png); }
 a.button.highlighted { background-image: url(../images/button_highligted.png); border: 1px solid #bec8d2; color: #8295a4; }
 
 
+
+/* @end */
+
+
+
+
+
+/* @group Pagination */
+
+ul.pagination { padding: 0px; list-style-type: none; }
+
+ul.pagination li { float: left; border: 1px solid #ddd; padding: 3px 6px; margin-right: 5px; }
+
+ul.pagination li.active { background-color: #4d4d4d; }
+
+ul.pagination li.active a { color: #fff; }
+
+ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
 
 /* @end */

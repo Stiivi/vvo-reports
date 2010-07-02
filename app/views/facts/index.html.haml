@@ -2,7 +2,7 @@
   .fl
     %h1
       Zoznam zmlúv
-      %em== (#{@facts.count} zmlúv)
+      %em== (#{@paginator.total} zmlúv)
   .fr
     = render :partial => "reports/buttons"
 
@@ -11,7 +11,8 @@
 %table.data_table
   %tr
     - @fields.each do |key, label|
-      %th= label
+      %th
+        %a{:href => "#sort"}= label
     %th
   - @facts.each do |fact|
     %tr{:class => cycle("even", "odd")}
@@ -19,3 +20,16 @@
         %td= fact[key]
       %td
         %a.detail{:href => fact_path(fact[:id], :cut => params[:cut])}
+        
+.clearfix
+  %ul.pagination.clearfix.fl
+    - unless @paginator.page == 1
+      %li= link_to "Prvá", update_params(:page => 1)
+    - unless @paginator.page == 1
+      %li= link_to "‹ Predchádzajúca", update_params(:page => @paginator.page-1)
+    - unless @paginator.page >= @paginator.total_pages
+      %li= link_to "Ďalšia ›", update_params(:page => @paginator.page+1)
+    - unless @page == @paginator.total_pages
+      %li= link_to "Posledná", update_params(:page => @paginator.total_pages)
+  .fr
+    == Stránka #{@paginator.page}/#{@paginator.total_pages}

@@ -8,4 +8,11 @@ module ApplicationHelper
 
       return link
   end
+  
+  def update_params(with)
+    params.delete(:controller)
+    params.delete(:action)
+    params.merge(with)
+  end
+  
 end
