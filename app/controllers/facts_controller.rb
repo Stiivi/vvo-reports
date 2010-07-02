@@ -26,7 +26,7 @@ class FactsController < ApplicationController
     slice = @slicer.to_slice
     total = slice.aggregate(:zmluva_hodnota).summary[:record_count]
     
-    @paginator = Paginator.new(:page => params[:page].to_i, :page_size => 20, :total => total)
+    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => total)
     @facts = slice.facts(:page => @paginator.page-1, :page_size => @paginator.page_size)
   end
 
