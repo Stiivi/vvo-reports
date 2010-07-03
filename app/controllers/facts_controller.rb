@@ -15,6 +15,8 @@ class FactsController < ApplicationController
     :"obstaravatel.name" => "Obstarávateľ",
     # druh_postupu: "Druh postupu"
   }
+  DEFAULT_SORT_FIELD = "vestnik_cislo"
+  DEFAULT_SORT_DIRECTION = "asc"
 
   def index
     @slicer = Brewery::CubeSlicer.new(@cube)
@@ -30,6 +32,9 @@ class FactsController < ApplicationController
     if params[:sort]
       sort_field = params[:sort]
       sort_direction = params[:dir]
+    else
+      sort_field = DEFAULT_SORT_FIELD
+      sort_direction = DEFAULT_SORT_DIRECTION
     end
     @facts = slice.facts(:page => @paginator.page-1,
                          :page_size => @paginator.page_size, 

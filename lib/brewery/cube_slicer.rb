@@ -41,6 +41,7 @@ module Brewery
     # Adds cuts from param.
     # @param [String] string to parse
     def update_from_param(param_string)
+      param_string = URI.unescape(param_string)
       cuts = param_string.split(CUT_SEPARATOR)
       
       cuts.each do |d|
@@ -83,7 +84,7 @@ module Brewery
     def to_slice
       slice = @cube.whole
       self.cuts.each do |dimension, path|
-        puts "#{dimension.to_s} → #{path.to_s}"
+        # puts "#{dimension.to_s} → #{path.to_s}"
         cut = Cut.point_cut(dimension, path)
         slice = slice.cut_by(cut)
       end
