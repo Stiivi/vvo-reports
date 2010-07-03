@@ -10,16 +10,16 @@ module Brewery
     
     describe ".facts" do
       it "should order facts ascending" do
-        facts = @slice.facts(:page => 1, :page_size => 5, :order_by => "vestnik_cislo", :order_direction => "asc")
+        facts = @slice.facts(:page => 1, :page_size => 5, :order_by => "id", :order_direction => "asc")
         facts = facts.to_a
-        sorted_facts = facts.sort_by { |f| f[:vestnik_cislo] }
+        sorted_facts = facts.sort_by { |f| f[:id] }
         facts.should == sorted_facts
       end
       
       it "should order facts descending" do
-        facts = @slice.facts(:page => 1, :page_size => 5, :order_by => "vestnik_cislo", :order_direction => "desc")
+        facts = @slice.facts(:page => 1, :page_size => 5, :order_by => "id", :order_direction => "desc")
         facts = facts.to_a
-        sorted_facts = facts.sort_by { |f| f[:vestnik_cislo] }.reverse
+        sorted_facts = facts.sort_by { |f| f[:id] }.reverse
         facts.should == sorted_facts
       end
       
