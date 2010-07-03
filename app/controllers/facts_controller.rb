@@ -15,6 +15,8 @@ class FactsController < ApplicationController
     :"obstaravatel.name" => "Obstarávateľ",
     # druh_postupu: "Druh postupu"
   }
+  DEFAULT_SORT_FIELD = "vestnik_cislo"
+  DEFAULT_SORT_DIRECTION = "asc"
 
   DEFAULT_SORT_FIELD = "zmluva_hodnota"
   DEFAULT_SORT_DIRECTION = "desc"
