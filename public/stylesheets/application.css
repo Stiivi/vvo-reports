@@ -5,6 +5,10 @@
 	http://localhost:3000/stylesheets/application.css?1277759566
 	http://localhost:3000/stylesheets/application.css?1277986270
 	http://localhost:3000/stylesheets/application.css?1277986583
+	http://localhost:3000/stylesheets/application.css?1278086133
+	http://localhost:3000/stylesheets/application.css?1278174497
+	http://localhost:3000/stylesheets/application.css?1278174622
+	http://localhost:3000/stylesheets/application.css?1278174664
 */
 
 /* @group Typo */
@@ -78,6 +82,18 @@ table.data_table th.podiel { width: 50px; }
 table.data_table a.detail { display: block; width: 16px; height: 16px; background: url(../images/table_arrow.png) 0 -16px; }
 
 table.data_table tr:hover a.detail { display: block; width: 16px; height: 16px; background: url(../images/table_arrow.png) 0 0; }
+
+/* @group Sorting */
+
+table.data_table th a.sort { display: block; }
+
+table.data_table a.sort.asc { padding-right: 10px; background: url(../images/sort_asc.png) no-repeat right center; }
+
+table.data_table a.sort.desc { padding-right: 10px; background: url(../images/sort_desc.png) no-repeat right center; }
+
+
+
+/* @end */
 
 
 

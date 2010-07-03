@@ -13,7 +13,7 @@ class FactsController < ApplicationController
     :"cpv.cpv_code" => "Kategória",
     :"dodavatel.name" => "Dodávateľ",
     :"obstaravatel.name" => "Obstarávateľ",
-    druh_postupu: "Druh postupu"
+    # druh_postupu: "Druh postupu"
   }
 
   def index
@@ -27,7 +27,10 @@ class FactsController < ApplicationController
     total = slice.aggregate(:zmluva_hodnota).summary[:record_count]
     
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => total)
-    @facts = slice.facts(:page => @paginator.page-1, :page_size => @paginator.page_size)
+    if params[:sort]
+      sort = "%s %s" % [params[:sort], params[:dir]||"asc"]
+    end
+    @facts = slice.facts(:page => @paginator.page-1, :page_size => @paginator.page_size, :order => sort)
   end
 
   def show

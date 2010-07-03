@@ -8,12 +8,16 @@ class ReportsController < ApplicationController
   include Reports
   
   before_filter :initialize_model
+  
+  # The only two methods Rails need. Will find and display
+  # report.
 
   def index
     redirect_to :action => "show", :id => "all"
   end
 
   def show
+    # Report template name. 
     report = params[:id]
     if report
       self.send(report)
@@ -23,6 +27,12 @@ class ReportsController < ApplicationController
       return render :action => "all"
     end
   end
+  
+  # These are private now. We don't want Rails to think of these
+  # as actions. They are not. These are methods to display reports
+  # user asked for.
+  
+  protected
   
   def all
     initialize_slicer
@@ -52,6 +62,10 @@ class ReportsController < ApplicationController
     
     load_all_views(slice)
   end
+  
+  # One very special methods. For now, it's shared across all report
+  # methods. It will load all fundamental data and turn 'em into table
+  # or graph views.
   
   def load_all_views(slice)
     # Aggregated values

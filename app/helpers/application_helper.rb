@@ -14,5 +14,21 @@ module ApplicationHelper
     params.delete(:action)
     params.merge(with)
   end
-  
+
+  def sort_link(text, column, direction = :asc)
+     current_direction = params[:dir] ? params[:dir].to_sym : :asc
+     if params[:sort] == column.to_s
+       if current_direction == :asc
+         html_class = "sort asc"
+       else
+         html_class = "sort desc"
+       end
+     end
+     if params[:sort] == column.to_s && params[:dir]
+       new_direction = (current_direction == :asc ? :desc : :asc)
+     else
+       new_direction = direction
+     end
+     link_to text, update_params(:sort => column.to_s, :dir => new_direction), :class => html_class
+   end
 end

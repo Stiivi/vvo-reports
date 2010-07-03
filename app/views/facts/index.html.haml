@@ -12,7 +12,7 @@
   %tr
     - @fields.each do |key, label|
       %th
-        %a{:href => "#sort"}= label
+        = sort_link label, key
     %th
   - @facts.each do |fact|
     %tr{:class => cycle("even", "odd")}
