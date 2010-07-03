@@ -28,9 +28,13 @@ class FactsController < ApplicationController
     
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => total)
     if params[:sort]
-      sort = "%s %s" % [params[:sort], params[:dir]||"asc"]
+      sort_field = params[:sort]
+      sort_direction = params[:dir]
     end
-    @facts = slice.facts(:page => @paginator.page-1, :page_size => @paginator.page_size, :order => sort)
+    @facts = slice.facts(:page => @paginator.page-1,
+                         :page_size => @paginator.page_size, 
+                         :order_by => sort_field, 
+                         :order_direction => sort_direction)
   end
 
   def show
