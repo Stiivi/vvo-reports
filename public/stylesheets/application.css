@@ -1,15 +1,4 @@
-/* @override 
-	http://localhost:3000/stylesheets/application.css?1277735010
-	http://localhost:3000/stylesheets/application.css?1277756348
-	http://localhost:3000/stylesheets/application.css?1277756483
-	http://localhost:3000/stylesheets/application.css?1277759566
-	http://localhost:3000/stylesheets/application.css?1277986270
-	http://localhost:3000/stylesheets/application.css?1277986583
-	http://localhost:3000/stylesheets/application.css?1278086133
-	http://localhost:3000/stylesheets/application.css?1278174497
-	http://localhost:3000/stylesheets/application.css?1278174622
-	http://localhost:3000/stylesheets/application.css?1278174664
-*/
+/* @override http://localhost:3000/stylesheets/application.css?1 */
 
 /* @group Typo */
 
@@ -75,13 +64,17 @@ table.data_table td { padding: 7px 12px; }
 
 /* Particular columns */
 
-table.data_table th.suma { width: 90px; }
-
-table.data_table th.podiel { width: 50px; }
-
 table.data_table a.detail { display: block; width: 16px; height: 16px; background: url(../images/table_arrow.png) 0 -16px; }
 
 table.data_table tr:hover a.detail { display: block; width: 16px; height: 16px; background: url(../images/table_arrow.png) 0 0; }
+
+table.data_table tr td .stripped { display: inline; }
+
+table.data_table tr td .full { display: none; }
+
+table.data_table tr:hover td .stripped { display: none; }
+
+table.data_table tr:hover td .full { display: inline; }
 
 /* @group Sorting */
 
@@ -125,13 +118,15 @@ table.data_table a.sort.desc { padding-right: 10px; background: url(../images/so
 
 /* @group Status */
 
-.status { margin-left: -22px; padding: 20px; background: #f3f3f3 url(../images/status_background.png) repeat-x; width: 920px; margin-bottom: 15px; color: #898989; font-size: 11px; border-bottom: 1px solid #dedede; }
+.status { margin-left: -22px; padding: 20px; background: #f3f3f3 url(../images/status_background.png) repeat-x; width: 920px; margin-bottom: 15px; color: #fff; font-size: 11px; border-bottom: 1px solid #dedede; text-transform: none; }
 
 .status em { color: #b3b3b3; font-style: normal; }
 
-.status .cut { margin-right: 20px; }
+.status .cut { margin-right: 10px; background-color: #4b4b4b; -webkit-border-radius: 15px; -moz-border-radius: 15px; padding: 3px 6px 5px 12px; margin-bottom: 3px; }
 
 .status .dimension { margin-right: 5px; }
+
+.status a { margin-left: 5px; }
 
 .status a img { position: relative; top: 2px; }
 
@@ -174,5 +169,21 @@ ul.pagination li.active { background-color: #4d4d4d; }
 ul.pagination li.active a { color: #fff; }
 
 ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
+
+/* @end */
+
+/* @group VVO Specific */
+
+table.data_table th.suma { width: 100px; }
+
+table.data_table th.podiel { width: 50px; }
+
+table.data_table td.suma { text-align: right;}
+
+table.data_table td.podiel { text-align: right; }
+
+table.data_table th.firma { width: 240px; }
+
+table.data_table td.firma .fl, table.data_table td.org .fl { width: 205px; }
 
 /* @end */

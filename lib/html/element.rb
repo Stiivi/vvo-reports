@@ -2,7 +2,7 @@
 
 module Html
   class Element
-    attr_accessor :text
+    attr_accessor :text, :parent
     
     def initialize(type, text = "", options = {})
       @type = type
@@ -32,12 +32,23 @@ module Html
     
     def new_child(type, text = "", options = {})
       child = Element.new(type, text, options)
-      @children << child
+      self.append(child)
       child
     end
     
     def []= (option, value)
       @options[option] = value
+    end
+    
+    def append(child)
+      child.parent = self
+      @children << child
+    end
+    
+    def clone
+      copy = Marshal.load(Marshal.dump(self))
+      self.parent.append(copy) if self.parent
+      copy
     end
   end
 end

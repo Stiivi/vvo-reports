@@ -1,6 +1,8 @@
 module DataView
   module Presenter
     
+    TRUNCATED_LENGTH = 29
+    
     # Presents link causing adding a new cut to existing slice.
     class Report
       
@@ -58,9 +60,15 @@ module DataView
           end
           
           a_element[:href] = url
+          data_element = a_element
         else
-          left.new_child(:span, data_cell.formatted_value)
+          data_element = left.new_child(:span, data_cell.formatted_value)
         end
+        
+        stripped_data_element = data_element.clone
+        data_element[:class] = "full"
+        stripped_data_element[:class] = "stripped"
+        truncate_text_in(stripped_data_element)
         
         # Now we need to add special (+) button to add this cut to current
         # slice.
@@ -69,6 +77,12 @@ module DataView
         button.new_child(:img, "", :src => "/images/plus_blue.png")
         report_template = @controller.params[:id] || "all"
         button[:href] = @controller.report_path(report_template, :cut => current_slicer.to_param, :object_id => @controller.params[:object_id])
+      end
+      
+      def truncate_text_in(element)
+        if element.text.length > TRUNCATED_LENGTH
+          element.text = element.text[0, TRUNCATED_LENGTH] + " &hellip;"
+        end
       end
     end
   end
