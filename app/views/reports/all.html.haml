@@ -18,12 +18,12 @@
   .left_column.clearfix
     %h2.fl Dodávatelia
     .clearfix.fr
-      = link_to "Zobraziť všetko", dump_path("supplier", :cut => @slicer.to_param), :class => "button blue"
+      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button blue"
     = @dodavatelia_table.as_html
   .right_column.clearfix
     %h2.fl Obstáravatelia
     .clearfix.fr
-      = link_to "Zobraziť všetko", dump_path("procurer", :cut => @slicer.to_param), :class => "button blue"
+      = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button blue"
     = @obstaravatelia_table.as_html
 
 .clearfix
@@ -39,7 +39,7 @@
   .left_column.clearfix
     %h2.fl Typy tovarov
     .clearfix.fr
-      = link_to "Zobraziť všetko", dump_path("cpv", :cut => @slicer.to_param), :class => "button blue"
+      = link_to "Zobraziť všetko", list_path("cpv", :cut => @slicer.to_param), :class => "button blue"
     = @typy_tovarov_table.as_html
   .right_column
     %h2 Typy tovarov (graf)
@@ -52,7 +52,7 @@
   .left_column.clearfix
     %h2.fl Druhy postupov
     .clearfix.fr
-      = link_to "Zobraziť všetko", dump_path("method", :cut => @slicer.to_param), :class => "button blue"
+      = link_to "Zobraziť všetko", list_path("method", :cut => @slicer.to_param), :class => "button blue"
     = @druhy_postupov_table.as_html
   .right_column
     %h2 Druhy postupov (graf)
