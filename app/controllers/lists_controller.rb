@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class ListsController < ApplicationController
   before_filter :initialize_model
   
@@ -15,10 +17,17 @@ class ListsController < ApplicationController
     initialize_slicer
     slice = @slicer.to_slice
     add_shared_field(slice)
-    @result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :dodavatel, 
+    result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :dodavatel, 
   		                        :row_levels => [:organisation],
   		                        :page_size => 50,
   		                        :page => 1 })
+    @table = Brewery::DataTable.new
+    @table.add_column(:text, "Firma", :firma)
+    @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
+    @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
+    result.rows.each { |row|
+        @table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
+    }
   end
   
   protected
