@@ -150,6 +150,8 @@ a.button:active { background-image: url(../images/button_active.png); }
 
 a.button.highlighted { background-image: url(../images/button_highligted.png); border: 1px solid #bec8d2; color: #8295a4; }
 
+a.button.blue { background-image: url(../images/button_blue.png); display: block; border: 1px solid #88a8cd; color: #6286b0; font-size: 11px; text-transform: uppercase; font-weight: bold; padding: 5px 8px; text-shadow: #c6d2df 0 1px 0; }
+
 
 
 /* @end */
