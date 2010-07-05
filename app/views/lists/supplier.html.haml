@@ -1,0 +1,12 @@
+%table.data_table
+  %tr
+    %th Nazov
+    %th Suma
+    %th Podiel
+  - @result.rows.each do |row|
+    %tr
+      %td
+        = link_to row[:name], report_path("supplier", :object_id => row[:ico])
+      %td= row[:sum]
+      %td= row[:podiel]
+      

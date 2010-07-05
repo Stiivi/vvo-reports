@@ -7,7 +7,7 @@
 
 Vvo::Application.routes.draw do |map|
   resources :reports
-  resources :dumps
+  resources :lists
   resources :facts
   
   # Root path
