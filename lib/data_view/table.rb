@@ -34,7 +34,8 @@ module DataView
         row_element = table.new_child(:tr, "", :class => html_class)
         @data.rows[row].each_index do |col|
           cell_element = row_element.new_child(:td,
-                         @data.formatted_value_at(row, col))
+                           @data.formatted_value_at(row, col),
+                           :class => @data.columns[col].identifier)
           if presenter = presenter_at(row, col)
             presenter.present(cell_element, @data.rows[row][col])
           end
