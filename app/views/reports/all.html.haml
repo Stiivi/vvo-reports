@@ -52,7 +52,7 @@
   .left_column.clearfix
     %h2.fl Druhy postupov
     .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("method", :cut => @slicer.to_param), :class => "button blue"
+      = link_to "Zobraziť všetko", list_path("postup", :cut => @slicer.to_param), :class => "button blue"
     = @druhy_postupov_table.as_html
   .right_column
     %h2 Druhy postupov (graf)
