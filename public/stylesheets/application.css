@@ -70,7 +70,7 @@ table.data_table tr:hover a.detail { display: block; width: 16px; height: 16px; 
 
 table.data_table tr td .stripped { display: inline; }
 
-table.data_table tr td .full { display: none; }
+table.data_table tr td .full { display: none; position: absolute; width: 185px; background: #fff; padding-bottom: 3px; }
 
 table.data_table tr:hover td .stripped { display: none; }
 
