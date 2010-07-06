@@ -23,6 +23,7 @@ class ReportsController < ApplicationController
       return redirect_to report_path("all", :cut => params[:cut])
     end
     if report
+      @report_type = report
       self.send(report)
       return render :action => report
     else
@@ -105,13 +106,20 @@ class ReportsController < ApplicationController
     
     DataView::Presenter.controller = self
     DataView::Presenter.slicer = @slicer
+
+    # Default presenter options for all tables
+    presenter_opts = if @report_type == "all"
+      {:link => :report}
+    else
+      {:link => :cut}
+    end
     
     # Dodavatelia
     @dodavatelia = top_10_dodavatelia(slice)
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
     @dodavatelia_table.add_cell_presenter(
       {:col => [:firma], :row => :all},
-      DataView::Presenter::Report.new(:report => :supplier, :dimension => :dodavatel, :level => 1)
+      DataView::Presenter::Report.new({:report => :supplier, :dimension => :dodavatel, :level => 1}.merge(presenter_opts))
     )
     @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
       DataView::Presenter::Report.new(:link => false))
@@ -121,7 +129,7 @@ class ReportsController < ApplicationController
     @obstaravatelia = top_10_obstaravatelia(slice)
     @obstaravatelia_table = DataView::Table.new(@obstaravatelia)
     @obstaravatelia_table.add_cell_presenter({:col => [:org], :row => :all},
-      DataView::Presenter::Report.new(:report => :procurer, :dimension => :obstaravatel, :level => 1))
+      DataView::Presenter::Report.new({:report => :procurer, :dimension => :obstaravatel, :level => 1, :link => :report}.merge(presenter_opts)))
     @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
       
     # Typy tovarov
@@ -129,14 +137,14 @@ class ReportsController < ApplicationController
     @typy_tovarov_table = DataView::Table.new(@typy_tovarov)
     @typy_tovarov_table.add_cell_presenter(
       {:col => [:cpv_division_desc], :row => :all},
-      DataView::Presenter::Report.new(:dimension => :cpv, :report => :cpv))
+      DataView::Presenter::Report.new({:dimension => :cpv, :report => :cpv}.merge(presenter_opts)))
     
     # Druhy postupov
     @druhy_postupov = druh_postupu(slice)
     @druhy_postupov_table = DataView::Table.new(@druhy_postupov)
     @druhy_postupov_table.add_cell_presenter(
       {:col => [:druh_postupu], :row => :all},
-      DataView::Presenter::Report.new(:dimension => :druh_postupu, :report => :postup))
+      DataView::Presenter::Report.new({:dimension => :druh_postupu, :report => :postup}.merge(presenter_opts)))
     @druhy_postupov_chart = DataView::PieChart.new(@druhy_postupov, {:labels => 0, :series => 1})
       
     @posledny_rok = posledny_rok(slice)

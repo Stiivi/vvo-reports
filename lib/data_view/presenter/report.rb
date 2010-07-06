@@ -13,7 +13,7 @@ module DataView
         @controller = Presenter.controller
         @dimension = options[:dimension]
         @level = options[:level] || 0
-        @link = options.has_key?(:link) ? options[:link] : true
+        @link = options[:link]
         @legend = options.has_key?(:legend) ? options[:legend] : true
         @report = options[:report]
       end
@@ -34,29 +34,25 @@ module DataView
           # [Hack - to be solved in some other way] Deep clones current slice.
           current_slicer = Marshal.load(Marshal.dump(@slicer))
           
-          params = {}
-          
-          if @dimension
-            if @level == 0
-              path = data_cell.value
+          # If we want link to report
+          if @link == :report && @report
+            url = @controller.report_path(@report, :object_id => data_cell.value)
+          elsif @link == :cut && @dimension
+            path = if @level == 0
+              data_cell.value
             else
-              path = (["*"]*@level + [data_cell.value]).join("-")
+              (["*"]*@level + [data_cell.value]).join("-")
             end
             
             current_slicer.
               update_from_param("#{@dimension}:#{path}")
               
+            params = @controller.params
             params[:cut] = current_slicer.to_param
-          end
-
-          # We want to render particular report template, if chosen so.
-          if @report
-            report_params = {:id => data_cell.value}.merge(params)
-            report_params.delete(:cut)
-            url = @controller.report_path(@report, :object_id => data_cell.value)
-          # Otherwise we want to render general report with no template.
+              
+            url = @controller.url_for(params)
           else
-            url = @controller.reports_path(params)
+            raise ArgumentError, "Cannot link to #{@link}."
           end
           
           a_element[:href] = url
@@ -72,11 +68,11 @@ module DataView
         
         # Now we need to add special (+) button to add this cut to current
         # slice.
-        base_url = @controller.request.env['PATH_INFO']
-        button = right.new_child(:a, "")
-        button.new_child(:img, "", :src => "/images/plus_blue.png")
-        report_template = @controller.params[:id] || "all"
-        button[:href] = @controller.report_path(report_template, :cut => current_slicer.to_param, :object_id => @controller.params[:object_id])
+        # base_url = @controller.request.env['PATH_INFO']
+        #         button = right.new_child(:a, "")
+        #         button.new_child(:img, "", :src => "/images/plus_blue.png")
+        #         report_template = @controller.params[:id] || "all"
+        #         button[:href] = @controller.report_path(report_template, :cut => current_slicer.to_param, :object_id => @controller.params[:object_id])
       end
       
       def truncate_text_in(element)
