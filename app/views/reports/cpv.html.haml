@@ -1,0 +1,53 @@
+.header.clearfix
+  %h1.fl
+    %em CPV:
+    = @detail[:cpv_division_desc]
+  .fr= render :partial => "reports/buttons"
+    
+= render :partial => "reports/slicer"
+
+.details
+  %dl.clearfix
+    %dt Hodnota zmlúv
+    %dd= number_to_currency(@hodnota_zmluv)
+  %dl.clearfix
+    %dt Počet zmlúv
+    %dd= @pocet_zmluv
+
+.clearfix
+  .left_column.clearfix
+    %h2.fl Dodávatelia
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button blue"
+    = @dodavatelia_table.as_html
+  .right_column.clearfix
+    %h2.fl Obstáravatelia
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button blue"
+    = @obstaravatelia_table.as_html
+
+.clearfix
+  .left_column
+    = @dodavatelia_chart.as_html
+  .right_column
+    = @obstaravatelia_chart.as_html
+
+%br
+%br
+
+.clearfix
+  .left_column.clearfix
+    %h2.fl Druhy postupov
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("postup", :cut => @slicer.to_param), :class => "button blue"
+    = @druhy_postupov_table.as_html
+  .right_column
+    %h2 Druhy postupov (graf)
+    = @druhy_postupov_chart.as_html
+    
+%br
+%br
+
+%h2 Vývoj v priebehu roka 
+
+= DataView::BarChart.new(@posledny_rok, {:labels => 0, :series => 1}).as_html

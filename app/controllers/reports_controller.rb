@@ -66,6 +66,30 @@ class ReportsController < ApplicationController
     load_all_views(slice)
   end
   
+  def cpv
+    dimension = @cube.dimension_with_name(:cpv)
+    path = [params[:object_id]]
+    @detail = dimension.detail_for_path(path)
+    
+    initialize_slicer
+    @slicer.update_from_param("cpv:#{params[:object_id]}")
+    slice = @slicer.to_slice
+    
+    load_all_views(slice)
+  end
+  
+  def postup
+    dimension = @cube.dimension_with_name(:druh_postupu)
+    path = [params[:object_id]]
+    @detail = dimension.detail_for_path(path)
+    
+    initialize_slicer
+    @slicer.update_from_param("druh_postupu:#{params[:object_id]}")
+    slice = @slicer.to_slice
+    
+    load_all_views(slice)
+  end
+  
   # One very special methods. For now, it's shared across all report
   # methods. It will load all fundamental data and turn 'em into table
   # or graph views.
@@ -105,14 +129,14 @@ class ReportsController < ApplicationController
     @typy_tovarov_table = DataView::Table.new(@typy_tovarov)
     @typy_tovarov_table.add_cell_presenter(
       {:col => [:cpv_division_desc], :row => :all},
-      DataView::Presenter::Report.new(:dimension => :cpv))
+      DataView::Presenter::Report.new(:dimension => :cpv, :report => :cpv))
     
     # Druhy postupov
     @druhy_postupov = druh_postupu(slice)
     @druhy_postupov_table = DataView::Table.new(@druhy_postupov)
     @druhy_postupov_table.add_cell_presenter(
       {:col => [:druh_postupu], :row => :all},
-      DataView::Presenter::Report.new(:dimension => :druh_postupu))
+      DataView::Presenter::Report.new(:dimension => :druh_postupu, :report => :postup))
     @druhy_postupov_chart = DataView::PieChart.new(@druhy_postupov, {:labels => 0, :series => 1})
       
     @posledny_rok = posledny_rok(slice)

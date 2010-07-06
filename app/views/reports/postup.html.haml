@@ -1,0 +1,54 @@
+.header.clearfix
+  %h1.fl
+    %em Druh postupu:
+    = @detail[:druh_postupu]
+  .fr= render :partial => "reports/buttons"
+    
+= render :partial => "reports/slicer"
+
+.details
+  %dl.clearfix
+    %dt Hodnota zmlúv
+    %dd= number_to_currency(@hodnota_zmluv)
+  %dl.clearfix
+    %dt Počet zmlúv
+    %dd= @pocet_zmluv
+
+.clearfix
+  .left_column.clearfix
+    %h2.fl Dodávatelia
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button blue"
+    = @dodavatelia_table.as_html
+  .right_column.clearfix
+    %h2.fl Obstáravatelia
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button blue"
+    = @obstaravatelia_table.as_html
+
+.clearfix
+  .left_column
+    = @dodavatelia_chart.as_html
+  .right_column
+    = @obstaravatelia_chart.as_html
+
+%br
+%br
+
+.clearfix
+  .left_column.clearfix
+    %h2.fl Typy tovarov
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("cpv", :cut => @slicer.to_param), :class => "button blue"
+    = @typy_tovarov_table.as_html
+  .right_column
+    %h2 Typy tovarov (graf)
+    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
+
+    
+%br
+%br
+
+%h2 Vývoj v priebehu roka 
+
+= DataView::BarChart.new(@posledny_rok, {:labels => 0, :series => 1}).as_html
