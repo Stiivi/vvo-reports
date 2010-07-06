@@ -19,6 +19,9 @@ class ReportsController < ApplicationController
   def show
     # Report template name. 
     report = params[:id]
+    if report && report!="all" && !params[:object_id]
+      return redirect_to report_path("all", :cut => params[:cut])
+    end
     if report
       self.send(report)
       return render :action => report
