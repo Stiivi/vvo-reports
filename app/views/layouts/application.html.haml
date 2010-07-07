@@ -12,13 +12,13 @@
     #header.clearfix
       %a.header.fl{:href => '/'}
       %ul.fr.links
-        = link_to "O projekte", "#", :class => "light"
+        = link_to "O projekte", page_path("o-projekte"), :class => "light"
         |
-        = link_to "Právne informácie", "#", :class => "light"
+        = link_to "Právne informácie", page_path("pravne-informacie"), :class => "light"
         |
-        = link_to "Mapa stránky", "#", :class => "light"
+        = link_to "Mapa stránky", page_path("mapa-stranky"), :class => "light"
         |
-        = link_to "Kontakt", "#", :class => "light"
+        = link_to "Kontakt", page_path("kontakt"), :class => "light"
     #container
       #navigation
       #content
