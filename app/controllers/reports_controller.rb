@@ -17,12 +17,22 @@ class ReportsController < ApplicationController
   end
 
   def show
+    # Slicer with cuts from param
+    @slicer = Brewery::CubeSlicer.new(@cube)
+    @slicer.update_from_param("date:2009")
+    
+    # Update from params
+    if params[:cut]
+      @slicer.update_from_param(params[:cut])
+    end    
+    
     # Report template name. 
     report = params[:id]
-    if report && report!="all" && !params[:object_id]
-      return redirect_to report_path("all", :cut => params[:cut])
-    end
     if report
+      # Redirect to "all" template
+      if report!="all" && !report_in_slice?(report, @slicer)
+        return redirect_to report_path("all", :cut => params[:cut])
+      end
       @report_type = report
       self.send(report)
       return render :action => report
@@ -39,57 +49,34 @@ class ReportsController < ApplicationController
   protected
   
   def all
-    initialize_slicer
     load_all_views(@slicer.to_slice)
   end
   
   def supplier
-    dimension = @cube.dimension_with_name(:dodavatel)
-    path = [:all, params[:object_id]]
-    @detail = dimension.detail_for_path(path)
-    
-    initialize_slicer
-    @slicer.update_from_param("dodavatel:*-#{params[:object_id]}")
+    @detail = @slicer.detail_for_dimension(:dodavatel)
     slice = @slicer.to_slice
-    
     load_all_views(slice)
   end
   
   def procurer
-    dimension = @cube.dimension_with_name(:obstaravatel)
-    path = [:all, params[:object_id]]
-    @detail = dimension.detail_for_path(path)
-    
-    initialize_slicer
-    @slicer.update_from_param("obstaravatel:*-#{params[:object_id]}")
+    @detail = @slicer.detail_for_dimension(:obstaravatel)
     slice = @slicer.to_slice
-    
     load_all_views(slice)
   end
   
   def cpv
-    dimension = @cube.dimension_with_name(:cpv)
-    path = [params[:object_id]]
-    @detail = dimension.detail_for_path(path)
-    
-    initialize_slicer
-    @slicer.update_from_param("cpv:#{params[:object_id]}")
+    @detail = @slicer.detail_for_dimension(:cpv)
     slice = @slicer.to_slice
-    
     load_all_views(slice)
   end
   
   def postup
-    dimension = @cube.dimension_with_name(:druh_postupu)
-    path = [params[:object_id]]
-    @detail = dimension.detail_for_path(path)
-    
-    initialize_slicer
-    @slicer.update_from_param("druh_postupu:#{params[:object_id]}")
+    @detail = @slicer.detail_for_dimension(:druh_postupu)
     slice = @slicer.to_slice
-    
     load_all_views(slice)
   end
+  
+  protected
   
   # One very special methods. For now, it's shared across all report
   # methods. It will load all fundamental data and turn 'em into table
@@ -150,14 +137,28 @@ class ReportsController < ApplicationController
     @posledny_rok = posledny_rok(slice)
   end
   
-  def initialize_slicer
-    @slicer = Brewery::CubeSlicer.new(@cube)
-    @slicer.update_from_param("date:2009")
+  def report_in_slice?(report, slicer)
+    # report: supplier
+    # slicer: #<Brewery::CubeSlicer:0x00000103b326b8 @cube=#<Brewery::Cube @id=1 @name="zmluvy" @label="UzatvorenÃ© zmluvy verejnÃ©ho obstarÃ¡vania" @description=<not loaded> @fact_table="ft_vvo_zmluvy">, @cuts=[[#<Brewery::Dimension @id=2 @name="date" @label="DÃ¡tum" @description=<not loaded> @key_field="id" @table="dm_date" @default_hierarchy_name=nil>, ["2009"]], [#<Brewery::Dimension @id=3 @name="dodavatel" @label="DodÃ¡vateÄ¾" @description=<not loaded> @key_field="id" @table="dm_supplier" @default_hierarchy_name=nil>, [:all, "36862631"]]]>
+    # slicer.cuts: [[#<Brewery::Dimension @id=2 @name="date" @label="DÃ¡tum" @description=<not loaded> @key_field="id" @table="dm_date" @default_hierarchy_name=nil>, ["2009"]], [#<Brewery::Dimension @id=3 @name="dodavatel" @label="DodÃ¡vateÄ¾" @description=<not loaded> @key_field="id" @table="dm_supplier" @default_hierarchy_name=nil>, [:all, "36862631"]]]
     
-    # Update from params
-    if params[:cut]
-      @slicer.update_from_param(params[:cut])
+    # What dimension reports require
+    # FIXME Put this somewhere else. Like maybe into YAML file or something.
+    reports = {
+      :supplier => [:dodavatel],
+      :procurer => [:obstaravatel],
+      :cpv => [:cpv],
+      :postup => [:druh_postupu]
+    }
+    
+    cuts = slicer.cuts.collect { |cut| cut[0].name }
+    required_cuts = reports[report.to_sym]
+    required_cuts.each do |cut|
+      return false unless cuts.include?(cut.to_s)
     end
+    
+    return true
   end
+  
   
 end

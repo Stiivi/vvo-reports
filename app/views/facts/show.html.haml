@@ -46,7 +46,7 @@
     
   %dl.clearfix
     %dt Predmet obstarávania (CPV)
-    %dd= link_to(@fact['cpv.description'], report_path("all", :cut => "cpv:#{@fact['cpv.cpv_code']}"))
+    %dd= link_to(@fact['cpv.description'], report_path("all", :cut => "cpv:*-*-#{@fact['cpv.cpv_code']}"))
       
   %h2 Dodávateľ
   

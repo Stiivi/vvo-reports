@@ -34,27 +34,31 @@ module DataView
           # [Hack - to be solved in some other way] Deep clones current slice.
           current_slicer = Marshal.load(Marshal.dump(@slicer))
           
-          # If we want link to report
-          if @link == :report && @report
-            url = @controller.report_path(@report, :object_id => data_cell.value)
-          elsif @link == :cut && @dimension
-            path = if @level == 0
-              data_cell.value
-            else
-              (["*"]*@level + [data_cell.value]).join("-")
-            end
-            
-            current_slicer.
-              update_from_param("#{@dimension}:#{path}")
-              
-            params = @controller.params
-            params[:cut] = current_slicer.to_param
-              
-            url = @controller.url_for(params)
+          # Find path for this data row
+          path = if @level == 0
+            data_cell.value
           else
-            raise ArgumentError, "Cannot link to #{@link}."
+            (["*"]*@level + [data_cell.value]).join("-")
           end
           
+          # Add it to our slicer
+          current_slicer.
+            update_from_param("#{@dimension}:#{path}")
+          
+          # Make some params out of this
+          params = @controller.params
+          params[:cut] = current_slicer.to_param
+          
+          # Add report name to params
+          if @link == :report && @report
+            params[:id] = @report
+          else
+            params[:id] = params[:id] || "all"
+          end
+          
+          puts params.to_yaml
+          
+          url = @controller.url_for(params)    
           a_element[:href] = url
           data_element = a_element
         else

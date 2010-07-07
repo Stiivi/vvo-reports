@@ -1,2 +1,2 @@
-%a.button{:href => report_path("all", :cut => @slicer.to_param), :class => params[:controller] == "reports" ? "highlighted" : ""} Report
+%a.button{:href => report_path(params[:report]||"all", :cut => @slicer.to_param), :class => params[:controller] == "reports" ? "highlighted" : ""} Report
 %a.button{:href => facts_path(:cut => @slicer.to_param, :report => params[:id]), :class => params[:controller] == "facts" ? "highlighted" : ""} Zmluvy

@@ -10,14 +10,23 @@
 
 %table.data_table
   %tr
-    - @fields.each do |key, label|
-      %th
-        = sort_link label, key
+    %th= sort_link "Vestník", :vestnik_cislo
+    %th= sort_link "Názov zákazky", :zakazka_nazov
+    %th.hodnota= sort_link "Hodnota zmluvy", :zmluva_hodnota
+    %th= sort_link "Kategória", :"cpv.cpv_code"
+    %th= sort_link "Dodávateľ", :"dodavatel.name"
+    %th= sort_link "Obstarávateľ", :"obstaravatel.name"
     %th
+    
   - @facts.each do |fact|
     %tr{:class => cycle("even", "odd")}
-      - @fields.each do |key, label|
-        %td= fact[key]
+      %td= fact[:vestnik_cislo]
+      %td= fact[:zakazka_nazov]
+      %td= number_to_currency(fact[:zmluva_hodnota])
+      %td= fact[:"cpv.cpv_code"]
+      %td= fact[:"dodavatel.name"]
+      %td= fact[:"obstaravatel.name"]
+      
       %td
         %a.detail{:href => fact_path(fact[:id], :cut => params[:cut])}
         
