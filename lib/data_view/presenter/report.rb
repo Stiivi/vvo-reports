@@ -56,8 +56,6 @@ module DataView
             params[:id] = params[:id] || "all"
           end
           
-          puts params.to_yaml
-          
           url = @controller.url_for(params)    
           a_element[:href] = url
           data_element = a_element
