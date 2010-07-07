@@ -1,9 +1,9 @@
 .header.clearfix
-  .fl
-    %h1 Verejné obstarávania
-  .fr
-    = render :partial => "reports/buttons"
-
+  %h1.fl
+    %em Druh postupu:
+    = @detail[:druh_postupu]
+  .fr= render :partial => "reports/buttons"
+    
 = render :partial => "reports/slicer"
 
 .details
@@ -34,7 +34,7 @@
 
 %br
 %br
-    
+
 .clearfix
   .left_column.clearfix
     %h2.fl Typy tovarov
@@ -45,18 +45,6 @@
     %h2 Typy tovarov (graf)
     = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
 
-%br
-%br
-
-.clearfix
-  .left_column.clearfix
-    %h2.fl Druhy postupov
-    .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("postup", :cut => @slicer.to_param), :class => "button blue"
-    = @druhy_postupov_table.as_html
-  .right_column
-    %h2 Druhy postupov (graf)
-    = @druhy_postupov_chart.as_html
     
 %br
 %br

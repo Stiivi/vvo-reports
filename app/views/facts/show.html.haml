@@ -38,15 +38,15 @@
       
   %dl.clearfix
     %dt Druh postupu
-    %dd= link_to(@fact['druh_postupu.druh_postupu'], report_path("all", :cut => "druh_postupu:#{@fact['druh_postupu.id']}"))
+    %dd= link_to(@fact['druh_postupu.druh_postupu'], report_path("postup", :cut => "druh_postupu:#{@fact['druh_postupu.druh_postupu']}"))
       
   %dl.clearfix
     %dt Kritéria vyhodnotenia
-    %dd= link_to(@fact['kriteria_vyhodnotenia.kriteria_vyhodnotenia'], report_path("all", :cut => "kriteria_vyhodnotenia:#{@fact['kriteria_vyhodnotenia.id']}"))
+    %dd= link_to(@fact['kriteria_vyhodnotenia.kriteria_vyhodnotenia'], report_path("all", :cut => "kriteria_vyhodnotenia:#{@fact['kriteria_vyhodnotenia.kriteria_vyhodnotenia']}"))
     
   %dl.clearfix
     %dt Predmet obstarávania (CPV)
-    %dd= link_to(@fact['cpv.description'], report_path("all", :cut => "cpv:#{@fact['cpv.cpv_code']}"))
+    %dd= link_to(@fact['cpv.description'], report_path("cpv", :cut => "cpv:*-*-*-*-#{@fact['cpv.cpv_code']}"))
       
   %h2 Dodávateľ
   

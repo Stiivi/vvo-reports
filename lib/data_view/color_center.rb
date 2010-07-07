@@ -3,8 +3,6 @@ module DataView
     # FIXME: this is causing ActionView::Template::Error (DataView is not missing constant ColorCenter!)
     # include Singleton
     @@__instance__ = nil
-
-    PALETTE = %w{b3121a ee2029 e90b8e a60d67 ce0beb 9409a9 6e0ce7 4f0aa5 0f57eb 0640b6 04baf6 0788b2 06ea4c 0b9c37 7be707 478504 e0dd05 e3751c db3716}
     
     def self.instance
         if !@@__instance__
@@ -14,13 +12,18 @@ module DataView
     end
     
     def initialize
+      @available_colors = []
+      @specific_colors = {}
       @generated_colors = {}
-      # @palette = PALETTE.sort { rand }
-      @palette = PALETTE
+      @config_path = File.join(Rails.root, "config", "color_center.yml")
+      @config = YAML::load_file(@config_path) 
+      reset(:default)
     end
     
     def color_for_string(str)
-      if @generated_colors[str]
+      if @specific_colors[str]
+        @specific_colors[str]
+      elsif @generated_colors[str]
         @generated_colors[str]
       else
         new_color = generate_for_string(str)
@@ -31,12 +34,27 @@ module DataView
     
     def generate_for_string(str)
       @last_index ||= 0
-      if @last_index >= @palette.size
+      if @last_index >= @available_colors.size
         @last_index = 0
       end
-      result = @palette[@last_index]
+      result = @available_colors[@last_index]
       @last_index += 1
       result
+    end
+    
+    def reset(palette_name)
+      palette = @config["palettes"][palette_name.to_s]
+      raise "Can't find palette named '#{palette_name}' in Color Center config file. (#{@config_path})" unless palette
+      @available_colors = palette["colors"]
+      @specific_colors = palette["specific_colors"] || {}
+      if @specific_colors
+        # available_colors = available_colors - specific_colors
+        @specific_colors.each do |str, color|
+          @available_colors.delete(color)
+        end
+      end
+      
+      @last_index = 0
     end
   end
 end

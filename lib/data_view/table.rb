@@ -22,6 +22,10 @@ module DataView
     # Renders Data Table as HTML
     # @return [String] Data Table in HTML form
     def as_html
+      @cell_presenters.flatten.uniq.each do |p|
+        p.prepare(self) if p.respond_to? :prepare
+      end
+      
       table = Html::Element.new(:table, "", :class => "data_table")
       header = table.new_child(:tr)
       

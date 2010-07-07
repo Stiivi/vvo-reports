@@ -106,9 +106,12 @@ module Brewery
     end
     
     def cuts
-      @cuts.collect do |dimension, path|
-        [dimension, path]
-      end
+      @cuts
+    end
+    
+    def detail_for_dimension(dimension_name)
+      dimension, path = @cuts.select { |c| c[0].name == dimension_name.to_s }.first
+      dimension.detail_for_path(path)
     end
   end
 end

@@ -1,0 +1,32 @@
+palettes:
+  default:
+    colors: &default_colors
+      - b3121a
+      - ee2029
+      - e90b8e
+      - a60d67
+      - ce0beb
+      - 9409a9
+      - 6e0ce7
+      - 4f0aa5
+      - 0f57eb
+      - 0640b6
+      - 04baf6
+      - 0788b2
+      - 06ea4c
+      - 0b9c37
+      - 7be707
+      - 478504
+      - e0dd05
+      - e3751c
+      - db3716
+    specific_colors:
+      ostatne: "bababa"
+  druh_postupu:
+    colors: *default_colors
+    specific_colors:
+      verejná súťaž: 56a736
+      rokovacie konanie bez zverejnenia: d84409
+      užšia súťaž: d87409
+      "*unknown": "979797"
+      rokovacie konanie so zverejnením: 46892c
