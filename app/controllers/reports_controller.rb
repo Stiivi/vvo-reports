@@ -131,7 +131,12 @@ class ReportsController < ApplicationController
     @druhy_postupov_table = DataView::Table.new(@druhy_postupov)
     @druhy_postupov_table.add_cell_presenter(
       {:col => [:druh_postupu], :row => :all},
-      DataView::Presenter::Report.new({:dimension => :druh_postupu, :report => :postup}.merge(presenter_opts)))
+      DataView::Presenter::Report.new({
+        :dimension => :druh_postupu, 
+        :report => :postup, 
+        :color_palette => :druh_postupu
+      }.merge(presenter_opts))
+    )
     @druhy_postupov_chart = DataView::PieChart.new(@druhy_postupov, {:labels => 0, :series => 1})
       
     @posledny_rok = posledny_rok(slice)

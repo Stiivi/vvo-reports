@@ -16,6 +16,12 @@ module DataView
         @link = options[:link]
         @legend = options.has_key?(:legend) ? options[:legend] : true
         @report = options[:report]
+        @color_palette = options[:color_palette]
+      end
+      
+      def prepare(table_view)
+        color_center = ColorCenter.instance
+        color_center.reset(@color_palette||:default)
       end
       
       def present(html_cell, data_cell)
