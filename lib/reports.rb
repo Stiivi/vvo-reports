@@ -19,7 +19,7 @@ module Reports
           table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
       }
       remainder_row = result.remainder
-      table.add_row([["ostatne", "Ostatne"], remainder_row[:sum], remainder_row[:podiel]])
+      table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
       
       
       table
@@ -40,6 +40,9 @@ module Reports
     result.rows.each { |row|
         table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
     }
+    remainder_row = result.remainder
+    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
+    
     return table
   end
   
@@ -58,6 +61,10 @@ module Reports
     result.rows.each { |row|
         table.add_row([[row[:cpv_division], row[:cpv_division_desc]], row[:sum], row[:podiel]])
     }
+    
+    remainder_row = result.remainder
+    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
+    
     return table
   end
   
