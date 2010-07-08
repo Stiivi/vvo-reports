@@ -6,7 +6,7 @@
   - @table.rows.each_index do |row|
     %tr
       %td
-        = link_to @table.rows[row][0].formatted_value, report_path("supplier", :object_id => @table.rows[row][0].value)
+        = link_to @table.rows[row][0].formatted_value, report_path("supplier", :cut => "dodavatel:*-#{@table.rows[row][0].value}")
       %td.tr= @table.formatted_value_at(row, 1)
       %td.tr= @table.formatted_value_at(row, 2)
       
