@@ -192,4 +192,6 @@ table.data_table td.firma .fl, table.data_table td.org .fl { width: 205px; }
 
 table.data_table th.hodnota { width: 100px; }
 
+table.data_table th.datum { width: 80px; }
+
 /* @end */

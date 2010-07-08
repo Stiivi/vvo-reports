@@ -2,7 +2,7 @@
   .fl
     %h1
       Zoznam zmlúv
-      %em== (#{@paginator.total} zmlúv)
+      %em= "(%s zmlúv)" % number_with_delimiter(@paginator.total, :delimiter => " ")
   .fr
     = render :partial => "reports/buttons"
 
@@ -10,22 +10,20 @@
 
 %table.data_table
   %tr
-    %th= sort_link "Vestník", :vestnik_cislo
-    %th= sort_link "Názov zákazky", :zakazka_nazov
-    %th.hodnota= sort_link "Hodnota zmluvy", :zmluva_hodnota
-    %th= sort_link "Kategória", :"cpv.cpv_code"
-    %th= sort_link "Dodávateľ", :"dodavatel.name"
+    %th.datum= sort_link "Dátum", :vestnik_datum
     %th= sort_link "Obstarávateľ", :"obstaravatel.name"
+    %th= sort_link "Dodávateľ", :"dodavatel.name"
+    %th= sort_link "Predmet obstarávania", :"cpv.description"
+    %th.hodnota= sort_link "Hodnota zmluvy", :zmluva_hodnota
     %th
     
   - @facts.each do |fact|
     %tr{:class => cycle("even", "odd")}
-      %td= fact[:vestnik_cislo]
-      %td= fact[:zakazka_nazov]
-      %td= number_to_currency(fact[:zmluva_hodnota])
-      %td= fact[:"cpv.cpv_code"]
-      %td= fact[:"dodavatel.name"]
+      %td=l fact[:vestnik_datum]
       %td= fact[:"obstaravatel.name"]
+      %td= fact[:"dodavatel.name"]
+      %td= fact[:"cpv.description"]
+      %td= number_to_currency(fact[:zmluva_hodnota])
       
       %td
         %a.detail{:href => fact_path(fact[:id], :cut => params[:cut])}
