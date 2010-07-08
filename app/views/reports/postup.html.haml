@@ -5,14 +5,7 @@
   .fr= render :partial => "reports/buttons"
     
 = render :partial => "reports/slicer"
-
-.details
-  %dl.clearfix
-    %dt Hodnota zmlúv
-    %dd= number_to_currency(@hodnota_zmluv)
-  %dl.clearfix
-    %dt Počet zmlúv
-    %dd= @pocet_zmluv
+= render :partial => "reports/details"
 
 .clearfix
   .left_column.clearfix

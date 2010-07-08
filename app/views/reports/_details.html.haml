@@ -1,0 +1,7 @@
+.details
+  %dl.clearfix
+    %dt Hodnota zmlúv
+    %dd= number_to_currency(@hodnota_zmluv)
+  %dl.clearfix
+    %dt Počet zmlúv
+    %dd= number_with_delimiter(@pocet_zmluv, :delimiter => " ")
