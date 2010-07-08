@@ -47,19 +47,39 @@ module Reports
   end
   
   def typy_tovarov(slice)
-    result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :cpv, 
-    			                        :row_levels => [:division],
+    # Dimension that is used to create this aggregation
+    dimension = @cube.dimension_with_name(:cpv)
+    cut = slice.cuts.find_all{|c|c.dimension == dimension}.first
+    if cut
+      level = dimension.next_level(cut.path)
+    else
+      level = dimension.levels.first
+    end
+    
+    levels_to_select = []
+    dimension.levels.each do |l|
+      levels_to_select << l
+      if l == level
+        break
+      end
+    end
+    
+    levels_to_select.collect! { |l| l.name }
+    fields = level.level_fields.collect { |f| f.to_sym }
+
+    result = slice.aggregate(:zmluva_hodnota, {:row_dimension => dimension.name, 
+    			                        :row_levels => levels_to_select,
     			                        :limit => :rank,
     			                        :limit_value => 5,
     			                        :limit_sort => :top})
 
     table = DataTable.new
-    table.add_column(:text, "Typ tovaru", :cpv_division_desc)
+    table.add_column(:text, "Typ tovaru", fields[1])
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
     result.rows.each { |row|
-        table.add_row([[row[:cpv_division], row[:cpv_division_desc]], row[:sum], row[:podiel]])
+        table.add_row([[row[fields[0]], row[fields[1]]], row[:sum], row[:podiel]])
     }
     
     remainder_row = result.remainder

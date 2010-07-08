@@ -128,7 +128,7 @@ class ReportsController < ApplicationController
     @typy_tovarov = typy_tovarov(slice)
     @typy_tovarov_table = DataView::Table.new(@typy_tovarov)
     @typy_tovarov_table.add_cell_presenter(
-      {:col => [:cpv_division_desc], :row => :all},
+      {:col => [0], :row => :all},
       DataView::Presenter::Report.new({:dimension => :cpv, :report => :cpv}.merge(presenter_opts)))
     @typy_tovarov_table.add_cell_presenter({:col => :first, :row => :last}, 
         remainder_presenter)
