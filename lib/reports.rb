@@ -47,15 +47,9 @@ module Reports
   end
   
   def typy_tovarov(slice)
-    # Dimension that is used to create this aggregation
     dimension = @cube.dimension_with_name(:cpv)
-    cut = slice.cuts.find_all{|c|c.dimension == dimension}.first
-    if cut
-      level = dimension.next_level(cut.path)
-    else
-      level = dimension.levels.first
-    end
-    
+    level = level_for_dimension(slice, dimension)
+
     levels_to_select = []
     dimension.levels.each do |l|
       levels_to_select << l
@@ -63,9 +57,9 @@ module Reports
         break
       end
     end
-    
     levels_to_select.collect! { |l| l.name }
-    fields = level.level_fields.collect { |f| f.to_sym }
+    description_field = level.description_field.to_sym
+    key_field = level.key_field.to_sym
 
     result = slice.aggregate(:zmluva_hodnota, {:row_dimension => dimension.name, 
     			                        :row_levels => levels_to_select,
@@ -74,12 +68,12 @@ module Reports
     			                        :limit_sort => :top})
 
     table = DataTable.new
-    table.add_column(:text, "Typ tovaru", fields[1])
+    table.add_column(:text, "Typ tovaru", description_field)
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
     result.rows.each { |row|
-        table.add_row([[row[fields[0]], row[fields[1]]], row[:sum], row[:podiel]])
+      table.add_row([[row[key_field], row[description_field]], row[:sum], row[:podiel]])
     }
     
     remainder_row = result.remainder
@@ -128,5 +122,18 @@ module Reports
     }
     
     table
+  end
+  
+  def level_for_dimension(slice, dimension)
+    cut = slice.cuts.find_all{|c|c.dimension == dimension}.first
+    if cut
+      level = dimension.next_level(cut.path)
+    else
+      level = dimension.levels.first
+    end
+
+    level ||= dimension.levels.last
+    
+    level    
   end
 end

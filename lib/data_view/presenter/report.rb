@@ -35,26 +35,30 @@ module DataView
           color = ColorCenter.instance.color_for_string(data_cell.value)
           color_el[:style] = "background-color: ##{color}"
         end
+
+        # Make path
+        if cut = @slicer.cut_for_dimension(@dimension)
+          dimension = cut[0]
+          path = cut[1].clone
+          if dimension.levels.count <= path.count
+            @link = false
+          else
+            path << data_cell.value
+          end
+        else
+          path = if @level == 0
+            [data_cell.value]
+          else
+            (["*"]*@level + [data_cell.value])
+          end
+        end
+        
+        path = path.join("-")
         
         if @link
           a_element = left.new_child(:a, data_cell.formatted_value)
           # [Hack - to be solved in some other way] Deep clones current slice.
           current_slicer = Marshal.load(Marshal.dump(@slicer))
-          
-          # Find path for this data row
-          if cut = @slicer.cut_for_dimension(@dimension)
-            path = cut[1].clone
-            path << data_cell.value
-            puts path.inspect
-          else
-            path = if @level == 0
-              [data_cell.value]
-            else
-              (["*"]*@level + [data_cell.value])
-            end
-          end
-          
-          path = path.join("-")
           
           # Add it to our slicer
           current_slicer.
