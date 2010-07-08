@@ -55,6 +55,8 @@ module Reports
     else
       level = dimension.levels.first
     end
+
+    level ||= dimension.levels.last
     
     levels_to_select = []
     dimension.levels.each do |l|
@@ -65,7 +67,11 @@ module Reports
     end
     
     levels_to_select.collect! { |l| l.name }
-    fields = level.level_fields.collect { |f| f.to_sym }
+    description_field = level.description_field.to_sym
+    key_field = level.key_field.to_sym
+
+    # puts level.inspect
+    # puts [key_field, description_field].inspect
 
     result = slice.aggregate(:zmluva_hodnota, {:row_dimension => dimension.name, 
     			                        :row_levels => levels_to_select,
@@ -73,13 +79,15 @@ module Reports
     			                        :limit_value => 5,
     			                        :limit_sort => :top})
 
+    # raise [description_field, key_field].inspect
+
     table = DataTable.new
-    table.add_column(:text, "Typ tovaru", fields[1])
+    table.add_column(:text, "Typ tovaru", description_field)
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
     result.rows.each { |row|
-        table.add_row([[row[fields[0]], row[fields[1]]], row[:sum], row[:podiel]])
+      table.add_row([[row[key_field], row[description_field]], row[:sum], row[:podiel]])
     }
     
     remainder_row = result.remainder
