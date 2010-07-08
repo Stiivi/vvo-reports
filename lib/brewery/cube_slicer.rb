@@ -10,7 +10,7 @@ module Brewery
   # @author Vojto Rinik <vojto@rinik.net>
   
   class CubeSlicer
-    attr_reader :cuts
+    attr_reader :cuts, :cube
     
     # Separator for cuts.
     CUT_SEPARATOR = "/"
@@ -46,6 +46,7 @@ module Brewery
       
       cuts.each do |d|
         dimension, value = d.split(DIMENSION_SEPARATOR)
+        return false unless dimension && value
         dimension = @cube.dimension_with_name(dimension)
         path = value.split(PATH_SEPARATOR).collect { |v|
           v == "*" ? :all : v
@@ -109,8 +110,12 @@ module Brewery
       @cuts
     end
     
+    def cut_for_dimension(dimension_name)
+      @cuts.select { |c| c[0].name == dimension_name.to_s }.first
+    end
+    
     def detail_for_dimension(dimension_name)
-      dimension, path = @cuts.select { |c| c[0].name == dimension_name.to_s }.first
+      dimension, path = cut_for_dimension(dimension_name)
       dimension.detail_for_path(path)
     end
   end

@@ -5,18 +5,13 @@
   .fr= render :partial => "reports/buttons"
     
 = render :partial => "reports/slicer"
-
-.details
-  %dl.clearfix
-    %dt Hodnota zmlúv
-    %dd= @hodnota_zmluv
-  %dl.clearfix
-    %dt Počet zmlúv
-    %dd= @pocet_zmluv
+= render :partial => "reports/details"
 
 .clearfix
-  .left_column
-    %h2 Top dodávatelia
+  .left_column.clearfix
+    %h2.fl Dodávatelia
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button blue"
     = @dodavatelia_table.as_html
   .right_column
     %h2 Top dodávatelia (graf)
@@ -27,8 +22,10 @@
 %br
     
 .clearfix
-  .left_column
-    %h2 Typy tovarov
+  .left_column.clearfix
+    %h2.fl Typy tovarov
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("cpv", :cut => @slicer.to_param), :class => "button blue"
     = @typy_tovarov_table.as_html
   .right_column
     %h2 Typy tovarov (graf)

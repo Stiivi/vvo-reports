@@ -10,6 +10,7 @@ module DataView
       # @param [Hash] Options
       def initialize(options = {})
         @slicer = Presenter.slicer
+        @cube = @slicer.cube
         @controller = Presenter.controller
         @dimension = options[:dimension]
         @level = options[:level] || 0
@@ -41,11 +42,19 @@ module DataView
           current_slicer = Marshal.load(Marshal.dump(@slicer))
           
           # Find path for this data row
-          path = if @level == 0
-            data_cell.value
+          if cut = @slicer.cut_for_dimension(@dimension)
+            path = cut[1].clone
+            path << data_cell.value
+            puts path.inspect
           else
-            (["*"]*@level + [data_cell.value]).join("-")
+            path = if @level == 0
+              [data_cell.value]
+            else
+              (["*"]*@level + [data_cell.value])
+            end
           end
+          
+          path = path.join("-")
           
           # Add it to our slicer
           current_slicer.
@@ -84,6 +93,7 @@ module DataView
       end
       
       def truncate_text_in(element)
+        element.text ||= ""
         if element.text.length > TRUNCATED_LENGTH
           element.text = element.text[0, TRUNCATED_LENGTH] + " &hellip;"
         end

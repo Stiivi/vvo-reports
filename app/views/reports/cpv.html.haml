@@ -5,14 +5,7 @@
   .fr= render :partial => "reports/buttons"
     
 = render :partial => "reports/slicer"
-
-.details
-  %dl.clearfix
-    %dt Hodnota zmlúv
-    %dd= number_to_currency(@hodnota_zmluv)
-  %dl.clearfix
-    %dt Počet zmlúv
-    %dd= @pocet_zmluv
+= render :partial => "reports/details"
 
 .clearfix
   .left_column.clearfix
@@ -37,9 +30,21 @@
 
 .clearfix
   .left_column.clearfix
+    %h2.fl Typy tovarov
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("cpv", :cut => @slicer.to_param), :class => "button blue"
+    = @typy_tovarov_table.as_html
+  .right_column
+    %h2 Typy tovarov (graf)
+    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
+
+%br
+%br
+
+.clearfix
+  .left_column.clearfix
     %h2.fl Druhy postupov
     .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("postup", :cut => @slicer.to_param), :class => "button blue"
     = @druhy_postupov_table.as_html
   .right_column
     %h2 Druhy postupov (graf)

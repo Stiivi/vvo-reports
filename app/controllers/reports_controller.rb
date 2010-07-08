@@ -101,6 +101,9 @@ class ReportsController < ApplicationController
       {:link => :cut}
     end
     
+    # This presenter will be shared across all tables.
+    remainder_presenter = DataView::Presenter::Report.new(:link => false)
+    
     # Dodavatelia
     @dodavatelia = top_10_dodavatelia(slice)
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
@@ -109,7 +112,7 @@ class ReportsController < ApplicationController
       DataView::Presenter::Report.new({:report => :supplier, :dimension => :dodavatel, :level => 1}.merge(presenter_opts))
     )
     @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
-      DataView::Presenter::Report.new(:link => false))
+      remainder_presenter)
     @dodavatelia_chart = DataView::PieChart.new(@dodavatelia, {:labels => 0, :series => 1})
       
     # Obstaravatelia
@@ -117,14 +120,18 @@ class ReportsController < ApplicationController
     @obstaravatelia_table = DataView::Table.new(@obstaravatelia)
     @obstaravatelia_table.add_cell_presenter({:col => [:org], :row => :all},
       DataView::Presenter::Report.new({:report => :procurer, :dimension => :obstaravatel, :level => 1, :link => :report}.merge(presenter_opts)))
+    @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
+        remainder_presenter)
     @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
       
     # Typy tovarov
     @typy_tovarov = typy_tovarov(slice)
     @typy_tovarov_table = DataView::Table.new(@typy_tovarov)
     @typy_tovarov_table.add_cell_presenter(
-      {:col => [:cpv_division_desc], :row => :all},
+      {:col => [0], :row => :all},
       DataView::Presenter::Report.new({:dimension => :cpv, :report => :cpv}.merge(presenter_opts)))
+    @typy_tovarov_table.add_cell_presenter({:col => :first, :row => :last}, 
+        remainder_presenter)
     
     # Druhy postupov
     @druhy_postupov = druh_postupu(slice)
