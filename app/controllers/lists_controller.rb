@@ -2,6 +2,7 @@
 
 class ListsController < ApplicationController
   before_filter :initialize_model
+  include Reports
   
   # params[:id] - field for the list to be show
   #               the one that should be used for aggregation
@@ -55,16 +56,30 @@ class ListsController < ApplicationController
   end
   
   def cpv
-    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => :cpv, 
-  		                        :row_levels => [:division],
+    dimension = @cube.dimension_with_name(:cpv)
+    level = level_for_dimension(@slice, dimension)
+
+    levels_to_select = []
+    dimension.levels.each do |l|
+      levels_to_select << l
+      if l == level
+        break
+      end
+    end
+    levels_to_select.collect! { |l| l.name }
+    description_field = level.description_field.to_sym
+    key_field = level.key_field.to_sym
+    
+    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => dimension.name, 
+  		                        :row_levels => levels_to_select,
   		                        :page_size => @paginator.page_size,
   		                        :page => @paginator.page-1 })
     @table = Brewery::DataTable.new
-    @table.add_column(:text, "Typ tovaru", :cpv_division_desc)
+    @table.add_column(:text, "Typ tovaru", description_field)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[:cpv_division], row[:cpv_division_desc]], row[:sum], row[:podiel]])
+        @table.add_row([[row[key_field], row[description_field]], row[:sum], row[:podiel]])
     }
   end
   
