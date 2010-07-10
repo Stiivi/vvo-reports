@@ -154,6 +154,16 @@ a.button.highlighted { background-image: url(../images/button_highligted.png); b
 
 a.button.blue { background-image: url(../images/button_blue.png); display: block; border: 1px solid #88a8cd; color: #6286b0; font-size: 11px; text-transform: uppercase; font-weight: bold; padding: 5px 8px; text-shadow: #c6d2df 0 1px 0; }
 
+a.tab { float: left; display: block; border: 1px solid #cdcdcd; font-size: 13px; font-weight: bold; color: #727272; text-decoration: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; margin-left: 0; padding: 5px 10px; background: url(../images/tabs.png) 0 -1px; }
+
+a.tab:active { background-position: 0 -29px; }
+
+a.tab.active { background-position: 0 -57px; border-color: #4274b4; color: #fff; }
+
+a.tab:first-child { -webkit-border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; }
+
+a.tab:last-child { -webkit-border-top-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; }
+
 
 
 /* @end */
