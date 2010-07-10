@@ -1,8 +1,13 @@
 .status.clearfix
   - @slicer.cuts.each do |dim, path|
-    .fl.cut
-      %em= "%s:" % dim.label
+    .breadcrumb.clearfix
+      .main
+        %a.cancel{:href => url_for(params.merge(:cut => @slicer.without(dim).to_param))}
+          = image_tag "cancel_white.png"
+        %span= dim.label
       - levels = dim.default_hierarchy.levels[0..(path.count-1)]
-      = levels.collect { |level| dim.detail_for_path(path)[level.short_description_field.to_sym] }.join(' / ')
-      %a{:href => url_for(params.merge(:cut => @slicer.without(dim).to_param))}
-        = image_tag "status_remove.png"
+      - html_class = "first"
+      - levels.each do |level|
+        %div{:class => html_class}= dim.detail_for_path(path)[level.short_description_field.to_sym]
+        - html_class = "middle"
+      .end

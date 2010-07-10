@@ -195,3 +195,27 @@ table.data_table th.hodnota { width: 120px; }
 table.data_table th.datum { width: 80px; }
 
 /* @end */
+
+/* @group Breadcrumbs */
+
+.breadcrumb { margin-bottom: 5px; }
+
+.breadcrumb div { font-weight: bold; background-repeat: no-repeat; padding: 7px 7px 7px 12px; }
+
+.breadcrumb .first, .breadcrumb .middle { padding-left: 35px; color: #8e8e8e; }
+
+.breadcrumb .main { background-image: url(../images/breadcrumb_main.png); float: left; color: #fff; text-shadow: #305785 0 1px 0; padding-left: 5px; }
+
+.breadcrumb .main a.cancel { position: relative; top: -1px; }
+
+.breadcrumb .main span { position: relative; top: -2px; }
+
+.breadcrumb .first { background-image: url(../images/breadcrumb_first.png); float: left; }
+
+.breadcrumb .middle { background-image: url(../images/breadcrumb_middle.png); float: left; }
+
+.breadcrumb .end { background-image: url(../images/breadcrumb_end.png); float: left; height: 13px; width: 10px; }
+
+
+
+/* @end */
