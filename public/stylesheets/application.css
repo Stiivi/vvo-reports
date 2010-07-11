@@ -154,6 +154,20 @@ a.button.highlighted { background-image: url(../images/button_highligted.png); b
 
 a.button.blue { background-image: url(../images/button_blue.png); display: block; border: 1px solid #88a8cd; color: #6286b0; font-size: 11px; text-transform: uppercase; font-weight: bold; padding: 5px 8px; text-shadow: #c6d2df 0 1px 0; }
 
+a.button.simple { display: block; border: 1px solid #cecece; color: #767676; font-size: 11px; font-weight: bold; padding: 5px 8px 4px; background: url(../images/button_simple.png) 0 -1px; }
+
+a.button.simple:active { background-position: 0 -25px; }
+
+a.tab { float: left; display: block; border: 1px solid #cdcdcd; font-size: 13px; font-weight: bold; color: #727272; text-decoration: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; margin-left: 0; padding: 5px 10px; background: url(../images/tabs.png) 0 -1px; }
+
+a.tab:active { background-position: 0 -29px; }
+
+a.tab.active { background-position: 0 -57px; border-color: #4274b4; color: #fff; }
+
+a.tab:first-child { -webkit-border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; }
+
+a.tab:last-child { -webkit-border-top-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; }
+
 
 
 /* @end */
@@ -193,5 +207,29 @@ table.data_table td.firma .fl, table.data_table td.org .fl { width: 205px; }
 table.data_table th.hodnota { width: 120px; }
 
 table.data_table th.datum { width: 80px; }
+
+/* @end */
+
+/* @group Breadcrumbs */
+
+.breadcrumb { margin-bottom: 5px; }
+
+.breadcrumb div { font-weight: bold; background-repeat: no-repeat; padding: 7px 7px 7px 12px; }
+
+.breadcrumb .first, .breadcrumb .middle { padding-left: 35px; color: #8e8e8e; }
+
+.breadcrumb .main { background-image: url(../images/breadcrumb_main.png); float: left; color: #fff; text-shadow: #305785 0 1px 0; padding-left: 5px; }
+
+.breadcrumb .main a.cancel { position: relative; top: -1px; }
+
+.breadcrumb .main span { position: relative; top: -2px; }
+
+.breadcrumb .first { background-image: url(../images/breadcrumb_first.png); float: left; }
+
+.breadcrumb .middle { background-image: url(../images/breadcrumb_middle.png); float: left; }
+
+.breadcrumb .end { background-image: url(../images/breadcrumb_end.png); float: left; height: 13px; width: 10px; }
+
+
 
 /* @end */

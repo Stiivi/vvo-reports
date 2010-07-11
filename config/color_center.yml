@@ -1,27 +1,36 @@
 palettes:
   default:
     colors: &default_colors
-      - b3121a
-      - ee2029
-      - e90b8e
-      - a60d67
-      - ce0beb
-      - 9409a9
-      - 6e0ce7
-      - 4f0aa5
-      - 0f57eb
-      - 0640b6
-      - 04baf6
-      - 0788b2
-      - 06ea4c
-      - 0b9c37
-      - 7be707
-      - 478504
-      - e0dd05
-      - e3751c
-      - db3716
+      - FCFBA6
+      - ACCF90
+      - B8C7D7
+      - BBA67E
+      - EEAC7B
+      - B6B6AA
+      - DFA4A9
+      - F2DC55
+      - 609A47
+      - 4A71A8
+      - 77673D
+      - DB6631
+      - 6E7466
+      - C13353
+      - EBB713
+      - 246F09
+      - 1C458D
+      - 322602
+      - D34015
+      - 424D43
+      - AD0027
+      - F5E56C
+      - 85B46A
+      - 7E9BBA
+      - 8E7D57
+      - E38858
+      - 8B8F81
+      - D26D7C
     specific_colors:
-      ostatne: "bababa"
+      ostatne: "B6B6AA"
   druh_postupu:
     colors: *default_colors
     specific_colors:
