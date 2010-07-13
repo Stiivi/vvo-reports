@@ -194,11 +194,13 @@ ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
 
 .breadcrumb { margin-bottom: 5px; }
 
+.breadcrumb .fl { margin: 0px; padding: 0px; }
+
 .breadcrumb div { font-weight: bold; background-repeat: no-repeat; padding: 7px 7px 7px 12px; }
 
 .breadcrumb .first, .breadcrumb .middle { padding-left: 35px; color: #8e8e8e; }
 
-.breadcrumb .main { background-image: url(../images/breadcrumb_main.png); float: left; color: #fff; text-shadow: #305785 0 1px 0; padding-left: 5px; }
+.breadcrumb .main { background-image: url(../images/breadcrumb_main.png); color: #fff; text-shadow: #305785 0 1px 0; padding-left: 5px; float: left; }
 
 .breadcrumb .main a.cancel { position: relative; top: -1px; }
 
@@ -206,9 +208,17 @@ ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
 
 .breadcrumb .first { background-image: url(../images/breadcrumb_first.png); float: left; }
 
-.breadcrumb .middle { background-image: url(../images/breadcrumb_middle.png); float: left; }
+.breadcrumb .middle { background-image: url(../images/breadcrumb_middle.png);white-space: nowrap; overflow: hidden; float: left; }
 
-.breadcrumb .end { background-image: url(../images/breadcrumb_end.png); float: left; height: 13px; width: 10px; }
+.breadcrumb .last { background-image: url(../images/breadcrumb_end.png); height: 13px; width: 10px; display: block; float: left; }
+
+.breadcrumb span.truncated { display: inline; }
+
+.breadcrumb span.full { display: none; }
+
+.breadcrumb div:hover span.truncated { display: none; }
+
+.breadcrumb div:hover span.full { display: inline; }
 
 
 

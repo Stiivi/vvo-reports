@@ -1,4 +1,4 @@
-.status.clearfix
+.status
   - @slicer.cuts.each do |dim, path|
     .breadcrumb.clearfix
       .main
@@ -7,7 +7,14 @@
         %span= dim.label
       - levels = dim.default_hierarchy.levels[0..(path.count-1)]
       - html_class = "first"
+      - current_level = 1
       - levels.each do |level|
-        %div{:class => html_class}= dim.detail_for_path(path)[level.short_description_field.to_sym]
+        %div{:class => html_class}
+          %a{:href => current_level < path.count ? url_for(params.merge(:cut => @slicer.to_param(current_level))) : "#"}
+            %span.truncated
+              = truncate(dim.detail_for_path(path)[level.short_description_field.to_sym].to_s, :length => 15)
+            %span.full
+              = dim.detail_for_path(path)[level.short_description_field.to_sym]
         - html_class = "middle"
-      .end
+        - current_level += 1
+      .last
