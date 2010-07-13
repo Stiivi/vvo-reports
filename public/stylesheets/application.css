@@ -38,7 +38,7 @@ body { background: #ececec url(../images/background.png) repeat-x; }
 
 #content .left_column { margin-right: 15px; }
 
-#footer { height: 35px; background-image: url(../images/footer_background.png); }
+#footer { height: 50px; background: url(../images/footer_background.png) no-repeat; padding-top: 30px; }
 
 
 
@@ -190,26 +190,6 @@ ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
 
 /* @end */
 
-/* @group VVO Specific */
-
-table.data_table th.suma { width: 100px; }
-
-table.data_table th.podiel { width: 50px; }
-
-table.data_table td.suma { text-align: right;}
-
-table.data_table td.podiel { text-align: right; }
-
-table.data_table th.firma { width: 240px; }
-
-table.data_table td.firma .fl, table.data_table td.org .fl { width: 205px; }
-
-table.data_table th.hodnota { width: 120px; }
-
-table.data_table th.datum { width: 80px; }
-
-/* @end */
-
 /* @group Breadcrumbs */
 
 .breadcrumb { margin-bottom: 5px; }
@@ -231,5 +211,25 @@ table.data_table th.datum { width: 80px; }
 .breadcrumb .end { background-image: url(../images/breadcrumb_end.png); float: left; height: 13px; width: 10px; }
 
 
+
+/* @end */
+
+/* @group VVO Specific */
+
+table.data_table th.suma { width: 100px; }
+
+table.data_table th.podiel { width: 50px; }
+
+table.data_table td.suma { text-align: right;}
+
+table.data_table td.podiel { text-align: right; }
+
+table.data_table th.firma { width: 240px; }
+
+table.data_table td.firma .fl, table.data_table td.org .fl { width: 205px; }
+
+table.data_table th.hodnota { width: 120px; }
+
+table.data_table th.datum { width: 80px; }
 
 /* @end */
