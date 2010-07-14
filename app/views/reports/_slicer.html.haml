@@ -12,7 +12,7 @@
         %div{:class => html_class}
           %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param))}
             %span.truncated
-              = truncate(dim.detail_for_path(path)[level.short_description_field.to_sym].to_s, :length => 15)
+              = dim.detail_for_path(path)[level.short_description_field.to_sym].to_s
             %span.full
               = dim.detail_for_path(path)[level.short_description_field.to_sym]
         - html_class = "middle"

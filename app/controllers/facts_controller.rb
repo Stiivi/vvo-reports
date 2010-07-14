@@ -18,6 +18,9 @@ class FactsController < ApplicationController
   DEFAULT_SORT_FIELD = "vestnik_cislo"
   DEFAULT_SORT_DIRECTION = "asc"
 
+  DEFAULT_SORT_FIELD = "zmluva_hodnota"
+  DEFAULT_SORT_DIRECTION = "desc"
+
   def index
     @slicer = Brewery::CubeSlicer.new(@cube)
     @slicer.update_from_param("date:2009")
@@ -31,15 +34,16 @@ class FactsController < ApplicationController
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => total)
     if params[:sort]
       sort_field = params[:sort]
-      sort_direction = params[:dir]
+      sort_direction = params[:dir] || "asc"
     else
       sort_field = DEFAULT_SORT_FIELD
       sort_direction = DEFAULT_SORT_DIRECTION
     end
+        
     @facts = slice.facts(:page => @paginator.page-1,
-                         :page_size => @paginator.page_size, 
-                         :order_by => sort_field, 
-                         :order_direction => sort_direction)
+                         :page_size => @paginator.page_size,
+                         :order_by => sort_field,
+                         :order_direction => sort_direction )
   end
 
   def show
