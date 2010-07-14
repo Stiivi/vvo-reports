@@ -56,11 +56,11 @@ class ListsController < ApplicationController
   end
   
   def cpv
-    dimension = @cube.dimension_with_name(:cpv)
-    level = level_for_dimension(@slice, dimension)
+    @dimension = @cube.dimension_with_name(:cpv)
+    @next_level = level = level_for_dimension(@slice, @dimension)
 
     levels_to_select = []
-    dimension.levels.each do |l|
+    @dimension.levels.each do |l|
       levels_to_select << l
       if l == level
         break
@@ -70,7 +70,7 @@ class ListsController < ApplicationController
     description_field = level.description_field.to_sym
     key_field = level.key_field.to_sym
     
-    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => dimension.name, 
+    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => @dimension.name, 
   		                        :row_levels => levels_to_select,
   		                        :page_size => @paginator.page_size,
   		                        :page => @paginator.page-1 })

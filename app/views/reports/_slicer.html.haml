@@ -10,7 +10,7 @@
       - current_level = 1
       - levels.each do |level|
         %div{:class => html_class}
-          %a{:href => current_level < path.count ? url_for(params.merge(:cut => @slicer.to_param(current_level))) : "#"}
+          %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param))}
             %span.truncated
               = truncate(dim.detail_for_path(path)[level.short_description_field.to_sym].to_s, :length => 15)
             %span.full

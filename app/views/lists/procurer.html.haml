@@ -1,3 +1,12 @@
+.header.clearfix
+  .fl
+    %h1
+      Zoznam obstarávateľov
+  .fr.clearfix
+    = render :partial => "lists/buttons"
+
+= render :partial => "reports/slicer"
+
 %table.data_table
   %tr
     %th Nazov

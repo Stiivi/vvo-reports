@@ -1,3 +1,12 @@
+.header.clearfix
+  .fl
+    %h1
+      Typy tovarov
+  .fr.clearfix
+    = render :partial => "lists/buttons"
+
+= render :partial => "reports/slicer"
+
 %table.data_table
   %tr
     %th Typ tovaru
@@ -5,7 +14,10 @@
     %th.tr Podiel
   - @table.rows.each_index do |row|
     %tr
-      %td= @table.rows[row][0].formatted_value
+      %td
+        - value = @table.value_at(row, 0)
+        %a{:href => report_path("cpv", :cut => @slicer.clone.update_value(@dimension, @next_level, value).to_param)}
+          = @table.rows[row][0].formatted_value
       %td.tr= @table.formatted_value_at(row, 1)
       %td.tr= @table.formatted_value_at(row, 2)
       

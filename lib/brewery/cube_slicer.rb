@@ -40,7 +40,7 @@ module Brewery
     
     # Adds cuts from param.
     # @param [String] string to parse
-    def update_from_param(param_string)
+    def update_from_param(param_string)      
       param_string = URI.unescape(param_string)
       cuts = param_string.split(CUT_SEPARATOR)
       
@@ -67,6 +67,8 @@ module Brewery
       end
     end
     
+    # Removes a cut
+    # @param [Dimension] dimension of which cut should be removed
     def remove_cut(dim)
       cut_index = @cuts.find_index { |c| 
         c[0] == dim
@@ -74,11 +76,55 @@ module Brewery
       @cuts.delete_at(cut_index)
     end
     
+    # Returns a clone and calls remove_cut
+    # @param [Dimension] dimension of which cut should be removed
+    # @see remove_cut
     def without(dim)
       alter_ego = Marshal.load(Marshal.dump(self))
       alter_ego.remove_cut(dim)
       alter_ego
     end
+    
+    # Strips path of a dimension
+    # @param [Dimension] dimension of which path should be stripped
+    # @param [Level] level that should be left
+    def strip_path(dimension, level)
+      # Get dimension
+      dimension, path = cut_for_dimension(dimension.name)
+      # Get position of requested level in dimension's levels
+      position = dimension.levels.find_index(level)
+      path = path[0, position+1].join(PATH_SEPARATOR)
+      param = "#{dimension.name}#{DIMENSION_SEPARATOR}#{path}"
+      update_from_param(param)
+      self
+    end
+    
+    # Sets value of dimension on level to value.
+    # @param [Dimension] dimension
+    # @param [Level] level
+    # @param [value] new value
+    def update_value(dimension, level, value)
+      dimension = @cube.dimension_object(dimension)
+      cut = cut_for_dimension(dimension.name)
+      level_position = dimension.levels.find_index(level)
+      
+      if cut
+        # There's already a cut, (ergo path) for this dimension
+        dimension, path = cut_for_dimension(dimension.name)
+        path[level_position] = value
+        path.each do |part|
+          part = "*" if part.nil?
+        end
+      else
+        # No path, let's create a new one
+        path = ["*"]*level_position + [value]
+      end
+      
+      path = path.join(PATH_SEPARATOR)
+      param = "#{dimension.name}#{DIMENSION_SEPARATOR}#{path}"
+      self.update_from_param(param)
+    end
+    
     
     # Creates slice from cuts stored in CubeSlicer.
     # @return [Slice] Slice with cuts stored in CubeSlicer.
@@ -94,12 +140,9 @@ module Brewery
     
     # Converts stored cuts to URL-compatible parameter.
     # @return [String] Parameter to be used in URL.
-    def to_param(max_level = nil)
+    def to_param
       @cuts.collect do |dim, path|
         dim = dim.name
-        if max_level
-          path = path[0, max_level]
-        end
         path = path.collect { |p| 
           p == :all ? "*" : p
         }.collect { |p|
@@ -120,6 +163,12 @@ module Brewery
     def detail_for_dimension(dimension_name)
       dimension, path = cut_for_dimension(dimension_name)
       dimension.detail_for_path(path)
+    end
+    
+    def clone
+      new_self = super
+      new_self.instance_variable_set("@cuts", self.cuts.clone)
+      new_self
     end
   end
 end
