@@ -45,7 +45,7 @@ module Brewery
       context "cut through date" do
         it "should give me ordered shit" do
           dimension = @cube.dimension_with_name(:date)
-          cut = Cut.point_cut(dimension, [2009])
+          cut = Brewery::Cut.point_cut(dimension, [2009])
           slice = @slice.cut_by(cut)
           result = slice.aggregate(:zmluva_hodnota, {
             :row_dimension => :dodavatel, 

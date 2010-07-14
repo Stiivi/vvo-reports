@@ -1,0 +1,21 @@
+name: dm_procurer
+label: Obstarávateľ
+fields:
+    -
+        name: region
+        label: Región
+    -
+        name: ico
+        label: IČO
+    -
+        name: name
+        label: Názov
+    -
+        name: address
+        label: Adresa
+    -
+        name: legal_form
+        label: Právna forma
+    -
+        name: account_sector
+        label: Sektor
