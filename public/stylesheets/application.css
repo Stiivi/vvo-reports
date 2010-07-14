@@ -242,4 +242,12 @@ table.data_table th.hodnota { width: 120px; }
 
 table.data_table th.datum { width: 80px; }
 
+span.icon_report { display: block; background: url(../images/report_icons.png) no-repeat 0 -20px; padding-left: 27px; }
+
+a.active span.icon_report { display: block; background: url(../images/report_icons.png) no-repeat 0 0; padding-left: 27px; }
+
+span.icon_facts { display: block; background: url(../images/report_icons.png) no-repeat 0 -60px; padding-left: 27px; }
+
+a.active span.icon_facts { display: block; background: url(../images/report_icons.png) no-repeat 0 -40px; padding-left: 27px; }
+
 /* @end */

@@ -1,2 +1,4 @@
-%a.tab{:href => report_path(params[:report]||"all", :cut => @slicer.to_param), :class => params[:controller] == "reports" ? "active" : ""} Report
-%a.tab{:href => facts_path(:cut => @slicer.to_param, :report => params[:id]), :class => params[:controller] == "facts" ? "active" : ""} Zmluvy
+%a.tab{:href => report_path(params[:report]||"all", :cut => @slicer.to_param), :class => params[:controller] == "reports" ? "active" : ""}
+  %span.icon_report Report
+%a.tab{:href => facts_path(:cut => @slicer.to_param, :report => params[:id]), :class => params[:controller] == "facts" ? "active" : ""}
+  %span.icon_facts Zmluvy
