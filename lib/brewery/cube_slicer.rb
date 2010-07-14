@@ -91,6 +91,24 @@ module Brewery
     def strip_path(dimension, level)
       # Get dimension
       dimension, path = cut_for_dimension(dimension.name)
+      
+      path.each_index do |i|
+        if path[i] == :all
+          detail = dimension.detail_for_path(path)
+          field = dimension.levels[i].level_fields.first
+          value = detail[field.to_sym]
+          path[i] = value
+        end
+      end
+      
+      dimension.levels.each do |l|
+        # raise l.inspect
+      end
+      
+      path = path.collect { |p| 
+        p == :all ? "this is awkward" : p
+      }
+      puts "[path] #{path.inspect}"
       # Get position of requested level in dimension's levels
       position = dimension.levels.find_index(level)
       path = path[0, position+1].join(PATH_SEPARATOR)
@@ -131,7 +149,7 @@ module Brewery
     def to_slice
       slice = @cube.whole
       self.cuts.each do |dimension, path|
-        # puts "#{dimension.to_s} → #{path.to_s}"
+        # puts "(generating slice ...) #{dimension.name} → #{path.to_s}"
         cut = Cut.point_cut(dimension, path)
         slice = slice.cut_by(cut)
       end
