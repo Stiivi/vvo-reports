@@ -94,10 +94,13 @@ module Brewery
     
     # Converts stored cuts to URL-compatible parameter.
     # @return [String] Parameter to be used in URL.
-    def to_param
-      @cuts.collect do |dim, val|
+    def to_param(max_level = nil)
+      @cuts.collect do |dim, path|
         dim = dim.name
-        path = val.collect { |p| 
+        if max_level
+          path = path[0, max_level]
+        end
+        path = path.collect { |p| 
           p == :all ? "*" : p
         }.collect { |p|
           URI.escape(p.to_s)
