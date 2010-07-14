@@ -9,6 +9,12 @@ fields:
         name: vestnik_cislo
         label: Číslo vestníka
     -
+        name: cislo_oznamenia
+        label: Číslo oznámenia
+    -
+        name: source_url
+        label: Pôvodný dokument
+    -
         name: zakazka_nazov
         label: Názov zákazky
     -
@@ -30,3 +36,15 @@ fields:
     -
         name: zakazka_hodnota
         label: Hodnota zákazky
+    -
+        name: obstaravatel_contact_email
+        label: Kontaktný email obstarávateľa
+    -
+        name: obstaravatel_contact_phone
+        label: Kontaktný telefón obstarávateľa
+    -
+        name: obstaravatel_contact_url
+        label: Web obstarávateľa
+    -
+        name: obstaravatel_contact_person
+        label: Kontaktná osoba obstarávateľa

@@ -20,6 +20,9 @@
   %dl.clearfix
     %dt Podiel tejto zmluvy
     %dd= number_to_percentage(@fact['zmluva_hodnota']/@fact['zakazka_hodnota']*100, :precision => 1)
+  %dl.clearfix
+    %dt Zdroj informacie
+    %dd= link_to('dokument', @fact['source_url'])
 
 .details
 
