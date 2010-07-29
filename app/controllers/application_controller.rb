@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   
   def initialize_model
     Brewery::load_rails_configuration
-    Brewery::create_default_workspace(:default)
+    Brewery::create_default_workspace(:vvo_data)
     
     @model = Brewery::Model.model_with_name("verejne_obstaravania")
     @cube = @model.cube_with_name("zmluvy")
