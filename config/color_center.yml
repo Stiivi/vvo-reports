@@ -1,13 +1,6 @@
 palettes:
   default:
     colors: &default_colors
-      - FCFBA6
-      - ACCF90
-      - B8C7D7
-      - BBA67E
-      - EEAC7B
-      - B6B6AA
-      - DFA4A9
       - F2DC55
       - 609A47
       - 4A71A8
@@ -15,6 +8,13 @@ palettes:
       - DB6631
       - 6E7466
       - C13353
+      - FCFBA6
+      - ACCF90
+      - B8C7D7
+      - BBA67E
+      - EEAC7B
+      - B6B6AA
+      - DFA4A9
       - EBB713
       - 246F09
       - 1C458D

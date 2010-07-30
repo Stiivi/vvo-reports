@@ -16,7 +16,7 @@ module Reports
       table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
 
       result.rows.each { |row|
-          table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
+          table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
       }
       remainder_row = result.remainder
       table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
@@ -36,11 +36,11 @@ module Reports
     table.add_column(:text, "Obstarávateľ", :org)
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€', :alignment => :right})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
-    
     result.rows.each { |row|
-        table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
+        table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     remainder_row = result.remainder
+    puts "==> GOT REMAINDER: #{remainder_row}"
     table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
     
     return table
@@ -73,7 +73,7 @@ module Reports
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
     result.rows.each { |row|
-      table.add_row([[row[key_field], row[description_field]], row[:sum], row[:podiel]])
+      table.add_row([[row[key_field], row[description_field]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     
     remainder_row = result.remainder
@@ -95,7 +95,7 @@ module Reports
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
     result.rows.each { |row|
-        table.add_row([[row[:druh_postupu], row[:druh_postupu]], row[:sum], row[:podiel]])
+        table.add_row([[row[:druh_postupu], row[:druh_postupu]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     return table
   end
@@ -118,7 +118,7 @@ module Reports
     table.add_column(:currency, "Suma", :sum, {:precision => 0, :currency => '€'})
 
     result.rows.each { |row|
-        table.add_row(["#{row[:month_name]} #{row[:year]}", row[:sum]])
+        table.add_row(["#{row[:month_name]} #{row[:year]}", row[:zmluva_hodnota_sum]])
     }
     
     table
