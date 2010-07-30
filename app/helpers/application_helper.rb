@@ -46,8 +46,8 @@ module ApplicationHelper
      years.insert(0, ["‹ Rok ›", nil])
      months = date_dim.list_of_values([:all]).map{|k|[k[:month_name].to_s, k[:month].to_s]}
      months.insert(0, ["‹ Mesiac ›", nil])
-     years_select = select_tag(:"date[0]", options_for_select(years, selected_year))
-     months_select = select_tag(:"date[1]", options_for_select(months, selected_month))
+     years_select = select_tag(:"date[0]", options_for_select(years, selected_year), :class => "year")
+     months_select = select_tag(:"date[1]", options_for_select(months, selected_month), :class => "month")
      return months_select + 
             " " +
             years_select
