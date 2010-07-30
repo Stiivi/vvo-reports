@@ -80,7 +80,7 @@ module Brewery
     # @param [Dimension] dimension of which cut should be removed
     # @see remove_cut
     def without(dim)
-      alter_ego = Marshal.load(Marshal.dump(self))
+      alter_ego = self.clone
       alter_ego.remove_cut(dim)
       alter_ego
     end
@@ -149,6 +149,15 @@ module Brewery
     def to_slice
       slice = @cube.whole
       self.cuts.each do |dimension, path|
+        # Remove * from end
+        path.reverse_each do |part|
+          if part == :all
+            path.delete(part)
+          else
+            break
+          end
+        end
+        next if path.empty?
         # puts "(generating slice ...) #{dimension.name} → #{path.to_s}"
         cut = Cut.point_cut(dimension, path)
         slice = slice.cut_by(cut)

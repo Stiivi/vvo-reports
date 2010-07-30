@@ -11,6 +11,9 @@ Vvo::Application.routes.draw do |map|
   resources :lists
   resources :facts
   
+  # Cut
+  resource :cut
+  
   # Pages
   resources :pages
   

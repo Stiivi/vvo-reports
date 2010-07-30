@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
   def show
     # Slicer with cuts from param
     @slicer = Brewery::CubeSlicer.new(@cube)
-    @slicer.update_from_param("date:2009")
+    # @slicer.update_from_param("date:2009")
     
     # Update from params
     if params[:cut]

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module ApplicationHelper
   
   def link_to_cut(dimension_name, label, path)
@@ -30,5 +32,24 @@ module ApplicationHelper
        new_direction = direction
      end
      link_to text, update_params(:sort => column.to_s, :dir => new_direction), :class => html_class
+   end
+   
+   def date_select
+     selected_year, selected_month = nil, nil
+     @slicer.cuts.each do |dim, path|
+       if dim.name == "date"
+         selected_year, selected_month = *path
+       end
+     end
+     date_dim = @cube.dimension_with_name(:date)
+     years = date_dim.list_of_values([]).map{|k|[k[:year].to_s, k[:year].to_s]}
+     years.insert(0, ["‹ Rok ›", nil])
+     months = date_dim.list_of_values([:all]).map{|k|[k[:month_name].to_s, k[:month].to_s]}
+     months.insert(0, ["‹ Mesiac ›", nil])
+     years_select = select_tag(:"date[0]", options_for_select(years, selected_year))
+     months_select = select_tag(:"date[1]", options_for_select(months, selected_month))
+     return months_select + 
+            " " +
+            years_select
    end
 end

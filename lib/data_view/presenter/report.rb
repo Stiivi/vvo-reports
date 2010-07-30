@@ -57,8 +57,7 @@ module DataView
         
         if @link
           a_element = left.new_child(:a, data_cell.formatted_value)
-          # [Hack - to be solved in some other way] Deep clones current slice.
-          current_slicer = Marshal.load(Marshal.dump(@slicer))
+          current_slicer = @slicer.clone
           
           # Add it to our slicer
           current_slicer.
