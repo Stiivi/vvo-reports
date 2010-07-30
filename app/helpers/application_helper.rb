@@ -48,8 +48,8 @@ module ApplicationHelper
      months.insert(0, ["‹ Mesiac ›", nil])
      years_select = select_tag(:"date[0]", options_for_select(years, selected_year), :class => "year")
      months_select = select_tag(:"date[1]", options_for_select(months, selected_month), :class => "month")
-     return months_select + 
+     return years_select + 
             " " +
-            years_select
+            months_select
    end
 end

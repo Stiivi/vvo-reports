@@ -51,6 +51,14 @@ module Brewery
         path = value.split(PATH_SEPARATOR).collect { |v|
           v == "*" ? :all : v
         }
+        path.reverse_each do |part|
+          if part == :all
+            path.delete(part)
+          else
+            break
+          end
+        end
+        
         # Find cut with same dimension
         cut_index = @cuts.find_index { |c| c[0] == dimension }
         if cut_index
@@ -149,15 +157,6 @@ module Brewery
     def to_slice
       slice = @cube.whole
       self.cuts.each do |dimension, path|
-        # Remove * from end
-        path.reverse_each do |part|
-          if part == :all
-            path.delete(part)
-          else
-            break
-          end
-        end
-        next if path.empty?
         # puts "(generating slice ...) #{dimension.name} → #{path.to_s}"
         cut = Cut.point_cut(dimension, path)
         slice = slice.cut_by(cut)
