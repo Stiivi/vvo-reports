@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
   include Brewery
   include Reports
   
-  before_filter :initialize_model
+  before_filter :initialize_model, :set_limit
   
   # The only two methods Rails need. Will find and display
   # report.
@@ -47,6 +47,26 @@ class ReportsController < ApplicationController
   # user asked for.
   
   protected
+  
+  def default
+    @limit = 5
+    current_month = Date.today.strftime("%Y-%m")
+    # current_month = "2009-6"
+    @slicer.update_from_param("date:#{current_month}")
+    slice = @slicer.to_slice
+    
+    load_all_views(slice) do
+      @dodavatelia = top_10_dodavatelia(slice, :sum => true)
+      @obstaravatelia = top_10_obstaravatelia(slice, :sum => true)
+    end
+    
+    @dodavatelia_table.add_cell_presenter({:col => :first, :row => [5]}, 
+      @remainder_presenter)
+      
+    @obstaravatelia_table.add_cell_presenter({:col => :first, :row => [5]}, 
+      @remainder_presenter)
+    # raise @dodavatelia_table.data.rows.count.to_s
+  end
   
   def all
     load_all_views(@slicer.to_slice)
@@ -101,27 +121,29 @@ class ReportsController < ApplicationController
       {:link => :cut}
     end
     
+    yield if block_given?
+    
     # This presenter will be shared across all tables.
-    remainder_presenter = DataView::Presenter::Report.new(:link => false)
+    @remainder_presenter = DataView::Presenter::Report.new(:link => false)
     
     # Dodavatelia
-    @dodavatelia = top_10_dodavatelia(slice)
+    @dodavatelia ||= top_10_dodavatelia(slice)
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
     @dodavatelia_table.add_cell_presenter(
       {:col => [:firma], :row => :all},
       DataView::Presenter::Report.new({:report => :supplier, :dimension => :dodavatel}.merge(presenter_opts))
     )
     @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
-      remainder_presenter)
+      @remainder_presenter)
     @dodavatelia_chart = DataView::PieChart.new(@dodavatelia, {:labels => 0, :series => 1})
       
     # Obstaravatelia
-    @obstaravatelia = top_10_obstaravatelia(slice)
+    @obstaravatelia ||= top_10_obstaravatelia(slice)
     @obstaravatelia_table = DataView::Table.new(@obstaravatelia)
     @obstaravatelia_table.add_cell_presenter({:col => [:org], :row => :all},
       DataView::Presenter::Report.new({:report => :procurer, :dimension => :obstaravatel, :level => 1, :link => :report}.merge(presenter_opts)))
     @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
-        remainder_presenter)
+        @remainder_presenter)
     @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
       
     # Typy tovarov
@@ -131,7 +153,7 @@ class ReportsController < ApplicationController
       {:col => [0], :row => :all},
       DataView::Presenter::Report.new({:dimension => :cpv, :report => :cpv}.merge(presenter_opts)))
     @typy_tovarov_table.add_cell_presenter({:col => :first, :row => :last}, 
-        remainder_presenter)
+        @remainder_presenter)
     
     # Druhy postupov
     @druhy_postupov = druh_postupu(slice)
@@ -150,10 +172,6 @@ class ReportsController < ApplicationController
   end
   
   def report_in_slice?(report, slicer)
-    # report: supplier
-    # slicer: #<Brewery::CubeSlicer:0x00000103b326b8 @cube=#<Brewery::Cube @id=1 @name="zmluvy" @label="UzatvorenÃ© zmluvy verejnÃ©ho obstarÃ¡vania" @description=<not loaded> @fact_table="ft_vvo_zmluvy">, @cuts=[[#<Brewery::Dimension @id=2 @name="date" @label="DÃ¡tum" @description=<not loaded> @key_field="id" @table="dm_date" @default_hierarchy_name=nil>, ["2009"]], [#<Brewery::Dimension @id=3 @name="dodavatel" @label="DodÃ¡vateÄ¾" @description=<not loaded> @key_field="id" @table="dm_supplier" @default_hierarchy_name=nil>, [:all, "36862631"]]]>
-    # slicer.cuts: [[#<Brewery::Dimension @id=2 @name="date" @label="DÃ¡tum" @description=<not loaded> @key_field="id" @table="dm_date" @default_hierarchy_name=nil>, ["2009"]], [#<Brewery::Dimension @id=3 @name="dodavatel" @label="DodÃ¡vateÄ¾" @description=<not loaded> @key_field="id" @table="dm_supplier" @default_hierarchy_name=nil>, [:all, "36862631"]]]
-    
     # What dimension reports require
     # FIXME Put this somewhere else. Like maybe into YAML file or something.
     reports = {
@@ -164,7 +182,7 @@ class ReportsController < ApplicationController
     }
     
     cuts = slicer.cuts.collect { |cut| cut[0].name }
-    required_cuts = reports[report.to_sym]
+    required_cuts = reports[report.to_sym] || []
     required_cuts.each do |cut|
       return false unless cuts.include?(cut.to_s)
     end
@@ -172,5 +190,8 @@ class ReportsController < ApplicationController
     return true
   end
   
+  def set_limit
+    @limit = 10
+  end
   
 end

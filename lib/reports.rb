@@ -3,11 +3,11 @@
 module Reports
   include Brewery
   
-  def top_10_dodavatelia(slice)
+  def top_10_dodavatelia(slice, options = {})
       result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :dodavatel, 
       			                        :row_levels => [:organisation],
       			                        :limit => :rank,
-      			                        :limit_value => 10,
+      			                        :limit_value => @limit,
       			                        :limit_sort => :top})
 
       table = DataTable.new
@@ -19,17 +19,20 @@ module Reports
           table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
       }
       remainder_row = result.remainder
-      table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
+      table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
       
+      if options[:sum]
+        table.add_row([["spolu", "Spolu"], result.summary[:sum], 1])
+      end
       
       table
   end
   
-  def top_10_obstaravatelia(slice)
+  def top_10_obstaravatelia(slice, options = {})
     result = slice.aggregate(:zmluva_hodnota, {:row_dimension => :obstaravatel, 
     			                        :row_levels => [:organisation],
     			                        :limit => :rank,
-    			                        :limit_value => 10,
+    			                        :limit_value => @limit,
     			                        :limit_sort => :top})
 
     table = DataTable.new
@@ -40,8 +43,12 @@ module Reports
         table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     remainder_row = result.remainder
-    puts "==> GOT REMAINDER: #{remainder_row}"
-    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
+    
+    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
+    
+    if options[:sum]
+      table.add_row([["spolu", "Spolu"], result.summary[:sum], 1])
+    end
     
     return table
   end
@@ -77,7 +84,7 @@ module Reports
     }
     
     remainder_row = result.remainder
-    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]])
+    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
     
     return table
   end

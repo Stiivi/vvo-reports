@@ -3,7 +3,7 @@ module DataView
     ALL = :all
     NONE = :none
     
-    attr_reader :cell_presenters
+    attr_reader :cell_presenters, :data
     
     # Initializes Table view (presenter?)
     # @param [Brewery::DataTable] Data table to be rendered

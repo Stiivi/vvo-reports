@@ -22,6 +22,17 @@
         = link_to "Kontakt", page_path("kontakt"), :class => "light"
     #container
       #navigation
+        %ul.nav.clearfix
+          %li
+            %a{:href => report_path('default')} Prehľad
+          %li
+            %a{:href => report_path('all')} Reporty
+          %li
+            %a{:href => dimension_path('procurer')} Obstarávatelia
+          %li
+            %a{:href => dimension_path('supplier')} Dodávatelia
+          %li
+            %a{:href => dimension_path('cpv')} Typy tovarov
       #content
         = yield
       #footer

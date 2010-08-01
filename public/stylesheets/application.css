@@ -30,7 +30,13 @@ body { background: #ececec url(../images/background.png) repeat-x; }
 
 #container { width: 996px; margin: 10px auto auto; }
 
-#navigation { background-image: url(../images/navigation_background.png); height: 45px; }
+#navigation { background-image: url(../images/navigation_background.png); height: 45px; text-align: left; position: relative; }
+
+ul.nav { position: absolute; left: 40px; top: 9px; }
+
+ul.nav li { float: left; }
+
+ul.nav li a { color: #adadad; font-weight: bold; text-decoration: none; font-size: 12px; }
 
 #content { padding: 20px 40px; background-image: url(../images/container_background.png); }
 
@@ -136,9 +142,11 @@ table.data_table a.sort.desc { padding-right: 10px; background: url(../images/so
 
 /* @end */
 
-/* @group Other */
+/* @group Other / Messages */
 
 span.color { width: 15px; height: 15px; padding-right: 10px; margin-right: 10px; }
+
+.note { color: #b7b7b7; font-size: 20px; text-align: center; padding-top: 50px; padding-bottom: 50px; }
 
 
 
