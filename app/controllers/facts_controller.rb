@@ -23,7 +23,6 @@ class FactsController < ApplicationController
 
   def index
     @slicer = Brewery::CubeSlicer.new(@cube)
-    @slicer.update_from_param("date:2009")
     if params[:cut]
       @slicer.update_from_param(params[:cut])
     end
