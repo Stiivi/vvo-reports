@@ -9,21 +9,21 @@
 
 .clearfix
   .left_column.clearfix
-    %h2.fl Dodávatelia
-    .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
-    = @dodavatelia_table.as_html
-  .right_column.clearfix
     %h2.fl Obstáravatelia
     .clearfix.fr
       = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button simple"
     = @obstaravatelia_table.as_html
+  .right_column.clearfix
+    %h2.fl Dodávatelia
+    .clearfix.fr
+      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
+    = @dodavatelia_table.as_html
 
 .clearfix
   .left_column
-    = @dodavatelia_chart.as_html
-  .right_column
     = @obstaravatelia_chart.as_html
+  .right_column
+    = @dodavatelia_chart.as_html
 
 %br
 %br
