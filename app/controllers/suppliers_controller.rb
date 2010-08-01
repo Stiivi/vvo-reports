@@ -11,7 +11,7 @@ class SuppliersController < ReportsController
   
   def show
     dimension = @cube.dimension_with_name(:dodavatel)
-    path = [:all, params[:id]]
+    path = [params[:id]]
     @detail = dimension.detail_for_path(path)
     
     slice = find_slice

@@ -109,7 +109,7 @@ class ReportsController < ApplicationController
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
     @dodavatelia_table.add_cell_presenter(
       {:col => [:firma], :row => :all},
-      DataView::Presenter::Report.new({:report => :supplier, :dimension => :dodavatel, :level => 1}.merge(presenter_opts))
+      DataView::Presenter::Report.new({:report => :supplier, :dimension => :dodavatel}.merge(presenter_opts))
     )
     @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
       remainder_presenter)
