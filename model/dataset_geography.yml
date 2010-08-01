@@ -1,0 +1,16 @@
+name: dm_geography
+label: "Geografia SR"
+description: "Geografické členenie SR na úrovni okresov"
+fields:
+    -
+        name: okres
+        label: Okres
+    -
+        name: okres_code
+        label: Kód okresu
+    -
+        name: kraj
+        label: Kraj
+    -
+        name: kraj_code
+        label: Kód kraja (ISO)

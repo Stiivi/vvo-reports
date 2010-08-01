@@ -2,10 +2,6 @@ name: dodavatel
 label: Dodávateľ
 table: dm_supplier
 levels:
-    region:
-        label: Región
-        fields:
-            - region
     organisation:
         label: Spoločnosť
         fields:
@@ -20,5 +16,4 @@ levels:
 hierarchies:
     default:
         levels:
-            - region
             - organisation

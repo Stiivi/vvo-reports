@@ -1,0 +1,19 @@
+name: geography
+label: Geografia
+table: dm_geography
+levels:
+    okres:
+        label: Okres
+        fields:
+            - okres_code
+            - okres
+    kraj:
+        label: Kraj
+        fields:
+            - kraj_code
+            - kraj
+hierarchies:
+    default:
+        levels:
+            - kraj
+            - okres
