@@ -18,7 +18,7 @@ class ListsController < ApplicationController
     @total = result.summary[:record_count]
     hodnota_zmluv = result.summary[:sum].to_f
     @slice.add_computed_field(:podiel) { |record|
-      record[:sum] / hodnota_zmluv
+      record[:zmluva_hodnota_sum] / hodnota_zmluv
     }
     
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => @total)
