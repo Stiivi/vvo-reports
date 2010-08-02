@@ -1,5 +1,11 @@
 %h1= @dimension.label
 
+- form_tag search_dimension_path(@dimension_name) do
+  %input{:name => "query"}
+  %input{:type => "submit", :value => "Hľadať"}
+  
+%br
+
 %table
   - @data.each do |row|
     - path = @path.clone.push(row[@level.level_fields.first.to_sym]).join('-')

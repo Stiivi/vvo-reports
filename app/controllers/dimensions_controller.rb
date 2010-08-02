@@ -12,11 +12,14 @@ class DimensionsController < ApplicationController
   end
   before_filter :initialize_model
   
+  before_filter do
+    @dimension_name = params[:id].to_sym
+    @dimension = @cube.dimension_with_name(@dimension_name)
+  end
+  
   ##
   # Shows particular dimension listing
   def show
-    @dimension_name = params[:id].to_sym
-    @dimension = @cube.dimension_with_name(@dimension_name)
     if params[:path]
       @path = params[:path].split('-')
     else
@@ -27,5 +30,11 @@ class DimensionsController < ApplicationController
     @levels = @dimension.levels
     @data = @dimension.list_of_values(@path)
     # raise data.to_yaml
+  end
+  
+  def search
+    search = SphinxSearch.new(params[:query], @dimension)
+    search.process
+    @results = search.results
   end
 end

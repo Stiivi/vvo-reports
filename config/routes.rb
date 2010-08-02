@@ -10,7 +10,11 @@ Vvo::Application.routes.draw do |map|
   resources :reports
   resources :lists
   resources :facts
-  resources :dimensions
+  resources :dimensions do
+    member do
+      post :search
+    end
+  end
   
   # Cut
   resource :cut
