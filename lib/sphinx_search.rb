@@ -13,7 +13,14 @@ class SphinxSearch
     if @dimension
       sphinx_client.SetFilter('dimension_id', [@dimension.id])
     end
-    @results = sphinx_client.Query(@query, INDEX_NAME)
+    @result = {}
+    result = sphinx_client.Query(@query, INDEX_NAME)
+    document_ids= result['matches'].collect { |match|
+      match['id']
+    }
+    connection = Brewery::workspace.connection
+    dataset = connection[:idx_dimensions]
+    @results = dataset.filter(:id => document_ids).all
   end
   
   # def create_search_with_string(string)

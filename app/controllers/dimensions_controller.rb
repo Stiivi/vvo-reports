@@ -36,5 +36,26 @@ class DimensionsController < ApplicationController
     search = SphinxSearch.new(params[:query], @dimension)
     search.process
     @results = search.results
+    slicer = Brewery::CubeSlicer.new(@cube)
+    @results.each do |result|
+      level = @dimension.levels.select{|l|l.id == result[:level_id]}.first
+      level_order = find_level_order(@dimension, level)
+      param = ['*'] * level_order
+      value = CGI::escape(result[:value].to_s)
+      param.push(value)
+      param_string = param.join('-')
+      param = "#{@dimension.name}:#{param_string}"
+      slicer.update_from_param(param)
+      raise slicer.to_param
+    end
+  end
+  
+  def find_level_order(dimension, level)
+    order = 0
+    dimension.levels.each do |dim_level|
+      break if dim_level == level
+      order += 1
+    end
+    order
   end
 end
