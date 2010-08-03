@@ -144,6 +144,10 @@ table.data_table a.sort.desc { padding-right: 10px; background: url(../images/so
 
 /* @group Other / Messages */
 
+.small_box { width: 450px; }
+
+.small_box dt, .small_box dd { float: none; }
+
 span.color { width: 15px; height: 15px; padding-right: 10px; margin-right: 10px; }
 
 .note { color: #b7b7b7; font-size: 20px; text-align: center; padding-top: 50px; padding-bottom: 50px; }
