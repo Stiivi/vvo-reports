@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Procurement reports
+    %title Verejné obstarávania
     = stylesheet_link_tag "blueprint", "inscription", "application"
     = javascript_include_tag 'jquery.js', 'application.js'
     %script{:src => "http://www.google.com/jsapi", :type => "text/javascript"}
@@ -17,22 +17,22 @@
         |
         = link_to "Právne informácie", page_path("pravne-informacie"), :class => "light"
         |
-        = link_to "Mapa stránky", page_path("mapa-stranky"), :class => "light"
-        |
         = link_to "Kontakt", page_path("kontakt"), :class => "light"
     #container
       #navigation
         %ul.nav.clearfix
           %li
-            %a{:href => report_path('default')} Prehľad
+            %a{:href => report_path('default')} Úvod
           %li
-            %a{:href => report_path('all')} Reporty
+            %a{:href => report_path('all')} Celkový Prehľad
           %li
             %a{:href => dimension_path('obstaravatel')} Obstarávatelia
           %li
             %a{:href => dimension_path('dodavatel')} Dodávatelia
           %li
             %a{:href => dimension_path('cpv')} Typy tovarov
+          %li
+            %a{:href => dimension_path('geography')} Regióny
       #content
         = yield
       #footer
