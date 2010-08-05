@@ -21,9 +21,10 @@ def initialize_table
 		primary_key :id
 		column :dimension, :varchar
 		column :dimension_id, :integer
-		column :key, :integer
+		column :dimension_key, :integer
 		column :level, :varchar
 		column :level_id, :integer
+		column :level_key, :varchar
 		column :field, :varchar
 		column :value, :text
 	end
@@ -48,8 +49,8 @@ end
 def index_field(dimension, level, field)
 
     stmt = "INSERT INTO #{@index_table}
-                            (dimension, dimension_id, key, level, level_id, field, value)
-                SELECT '#{dimension.name}', #{dimension.id}, #{dimension.key_field}, '#{level.name}', #{level.id}, '#{field}', #{field}
+                            (dimension, dimension_id, dimension_key, level, level_id, level_key, field, value)
+                SELECT '#{dimension.name}', #{dimension.id}, #{dimension.key_field}, '#{level.name}', #{level.id}, #{level.key_field}, '#{field}', #{field}
                 FROM #{dimension.table}"
     
     @workspace.connection << stmt
