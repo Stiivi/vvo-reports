@@ -22,36 +22,49 @@ class ListsController < ApplicationController
     }
     
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => @total)
+    @page_size = @paginator.page_size
+    @current_page = @paginator.page-1
+    if params[:format] == "csv"
+      @page_size, @current_page = nil, nil
+    end
     
     self.send(type)
-    render :action => type
+    respond_to do |format|
+      format.html do
+        render :action => type
+      end
+      format.csv do
+        render :text => table_as_csv(@table)
+      end
+    end
   end
   
   def supplier
     result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => :dodavatel, 
   		                        :row_levels => [:organisation],
-  		                        :page_size => @paginator.page_size,
-  		                        :page => @paginator.page-1 })
+  		                        :page_size => @page_size,
+  		                        :page => @current_page })
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Firma", :firma)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
+        @table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
   end
   
   def procurer
     result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => :obstaravatel, 
   		                        :row_levels => [:organisation],
-  		                        :page_size => @paginator.page_size,
-  		                        :page => @paginator.page-1 })
+  		                        :page_size => @page_size,
+  		                        :page => @current_page })
+    
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Obstaravatel", :firma)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[:ico], row[:name]], row[:sum], row[:podiel]])
+        @table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
   end
   
@@ -72,32 +85,42 @@ class ListsController < ApplicationController
     
     result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => @dimension.name, 
   		                        :row_levels => levels_to_select,
-  		                        :page_size => @paginator.page_size,
-  		                        :page => @paginator.page-1 })
+  		                        :page_size => @page_size,
+  		                        :page => @current_page })
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Typ tovaru", description_field)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[key_field], row[description_field]], row[:sum], row[:podiel]])
+        @table.add_row([[row[key_field], row[description_field]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
   end
   
   def postup
     result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => :druh_postupu, 
   		                        :row_levels => [:druh_postupu],
-  		                        :page_size => @paginator.page_size,
-  		                        :page => @paginator.page-1 })
+  		                        :page_size => @page_size,
+  		                        :page => @current_page })
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Druh postupu", :druh_postupu)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[:druh_postupu], row[:druh_postupu]], row[:sum], row[:podiel]])
+        @table.add_row([[row[:druh_postupu], row[:druh_postupu]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
   end
   
   protected
+  
+  def table_as_csv(table)
+    result = ""
+    data = CSV.new(result)
+    data << table.columns.collect(&:identifier)
+    table.rows.each do |row|
+      data << row.collect { |cell| (cell.formatted_value || "%f"%cell.value) }
+    end
+    result
+  end
   
   def initialize_slicer
     @slicer = Brewery::CubeSlicer.new(@cube)
