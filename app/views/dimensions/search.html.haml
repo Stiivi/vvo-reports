@@ -1,3 +1,6 @@
 %h1= @dimension.label
 
-%pre= @results.to_yaml
+%ul
+  - @results.each do |result|
+    %li
+      = link_to result[:value], result[:link]

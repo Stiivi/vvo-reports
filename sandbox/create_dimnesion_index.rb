@@ -34,7 +34,7 @@ def index_dimension(dimension)
     puts "==> indexing dimension #{dimension.name}"
     levels = dimension.levels
     levels.each { |level|
-        puts "-->   indexing level #{level.name}"
+        puts "-->   indexing level #{level.name} (#{level.id})"
         level.level_fields.each { |field|
             puts "---     field #{field}"
 #            begin

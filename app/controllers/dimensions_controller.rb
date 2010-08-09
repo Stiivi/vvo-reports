@@ -41,12 +41,12 @@ class DimensionsController < ApplicationController
       level = @dimension.levels.select{|l|l.id == result[:level_id]}.first
       level_order = find_level_order(@dimension, level)
       param = ['*'] * level_order
-      value = CGI::escape(result[:value].to_s)
+      value = CGI::escape(result[:level_key].to_s)
       param.push(value)
       param_string = param.join('-')
       param = "#{@dimension.name}:#{param_string}"
       slicer.update_from_param(param)
-      raise slicer.to_param
+      result[:link] = report_path(@report_map[@dimension.name.to_sym], :cut => slicer.to_param)
     end
   end
   

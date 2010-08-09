@@ -22,7 +22,7 @@ module DataView
       
       chart_container_id = "chart_#{self.object_id}"
       chart_container = Html::Element.new("div", "", :id => chart_container_id)
-
+      
       colors_json = colors.to_json
       
       javascript_code = <<-HERE
