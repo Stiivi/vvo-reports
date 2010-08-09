@@ -39,10 +39,19 @@ class FactsController < ApplicationController
       sort_direction = DEFAULT_SORT_DIRECTION
     end
         
-    @facts = slice.facts(:page => @paginator.page-1,
-                         :page_size => @paginator.page_size,
-                         :order_by => sort_field,
-                         :order_direction => sort_direction )
+    respond_to do |format|
+      format.html {
+        @facts = slice.facts(:page => @paginator.page-1,
+                             :page_size => @paginator.page_size,
+                             :order_by => sort_field,
+                             :order_direction => sort_direction )
+      }
+      format.csv {
+        @facts = slice.facts
+        render :text => @facts.to_csv
+      }
+    end
+    
   end
 
   def show

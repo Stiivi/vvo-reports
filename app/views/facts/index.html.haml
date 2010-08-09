@@ -3,10 +3,15 @@
     %h1
       Zoznam zmlúv
       %em= "(%s zmlúv)" % number_with_delimiter(@paginator.total, :delimiter => " ")
+      
   .fr
     = render :partial => "reports/buttons"
 
 = render :partial => "reports/slicer"
+
+= link_to "Stiahnúť CSV", :format => "csv", :cut => params[:cut]
+%br
+%br
 
 %table.data_table
   %tr
