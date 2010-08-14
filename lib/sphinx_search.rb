@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class SphinxSearch
   INDEX_NAME = "dimensions"
   
