@@ -34,8 +34,8 @@ class ReportsController < ApplicationController
         return redirect_to report_path("all", :cut => params[:cut])
       end
       @report_type = report
-      self.send(report)
-      return render :action => report
+      self.send(report).to_yaml
+      return render :action => @template || report
     else
       self.all
       return render :action => "all"
@@ -94,6 +94,11 @@ class ReportsController < ApplicationController
     @detail = @slicer.detail_for_dimension(:druh_postupu)
     slice = @slicer.to_slice
     load_all_views(slice)
+  end
+  
+  def geography
+    load_all_views(@slicer.to_slice)
+    @template = "all"
   end
   
   protected

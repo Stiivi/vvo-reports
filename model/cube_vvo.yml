@@ -46,3 +46,5 @@ dimensions:
         fact_key: druh_postupu_id
     kriteria_vyhodnotenia:
         fact_key: kriteria_vyhodnotenia_id
+    geography:
+        fact_key: geography_id
