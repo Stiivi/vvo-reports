@@ -50,4 +50,4 @@
 
 %h2 Vývoj v priebehu roka 
 
-= DataView::BarChart.new(@posledny_rok, {:labels => 0, :series => 1}).as_html
+= DataView::BarChart.new(@posledny_rok, {:labels => 0, :series => 1, :dimension => :date}).as_html

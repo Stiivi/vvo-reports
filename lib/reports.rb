@@ -125,9 +125,9 @@ module Reports
     table.add_column(:currency, "Suma", :sum, {:precision => 0, :currency => '€'})
 
     result.rows.each { |row|
-        table.add_row(["#{row[:month_name]} #{row[:year]}", row[:zmluva_hodnota_sum]])
+        table.add_row([["#{row[:year]}-#{row[:month]}", "#{row[:month_name]} #{row[:year]}"], row[:zmluva_hodnota_sum]])
     }
-    
+
     table
   end
   

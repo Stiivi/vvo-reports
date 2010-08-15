@@ -36,45 +36,11 @@ module DataView
           color_el[:style] = "background-color: ##{color}"
         end
 
-        # Make path
-        if cut = @slicer.cut_for_dimension(@dimension)
-          dimension = cut[0]
-          path = cut[1].clone
-          if dimension.levels.count <= path.count
-            @link = false
-          else
-            path << data_cell.value
-          end
-        else
-          path = if @level == 0
-            [data_cell.value]
-          else
-            (["*"]*@level + [data_cell.value])
-          end
-        end
-        
-        path = path.join("-")
         
         if @link
           a_element = left.new_child(:a, data_cell.formatted_value)
-          current_slicer = @slicer.clone
-          
-          # Add it to our slicer
-          current_slicer.
-            update_from_param("#{@dimension}:#{path}")
-          
-          # Make some params out of this
-          params = @controller.params
-          params[:cut] = current_slicer.to_param
-          
-          # Add report name to params
-          if @link == :report && @report
-            params[:id] = @report
-          else
-            params[:id] = params[:id] || "all"
-          end
-          
-          url = @controller.url_for(params)    
+          cut_path = cut_path(data_cell.value)
+          url = path(cut_path)
           a_element[:href] = url
           data_element = a_element
         else
@@ -93,6 +59,51 @@ module DataView
         #         button.new_child(:img, "", :src => "/images/plus_blue.png")
         #         report_template = @controller.params[:id] || "all"
         #         button[:href] = @controller.report_path(report_template, :cut => current_slicer.to_param, :object_id => @controller.params[:object_id])
+      end
+      
+      def cut_path(value)
+        if cut = @slicer.cut_for_dimension(@dimension)
+          puts cut.inspect
+          dimension = cut[0]
+          path = cut[1].clone
+          if dimension.levels.count <= path.count
+            @link = false
+          else
+            path << value
+          end
+        else
+          path = if @level == 0
+            [value]
+          else
+            (["*"]*@level + [value])
+          end
+        end
+        
+        path = path.join("-")
+        path
+      end
+      
+      def path(path)
+        # path = cut_path(value)
+        
+        current_slicer = @slicer.clone
+        
+        # Add it to our slicer
+        current_slicer.
+          update_from_param("#{@dimension}:#{path}")
+        
+        # Make some params out of this
+        params = @controller.params
+        params[:cut] = current_slicer.to_param
+        
+        # Add report name to params
+        if @link == :report && @report
+          params[:id] = @report
+        else
+          params[:id] = params[:id] || "all"
+        end
+        
+        url = @controller.url_for(params)
       end
       
       def truncate_text_in(element)

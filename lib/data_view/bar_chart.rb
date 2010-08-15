@@ -9,10 +9,14 @@ module DataView
     
     def as_html
       data_for_chart = []
+      links = []
       
       @data.rows.each_index do |row|
         labels = @data.formatted_value_at(row, @options[:labels])
         series = @data.value_at(row, @options[:series])
+        presenter = Presenter::Report.new(:dimension => @options[:dimension])
+        link = presenter.path(@data.value_at(row, @options[:labels]))
+        links << link
         data_for_chart << [labels, series.to_f]
       end
       
@@ -22,6 +26,7 @@ module DataView
       javascript_code = <<-HERE
       (function(){
         var json_data = #{data_for_chart.to_json};
+        var links_data = #{links.to_json};
         google.setOnLoadCallback(function(){
           var table = new google.visualization.DataTable();
           table.addColumn('string', 'Label');
@@ -29,6 +34,13 @@ module DataView
           table.addRows(json_data);
           var chart = new google.visualization.ColumnChart(document.getElementById('#{chart_container_id}'));
           chart.draw(table, {width: 900, height: 240, is3D: true, labels: 'none'});
+          google.visualization.events.addListener(chart, 'select', function(){
+            var selection = chart.getSelection();
+            var selected = selection[0];
+            if (selected) {
+              document.location = links_data[selected.row];
+            };
+          });
         });
       })();
       HERE
