@@ -11,12 +11,12 @@
   .left_column.clearfix
     %h2.fl Obstáravatelia
     .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button simple"
+      = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param, :report => "cpv"), :class => "button simple"
     = @obstaravatelia_table.as_html
   .right_column.clearfix
     %h2.fl Dodávatelia
     .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
+      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param, :report => "cpv"), :class => "button simple"
     = @dodavatelia_table.as_html
 
 .clearfix
