@@ -1,4 +1,5 @@
-name: ft_vvo_zmluvy
+name: zmluvy
+object_name: ft_vvo_zmluvy
 label: "Uzatvorené zmluvy verejného obstarávania"
 description: "Uzatvorené zmluvy verejného obstarávania Slovenskej Republiky"
 fields:

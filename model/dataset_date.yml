@@ -1,0 +1,28 @@
+name: date
+object_name: dm_date
+label: "Datum"
+fields:
+    -
+        name: year
+        label: Rok
+    -
+        name: month
+        label: Mesiac
+    -
+        name: month_name
+        label: Mesiac
+    -
+        name: month_sname
+        label: Mesiac
+    -
+        name: day
+        label: Deň
+    -
+        name: week_day
+        label: Deň v týždni
+    -
+        name: week_day_name
+        label: Deň v týždni
+    -
+        name: week_day_sname
+        label: Deň v týždni

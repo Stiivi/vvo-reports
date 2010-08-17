@@ -5,13 +5,13 @@ levels:
     okres:
         label: Okres
         fields:
-            - okres_code
-            - okres
+            - geography.okres_code
+            - geography.okres
     kraj:
         label: Kraj
         fields:
-            - kraj_code
-            - kraj
+            - geography.kraj_code
+            - geography.kraj
 hierarchies:
     default:
         levels:

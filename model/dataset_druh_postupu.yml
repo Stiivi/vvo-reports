@@ -1,0 +1,7 @@
+name: druh_postupu
+object_name: dm_druh_postupu
+label: Druh postupu
+fields:
+    -
+        name: druh_postupu
+        label: Druh postupu

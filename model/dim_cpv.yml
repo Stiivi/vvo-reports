@@ -2,39 +2,38 @@ type: dimension
 name: cpv
 label: "Predmet obstarávania"
 description: "Predmet obstarávania podľa kódu spoločného slovníka obstarávania (CPV)"
-table: dm_cpv
 levels:
     division:
         label: oddiel
         fields:
-            - cpv_division
-            - cpv_division_desc
-        description_field: cpv_division_desc
+            - cpv.cpv_division
+            - cpv.cpv_division_desc
+        description_field: cpv.cpv_division_desc
     group:
         label: skupina
         fields:
-            - cpv_group
-            - cpv_group_desc
-        description_field: cpv_group_desc
+            - cpv.cpv_group
+            - cpv.cpv_group_desc
+        description_field: cpv.cpv_group_desc
     class:
         label: trieda
         fields:
-            - cpv_class
-            - cpv_class_desc
-        description_field: cpv_class_desc
+            - cpv.cpv_class
+            - cpv.cpv_class_desc
+        description_field: cpv.cpv_class_desc
     category:
         label: kategória
         fields:
-            - cpv_category
-            - cpv_category_desc
-        description_field: cpv_category_desc
+            - cpv.cpv_category
+            - cpv.cpv_category_desc
+        description_field: cpv.cpv_category_desc
     detail:
         label: detail
         fields:
-            - cpv_code
-            - description
-            - cpv_detail
-        description_field: description
+            - cpv.cpv_code
+            - cpv.description
+            - cpv.cpv_detail
+        description_field: cpv.description
 hierarchies:
     default:
         levels:

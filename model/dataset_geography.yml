@@ -1,4 +1,5 @@
-name: dm_geography
+name: geography
+object_name: dm_geography
 label: "Geografia SR"
 description: "Geografické členenie SR na úrovni okresov"
 fields:

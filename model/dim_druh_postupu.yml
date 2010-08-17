@@ -5,7 +5,7 @@ levels:
     druh_postupu:
         label: druh_postupu
         fields:
-            - druh_postupu
+            - druh_postupu.druh_postupu
 hierarchies:
     default:
         levels:

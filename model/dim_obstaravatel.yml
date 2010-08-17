@@ -5,14 +5,14 @@ levels:
     sector:
         label: Sektor
         fields:
-            - account_sector_code
-            - account_sector
+            - obstaravatel.account_sector_code
+            - obstaravatel.account_sector
     organisation:
         label: Spoločnosť
         fields:
-            - ico
-            - name
-            - address
+            - obstaravatel.ico
+            - obstaravatel.name
+            - obstaravatel.address
 hierarchies:
     default:
         levels:

@@ -10,14 +10,14 @@
 
 %table
   - @data.each do |row|
-    - path = @path.clone.push(row[@level.level_fields.first.to_sym]).join('-')
+    - path = @path.clone.push(row[@level.key_field.to_sym]).join('-')
     %tr
       %td
         - if @level_number+1 == @levels.count
-          = row[@level.short_description_field.to_sym]
+          = row[@description_field.to_sym]
         - else
           %a{:href => url_for(:path => path)}
-            = row[@level.short_description_field.to_sym]
+            = row[@description_field.to_sym]
       %td
         %a{:href => report_path(@report_map[@dimension_name], :cut => "#{@dimension_name}:#{path}")}
           Report ›

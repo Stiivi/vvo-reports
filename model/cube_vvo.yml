@@ -1,50 +1,34 @@
 name: zmluvy
 label: "Uzatvorené zmluvy verejného obstarávania"
 description: "Uzatvorené zmluvy verejného obstarávania Slovenskej Republiky"
-fact_table: ft_vvo_zmluvy
-dataset_name: ft_vvo_zmluvy
-fields:
-    -
-        name: document_id
-        label: ID dokumentu E-Vestníka
-    -
-        name: vestnik_cislo
-        label: Číslo vestníka
-    -
-        name: zakazka_nazov
-        label: Názov zákazky
-    -
-        name: elektronicka_aukcia_flag
-        label: Elektronická aukcia
-    -
-        name: zakazka_eurofondy_flag
-        label: Eurofondy
-    -
-        name: pocet_zmluv
-        label: Počet zmlúv obstarávania
-    -
-        name: vestnik_datum
-        label: Dátum oznámenia
-    -
-        name: zmluva_hodnota
-        field_type: measure
-        label: Hodnota zmluvy
-    -
-        name: zakazka_hodnota
-        field_type: measure
-        label: Hodnota zákazky
+fact_dataset: zmluvy
 dimensions:
-    date:
-        fact_key: vestnik_datum_id
-    cpv:
-        fact_key: cpv_kod_id
-    obstaravatel:
-        fact_key: obstaravatel_org_id
-    dodavatel:
-        fact_key: dodavatel_id
-    druh_postupu:
-        fact_key: druh_postupu_id
-    kriteria_vyhodnotenia:
-        fact_key: kriteria_vyhodnotenia_id
-    geography:
-        fact_key: geography_id
+    - date
+    - cpv
+    - obstaravatel
+    - dodavatel
+    - druh_postupu
+    - kriteria_vyhodnotenia
+    - geography
+joins:
+    -
+        master: zmluvy.vestnik_datum_id
+        detail: date.id
+    -
+        master: zmluvy.cpv_kod_id
+        detail: cpv.id
+    -
+        master: zmluvy.obstaravatel_org_id
+        detail: obstaravatel.id
+    -
+        master: zmluvy.dodavatel_id
+        detail: dodavatel.id
+    -
+        master: zmluvy.druh_postupu_id
+        detail: druh_postupu.id
+    -
+        master: zmluvy.kriteria_vyhodnotenia_id
+        detail: kriteria_vyhodnotenia.id
+    -
+        master: zmluvy.geography_id
+        detail: geography.id
