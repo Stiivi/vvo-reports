@@ -30,6 +30,8 @@ class DimensionsController < ApplicationController
     @levels = @dimension.levels
     @data = @dimension.list_of_values(@path)
     # raise data.to_yaml
+    @slicer = Brewery::CubeSlicer.new(@cube)
+    @slicer.update_from_param("#{@dimension.name}:#{@path.join('-')}")
   end
   
   def search

@@ -1,5 +1,7 @@
 %h1= @dimension.label
 
+= render :partial => "slicer"
+
 - form_tag search_dimension_path(@dimension_name) do
   %input{:name => "query"}
   %input{:type => "submit", :value => "Hľadať"}
