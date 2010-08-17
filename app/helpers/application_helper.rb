@@ -42,14 +42,25 @@ module ApplicationHelper
        end
      end
      date_dim = @cube.dimension_with_name(:date)
-     years = date_dim.list_of_values([]).map{|k|[k[:year].to_s, k[:year].to_s]}
+     slice = @cube.whole
+
+     values = slice.dimension_values_at_path(date_dim, [])
+     years = values.collect { | row | [row[:year].to_s, row[:year].to_s] }
      years.insert(0, ["‹ Rok ›", nil])
-     months = date_dim.list_of_values([:all]).map{|k|[k[:month_name].to_s, k[:month].to_s]}
+
+     if selected_year
+        year = selected_year
+     else
+        year = :all
+     end
+     
+     values = slice.dimension_values_at_path(date_dim, [year])
+     months = values.collect { | row | [ row[:month_name].to_s, row[:month].to_s ] }
      months.insert(0, ["‹ Mesiac ›", nil])
+
      years_select = select_tag(:"date[0]", options_for_select(years, selected_year), :class => "year")
      months_select = select_tag(:"date[1]", options_for_select(months, selected_month), :class => "month")
-     return years_select + 
-            " " +
-            months_select
+
+     return years_select + " " + months_select
    end
 end

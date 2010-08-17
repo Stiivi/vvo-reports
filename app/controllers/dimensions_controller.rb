@@ -28,7 +28,8 @@ class DimensionsController < ApplicationController
     @level_number = @path.count
     @level = @dimension.default_hierarchy.levels[0..@level_number].last
     @levels = @dimension.levels
-    @data = @dimension.list_of_values(@path)
+    @description_field = @level.short_description_field
+    @data = @cube.whole.dimension_values_at_path(@dimension, @path, { :order_by => @description_field })
     # raise data.to_yaml
   end
   
