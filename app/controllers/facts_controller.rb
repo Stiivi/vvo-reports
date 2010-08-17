@@ -27,8 +27,8 @@ class FactsController < ApplicationController
       @slicer.update_from_param(params[:cut])
     end
     
-    slice = @slicer.to_slice
-    total = slice.aggregate(:zmluva_hodnota).summary[:record_count]
+    @slice = @slicer.to_slice
+    total = @slice.aggregate(:zmluva_hodnota).summary[:record_count]
     
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => total)
     if params[:sort]
@@ -41,13 +41,13 @@ class FactsController < ApplicationController
         
     respond_to do |format|
       format.html {
-        @facts = slice.facts(:page => @paginator.page-1,
+        @facts = @slice.facts(:page => @paginator.page-1,
                              :page_size => @paginator.page_size,
                              :order_by => sort_field,
                              :order_direction => sort_direction )
       }
       format.csv {
-        @facts = slice.facts
+        @facts = @slice.facts
         render :text => @facts.to_csv
       }
     end

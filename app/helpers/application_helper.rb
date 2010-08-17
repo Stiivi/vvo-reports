@@ -45,7 +45,7 @@ module ApplicationHelper
      slice = @cube.whole
 
      values = slice.dimension_values_at_path(date_dim, [])
-     years = values.collect { | row | [row[:year].to_s, row[:year].to_s] }
+     years = values.collect { | row | [row[:"date.year"].to_s, row[:"date.year"].to_s] }
      years.insert(0, ["‹ Rok ›", nil])
 
      if selected_year
@@ -55,7 +55,7 @@ module ApplicationHelper
      end
      
      values = slice.dimension_values_at_path(date_dim, [year])
-     months = values.collect { | row | [ row[:month_name].to_s, row[:month].to_s ] }
+     months = values.collect { | row | [ row[:"date.month_name"].to_s, row[:"date.month"].to_s ] }
      months.insert(0, ["‹ Mesiac ›", nil])
 
      years_select = select_tag(:"date[0]", options_for_select(years, selected_year), :class => "year")
