@@ -1,0 +1,7 @@
+name: kriteria_vyhodnotenia
+object_name: dm_kriteria_vyhodnotenia
+label: Kriteria vyhodnotenia
+fields:
+    -
+        name: kriteria_vyhodnotenia
+        label: Kriteria vyhodnotenia

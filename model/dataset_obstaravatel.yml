@@ -1,4 +1,5 @@
-name: dm_procurer
+name: obstaravatel
+object_name: dm_procurer
 label: Obstarávateľ
 fields:
     -
@@ -19,3 +20,6 @@ fields:
     -
         name: account_sector
         label: Sektor
+    -
+        name: account_sector_code
+        label: "Sektor - kod"

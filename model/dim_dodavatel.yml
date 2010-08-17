@@ -1,18 +1,17 @@
 name: dodavatel
 label: Dodávateľ
-table: dm_supplier
 levels:
     organisation:
         label: Spoločnosť
         fields:
-            - ico
-            - name
-            - address
-            - country
-            - date_start
-            - date_end
-            - legal_form
-            - ownership
+            - dodavatel.ico
+            - dodavatel.name
+            - dodavatel.address
+            - dodavatel.country
+            - dodavatel.date_start
+            - dodavatel.date_end
+            - dodavatel.legal_form
+            - dodavatel.ownership
 hierarchies:
     default:
         levels:

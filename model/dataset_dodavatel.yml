@@ -1,4 +1,5 @@
-name: dm_supplier
+name: dodavatel
+object_name: dm_supplier
 label: Dodávateľ
 fields:
     -

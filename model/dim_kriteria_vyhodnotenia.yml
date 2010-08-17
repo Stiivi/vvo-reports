@@ -5,7 +5,7 @@ levels:
     kriteria_vyhodnotenia:
         label: kriteria_vyhodnotenia
         fields:
-            - kriteria_vyhodnotenia
+            - kriteria_vyhodnotenia.kriteria_vyhodnotenia
 hierarchies:
     default:
         levels:

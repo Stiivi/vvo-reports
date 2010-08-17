@@ -1,0 +1,37 @@
+name: cpv
+label: Common Procurement Vocabulary
+object_name: dm_cpv
+fields:    
+    -
+        name: cpv_division
+        label: kód oddielu
+    -
+        name: cpv_division_desc
+        label: oddiel
+    -
+        name: cpv_group
+        label: kód skupiny
+    -
+        name: cpv_group_desc
+        label: skupina
+    -
+        name: cpv_class
+        label: kód triedy
+    -
+        name: cpv_class_desc
+        label: trieda
+    -
+        name: cpv_category
+        label: kód kategórie
+    -
+        name: cpv_category_desc
+        label: kategória
+    -
+        name: cpv_code
+        label: kód CPV
+    -
+        name: description
+        label: popis
+    -
+        name: cpv_detail
+        label:
