@@ -2,19 +2,7 @@
 
 class FactsController < ApplicationController
   before_filter :initialize_model
-  before_filter do
-    @fields = VIEW_FIELDS
-  end
 
-  VIEW_FIELDS = {
-    vestnik_cislo: "Vestník",
-    zakazka_nazov: "Názov zákazky",
-    zmluva_hodnota: "Hodnota zmluvy",
-    :"cpv.cpv_code" => "Kategória",
-    :"dodavatel.name" => "Dodávateľ",
-    :"obstaravatel.name" => "Obstarávateľ",
-    # druh_postupu: "Druh postupu"
-  }
   DEFAULT_SORT_FIELD = "vestnik_cislo"
   DEFAULT_SORT_DIRECTION = "asc"
 
@@ -22,6 +10,16 @@ class FactsController < ApplicationController
   DEFAULT_SORT_DIRECTION = "desc"
 
   def index
+    @fields = {
+    vestnik_cislo: "Vestník",
+    zakazka_nazov: "Názov zákazky",
+    zmluva_hodnota: "Hodnota zmluvy",
+    :"cpv.cpv_code" => "Kategória",
+    :"dodavatel.name" => "Dodávateľ",
+    :"obstaravatel.name" => "Obstarávateľ",
+    # druh_postupu: "Druh postupu"
+    }
+    
     @slicer = Brewery::CubeSlicer.new(@cube)
     if params[:cut]
       @slicer.update_from_param(params[:cut])
@@ -58,18 +56,5 @@ class FactsController < ApplicationController
     @id = params[:id]
     
     @fact = @cube.fact(@id)
-
-    @view_fields = [ 'vestnik_cislo', 
-                     'zakazka_nazov',
-                     'zmluva_hodnota',
-                     'cpv.cpv_code',
-                     'dodavatel.name',
-                     'dodavatel.region',
-                     'dodavatel.address',
-                     'obstaravatel.name',
-                     'obstaravatel.ico',
-                     'obstaravatel.address',
-                     'obstaravatel.account_sector',
-                     'druh_postupu' ]
   end
 end
