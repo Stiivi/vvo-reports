@@ -100,10 +100,13 @@ module Brewery
       # Get dimension
       dimension, path = cut_for_dimension(dimension.name)
       
+      slice = to_slice
       path.each_index do |i|
         if path[i] == :all
-          detail = dimension.detail_for_path(path)
-          field = dimension.levels[i].level_fields.first
+          # FIXME: what is this? and why is this called in a loop?
+          detail = slice.dimension_detail_at_path(dimension, path)
+          # detail = dimension.detail_for_path(path)
+          field = dimension.levels[i].key_field
           value = detail[field.to_sym]
           path[i] = value
         end
@@ -188,7 +191,8 @@ module Brewery
     
     def detail_for_dimension(dimension_name)
       dimension, path = cut_for_dimension(dimension_name)
-      dimension.detail_for_path(path)
+      slice = to_slice
+      slice.dimension_detail_at_path(dimension, path)
     end
     
     def clone

@@ -55,11 +55,11 @@ class ReportsController < ApplicationController
     current_month = Date.today.strftime("%Y-%m")
     # current_month = "2009-6"
     @slicer.update_from_param("date:#{current_month}")
-    slice = @slicer.to_slice
+    @slice = @slicer.to_slice
     
-    load_all_views(slice) do
-      @dodavatelia = top_10_dodavatelia(slice, :sum => true)
-      @obstaravatelia = top_10_obstaravatelia(slice, :sum => true)
+    load_all_views(@slice) do
+      @dodavatelia = top_10_dodavatelia(@slice, :sum => true)
+      @obstaravatelia = top_10_obstaravatelia(@slice, :sum => true)
     end
     
     @dodavatelia_table.add_cell_presenter({:col => :first, :row => [5]}, 
