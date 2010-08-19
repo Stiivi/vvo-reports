@@ -16,7 +16,9 @@ class SphinxSearch
       sphinx_client.SetFilter('dimension_id', [@dimension.id])
     end
     @result = {}
-    result = sphinx_client.Query(@query, INDEX_NAME)
+    query = @query.force_encoding('utf-8')
+    converted_query = Iconv.conv('us-ascii//translit', 'utf-8', query).gsub(/'/, '')
+    result = sphinx_client.Query(converted_query, INDEX_NAME)
     document_ids= result['matches'].collect { |match|
       match['id']
     }
