@@ -36,7 +36,7 @@ class ReportsController < ApplicationController
         return redirect_to report_path("all", :cut => params[:cut])
       end
       @report_type = report
-      self.send(report).to_yaml
+      self.send("report_#{report}")
       return render :action => @template || report
     else
       self.all
@@ -50,7 +50,7 @@ class ReportsController < ApplicationController
   
   protected
   
-  def default
+  def report_default
     @limit = 5
     current_month = Date.today.strftime("%Y-%m")
     # current_month = "2009-6"
@@ -70,35 +70,35 @@ class ReportsController < ApplicationController
     # raise @dodavatelia_table.data.rows.count.to_s
   end
   
-  def all
+  def report_all
     load_all_views(@slicer.to_slice)
   end
   
-  def supplier
+  def report_supplier
     @detail = @slicer.detail_for_dimension(:dodavatel)
     slice = @slicer.to_slice
     load_all_views(slice)
   end
   
-  def procurer
+  def report_procurer
     @detail = @slicer.detail_for_dimension(:obstaravatel)
     slice = @slicer.to_slice
     load_all_views(slice)
   end
   
-  def cpv
+  def report_cpv
     @detail = @slicer.detail_for_dimension(:cpv)
     slice = @slicer.to_slice
     load_all_views(slice)
   end
   
-  def postup
+  def report_postup
     @detail = @slicer.detail_for_dimension(:druh_postupu)
     slice = @slicer.to_slice
     load_all_views(slice)
   end
   
-  def geography
+  def report_geography
     load_all_views(@slicer.to_slice)
     @template = "all"
   end
