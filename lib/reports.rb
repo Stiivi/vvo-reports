@@ -16,7 +16,7 @@ module Reports
       table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
 
       result.rows.each { |row|
-          table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
+          table.add_row([[row[:"dodavatel.ico"], row[:"dodavatel.name"]], row[:zmluva_hodnota_sum], row[:podiel]])
       }
       remainder_row = result.remainder
       table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
@@ -40,7 +40,7 @@ module Reports
     table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€', :alignment => :right})
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2 , :alignment => :right} )
     result.rows.each { |row|
-        table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
+        table.add_row([[row[:"obstaravatel.ico"], row[:"obstaravatel.name"]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     remainder_row = result.remainder
     
@@ -102,7 +102,7 @@ module Reports
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
     result.rows.each { |row|
-        table.add_row([[row[:druh_postupu], row[:druh_postupu]], row[:zmluva_hodnota_sum], row[:podiel]])
+        table.add_row([[row[:"druh_postupu.druh_postupu"], row[:"druh_postupu.druh_postupu"]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     return table
   end
@@ -125,13 +125,15 @@ module Reports
     table.add_column(:currency, "Suma", :sum, {:precision => 0, :currency => '€'})
 
     result.rows.each { |row|
-        table.add_row([["#{row[:year]}-#{row[:month]}", "#{row[:month_name]} #{row[:year]}"], row[:zmluva_hodnota_sum]])
+        table.add_row([["#{row[:"date.year"]}-#{row[:"date.month"]}", "#{row[:"date.month_name"]} #{row[:"date.year"]}"], row[:zmluva_hodnota_sum]])
     }
 
     table
   end
   
   def level_for_dimension(slice, dimension)
+    # FIXME: use hierarchy
+    # FIXME: rename method to something more appropriate/descriptive
     cut = slice.cuts.find_all{|c|c.dimension == dimension}.first
     if cut
       level = dimension.next_level(cut.path)
