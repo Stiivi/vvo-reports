@@ -1,4 +1,7 @@
-/* @override http://localhost:3000/stylesheets/application.css?1 */
+/* @override 
+	http://localhost:3000/stylesheets/application.css?1
+	http://localhost:3001/stylesheets/application.css?1
+*/
 
 /* @group Typo */
 
@@ -22,13 +25,15 @@ a.light { color: #a8aeb2; text-decoration: none; }
 
 body { background: #ececec url(../images/background.png) repeat-x; }
 
-#header { height: 30px; background: url(../images/logo.png) no-repeat 30px 2px; text-align: right; width: 996px; margin: 10px auto auto; }
+#header { background: url(../images/logo.png) no-repeat 15px 0; text-align: right; width: 996px; margin: 10px auto auto; height: 40px; }
 
-#header ul.links { padding-top: 10px; padding-right: 24px; color: #bec5c9; }
+div.links { padding-top: 10px; padding-right: 24px; color: #bec5c9; }
 
-#header a.header { display: block; height: 35px; width: 300px; }
+div.links a { color: #808080; }
 
-#container { width: 996px; margin: 10px auto auto; }
+#header a.header { display: block; height: 35px; width: 370px; }
+
+#container { width: 996px; margin: 10px auto 0; padding-bottom: 30px; }
 
 #navigation { background-image: url(../images/navigation_background.png); height: 45px; text-align: left; position: relative; }
 
@@ -44,7 +49,7 @@ ul.nav li a { color: #adadad; font-weight: bold; text-decoration: none; font-siz
 
 #content .left_column { margin-right: 15px; }
 
-#footer { height: 50px; background: url(../images/footer_background.png) no-repeat; padding-top: 30px; }
+#footer { height: 50px; background: url(../images/footer_background.png) no-repeat; padding-top: 30px; padding-bottom: 10px; }
 
 
 
