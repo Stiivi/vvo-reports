@@ -1,6 +1,6 @@
 name: date
 label: Dátum
-key_field: id
+key_field: date.id
 levels:
     year:
         label: Rok
