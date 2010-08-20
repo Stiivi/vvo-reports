@@ -1,0 +1,10 @@
+- if @results[dimension]
+  %div
+    - unless @results[dimension].empty?
+      - @results[dimension].each do |result|
+        = form.radio_button dimension, result[:path], :id => "#{dimension}_#{result[:level_key]}"
+        %label{:for => "#{dimension}_#{result[:level_key]}"}= result[:value]
+        %br
+    - else
+      Žiadne výsledky
+    

@@ -44,6 +44,51 @@ class ReportsController < ApplicationController
     end
   end
   
+  def new
+    @results = {}
+    @param_report = {}
+  end
+  
+  def create
+    @results = {}
+    @param_report = params[:report] || {}
+    
+    show_report = @param_report.delete(:show_report)
+    if show_report
+      slicer = Brewery::CubeSlicer.new(@cube)
+      @param_report.each do |dimension_name, value|
+        param = "#{dimension_name}:#{value}"
+        slicer.update_from_param(param)
+      end
+      return redirect_to report_path(:all, :cut => slicer.to_param)
+    end
+    
+    params[:report].each do |dimension_name, query|
+      if query.blank?
+        @results[dimension_name.to_sym] = nil
+        next
+      end
+      dimension = @cube.dimension_with_name(dimension_name)
+      raise "No dimension with name #{dimension_name}" unless dimension
+      search = SphinxSearch.new(query, dimension)
+      search.limit = 5
+      search.process
+      @results[dimension.name.to_sym] = search.results.collect do |result|
+        level = dimension.levels.get(result[:level_id])
+        level_order = find_level_order(dimension, level)
+        param = ['*'] * level_order
+        value = CGI::escape(result[:level_key].to_s)
+        param.push(value)
+        result[:path] = param.join('-')
+        result
+      end
+    end
+    
+    render :action => "new"
+  end
+  
+  # raise @data.to_yaml
+  
   # These are private now. We don't want Rails to think of these
   # as actions. They are not. These are methods to display reports
   # user asked for.
