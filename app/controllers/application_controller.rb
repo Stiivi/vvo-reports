@@ -32,6 +32,18 @@ class ApplicationController < ActionController::Base
     @cube = @model.cube_with_name("zmluvy")
   end
   
-  
+  # FIXME: Move to a class for generating paths generally
+  def find_level_order(dimension, level)
+     if !level
+         # this should not happen
+         return 0
+     end
+     order = 0
+     dimension.default_hierarchy.levels.each do |dim_level|
+       break if dim_level.id == level.id
+       order += 1
+     end
+     return order
+   end
   
 end

@@ -1,0 +1,37 @@
+%h1 Vyhľadávanie
+
+- if params[:action] == "create"
+  %p.notice Zvoľte si výsledky pre vytvorenie prehľadu
+
+
+- form_for :report, :url => reports_path do |f|
+  
+  %div
+    %h2 Obstarávateľ
+    = f.text_field :obstaravatel, :value => @param_report[:obstaravatel]
+    = render :partial => "results", :locals => {:dimension => :obstaravatel, :form => f}
+  %br
+  
+  %div
+    %h2 Dodávateľ
+    = f.text_field :dodavatel, :value => @param_report[:dodavatel]
+    = render :partial => "results", :locals => {:dimension => :dodavatel, :form => f}
+  %br
+    
+  %div
+    %h2 Typ tovaru
+    = f.text_field :cpv, :value => @param_report[:cpv]
+    = render :partial => "results", :locals => {:dimension => :cpv, :form => f}
+  %br
+    
+  %div
+    %h2 Región
+    = f.text_field :geography, :value => @param_report[:geography]
+    = render :partial => "results", :locals => {:dimension => :geography, :form => f}
+  %br  
+  
+  - if params[:action] == "new"
+    = f.submit "Vyhľadať"
+  - elsif params[:action] == "create"
+    = f.hidden_field :show_report, :value => true
+    = f.submit "Zobraziť prehľad"

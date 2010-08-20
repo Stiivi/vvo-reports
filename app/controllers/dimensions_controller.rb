@@ -60,17 +60,4 @@ class DimensionsController < ApplicationController
       result[:level_obj] = level
     end
   end
-  
-  def find_level_order(dimension, level)
-    if !level
-        # this should not happen
-        return 0
-    end
-    order = 0
-    dimension.default_hierarchy.levels.each do |dim_level|
-      break if dim_level.id == level.id
-      order += 1
-    end
-    return order
-  end
 end

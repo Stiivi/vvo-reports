@@ -5,6 +5,7 @@ module DataView
       @options = options
       raise "Missing option :labels" unless options.has_key?(:labels)
       raise "Missing option :series" unless options.has_key?(:labels)
+      raise "Missing option :dimension" unless options.has_key?(:dimension)
     end
     
     def as_html

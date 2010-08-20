@@ -4,6 +4,7 @@ class SphinxSearch
   INDEX_NAME = "dimensions"
   
   attr_reader :results
+  attr_accessor :limit
   
   def initialize(query, dimension = nil)
     @query = query
@@ -14,6 +15,9 @@ class SphinxSearch
     sphinx_client = Sphinx::Client.new
     if @dimension
       sphinx_client.SetFilter('dimension_id', [@dimension.id])
+    end
+    if @limit
+      sphinx_client.SetLimits(0, @limit)
     end
     @result = {}
     query = @query.force_encoding('utf-8')
