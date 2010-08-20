@@ -47,27 +47,31 @@ end
 
 def index_field(dimension, level, field)
 
-    stmt = "INSERT INTO #{@index_table}
-                            (dimension, dimension_id, key, level, level_id, field, value)
-                SELECT '#{dimension.name}', #{dimension.id}, #{dimension.key_field}, '#{level.name}', #{level.id}, '#{field}', #{field}
-                FROM #{dimension.table}"
+    query = @cube.create_star_query
     
-    @workspace.connection << stmt
+    query.create_dimension_field_index(@index_table, dimension, level, field)
 end
 
 def run
     initialize_brewery
     initialize_table    
     
-    model = Model.model_with_name("verejne_obstaravania")
+    @model_name = "verejne_obstaravania"
+    model = Brewery::LogicalModel.model_with_name(@model_name)
+    @cube = model.cube_with_name('zmluvy')
     
     if ! model
-        raise RuntimeError, "No model"
+        raise "No model '#{@model_name}'"
+        return
+    end
+
+    if ! @cube
+        raise "No cube 'zmluvy'"
+        return
     end
     
-    puts "==> model: #{model.name}"
-    puts "==> number of dimensions: #{model.dimensions.count}"
-    model.dimensions.each { |dim|
+    puts "Indexing #{model.dimensions.count} dimensions"
+    @cube.dimensions.each { |dim|
         index_dimension(dim)
     }
 end
