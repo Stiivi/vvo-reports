@@ -4,7 +4,7 @@
   %p.notice Zvoľte si výsledky pre vytvorenie prehľadu
 
 
-- form_for :report, :url => reports_path do |f|
+- form_for :report, :url => reports_path, :html => {:class => "reports-search"} do |f|
   
   %div
     %h2 Obstarávateľ
@@ -33,5 +33,6 @@
   - if params[:action] == "new"
     = f.submit "Vyhľadať"
   - elsif params[:action] == "create"
-    = f.hidden_field :show_report, :value => true
+    = f.hidden_field :show_report, :value => true, :class => "show-report"
     = f.submit "Zobraziť prehľad"
+    %input{:type => "button", :value => "Zopakovať vyhľadávanie", :class => "repeat-search"}

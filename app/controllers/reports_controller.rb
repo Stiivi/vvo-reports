@@ -71,7 +71,7 @@ class ReportsController < ApplicationController
       dimension = @cube.dimension_with_name(dimension_name)
       raise "No dimension with name #{dimension_name}" unless dimension
       search = SphinxSearch.new(query, dimension)
-      search.limit = 5
+      search.limit = 10
       search.process
       @results[dimension.name.to_sym] = search.results.collect do |result|
         level = dimension.levels.get(result[:level_id])
