@@ -268,3 +268,21 @@ span.icon_facts { display: block; background: url(../images/report_icons.png) no
 a.active span.icon_facts { display: block; background: url(../images/report_icons.png) no-repeat 0 -40px; padding-left: 27px; }
 
 /* @end */
+
+/* @group Search */
+
+div.search {  }
+
+div.search div.search_legend { color: #8d8d8d; font-size: 15px; width: 119px; padding-top: 13px; }
+
+input.large { border: 1px solid #eeeeee; color: #3c3c3c; font-size: 17px; background: url(../images/input_large_background.png) repeat-x; padding-right: 10px; padding-left: 10px; }
+
+input.search_button { background: transparent url(../images/search_button.png) no-repeat 0 0; border: none; text-indent: -99999px; width: 147px; height: 44px; position: relative; top: -2px; margin-left: 5px; cursor: pointer; }
+
+input.search_button:active { background-position: 0 -49px; }
+
+div.search input.large { width: 620px; }
+
+
+
+/* @end */

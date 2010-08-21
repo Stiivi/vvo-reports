@@ -1,0 +1,9 @@
+.search
+  - form_tag search_dimension_path(@dimension_name) do
+    .clearfix
+      .search_legend.fl= @dimension.label
+      .search_field.fl
+        %input.large{:name => "query", :value => params[:query]}
+        %input.search_button{:type => "submit", :value => "Hľadať"}
+  
+%br

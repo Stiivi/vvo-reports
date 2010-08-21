@@ -1,18 +1,19 @@
-.status
-  - @slicer.cuts.each do |dim, path|
-    .breadcrumb.clearfix
-      .main
-        %a.cancel{:href => url_for(:path => '')}
-          = image_tag "cancel_white.png"
-        %span= dim.label
-      - levels = dim.default_hierarchy.levels[0..(path.count-1)]
-      - html_class = "first"
-      - current_level = 1
-      - levels.each do |level|
-        %div{:class => html_class}
-          %a{:href => url_for(params.merge(:path => @path[0..current_level].join('-')))}
-            - detail = @slicer.to_slice.dimension_detail_at_path(dim, path)
-            %p= detail[level.short_description_field.to_sym]
-        - html_class = "middle"
-        - current_level += 1
-      .last
+- if @slicer.cuts.present?
+  .status
+    - @slicer.cuts.each do |dim, path|
+      .breadcrumb.clearfix
+        .main
+          %a.cancel{:href => url_for(:path => '')}
+            = image_tag "cancel_white.png"
+          %span= dim.label
+        - levels = dim.default_hierarchy.levels[0..(path.count-1)]
+        - html_class = "first"
+        - current_level = 1
+        - levels.each do |level|
+          %div{:class => html_class}
+            %a{:href => url_for(params.merge(:path => @path[0..current_level].join('-')))}
+              - detail = @slicer.to_slice.dimension_detail_at_path(dim, path)
+              %p= detail[level.short_description_field.to_sym]
+          - html_class = "middle"
+          - current_level += 1
+        .last
