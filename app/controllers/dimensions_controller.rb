@@ -30,9 +30,18 @@ class DimensionsController < ApplicationController
     @level = @dimension.default_hierarchy.levels[0..@level_number].last
     @levels = @dimension.levels
     @description_field = @level.short_description_field
-    @data = @cube.whole.dimension_values_at_path(@dimension, @path, 
-                                                { :order_by => @description_field })
-
+    
+    # Prepare paginator & sort
+    query = @cube.whole.dimension_values_at_path(@dimension, @path)
+    total = query.count
+    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 10, :total => total)
+    
+    options = {:order_by => @description_field,
+               :page_size => @paginator.page_size,
+               :page => @paginator.page}
+    
+    @data = @cube.whole.dimension_values_at_path(@dimension, @path, options)
+    
     @slicer = Brewery::CubeSlicer.new(@cube)
     @slicer.update_from_param("#{@dimension.name}:#{@path.join('-')}")
   end
