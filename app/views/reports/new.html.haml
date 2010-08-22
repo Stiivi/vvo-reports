@@ -33,6 +33,6 @@
   - if params[:action] == "new"
     = f.submit "Vyhľadať"
   - elsif params[:action] == "create"
-    = f.hidden_field :show_report, :value => true, :class => "show-report"
-    = f.submit "Zobraziť prehľad"
-    %input{:type => "button", :value => "Zopakovať vyhľadávanie", :class => "repeat-search"}
+    = f.hidden_field :show_report, :value => "", :class => "show-report"
+    = f.submit "Zobraziť prehľad", :class => "show-report-button"
+    = f.submit "Zopakovať vyhľadávanie", :class => "repeat-search-button"

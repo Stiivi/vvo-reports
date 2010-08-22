@@ -51,10 +51,11 @@ class ReportsController < ApplicationController
   
   def create
     @results = {}
+    @result_counts = {}
     @param_report = params[:report] || {}
     
     show_report = @param_report.delete(:show_report)
-    if show_report
+    unless show_report.blank?
       slicer = Brewery::CubeSlicer.new(@cube)
       @param_report.each do |dimension_name, value|
         param = "#{dimension_name}:#{value}"
@@ -73,6 +74,7 @@ class ReportsController < ApplicationController
       search = SphinxSearch.new(query, dimension)
       search.limit = 10
       search.process
+      @result_counts[dimension.name.to_sym] = search.total_found
       @results[dimension.name.to_sym] = search.results.collect do |result|
         level = dimension.levels.get(result[:level_id])
         level_order = find_level_order(dimension, level)

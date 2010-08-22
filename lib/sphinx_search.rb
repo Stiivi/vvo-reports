@@ -3,7 +3,7 @@
 class SphinxSearch
   INDEX_NAME = "dimensions"
   
-  attr_reader :results
+  attr_reader :results, :total_found
   attr_accessor :limit
   
   def initialize(query, dimension = nil)
@@ -23,6 +23,7 @@ class SphinxSearch
     query = @query.force_encoding('utf-8')
     converted_query = Iconv.conv('us-ascii//translit', 'utf-8', query).gsub(/'/, '')
     result = sphinx_client.Query(converted_query, INDEX_NAME)
+    @total_found = result['total_found']
     document_ids= result['matches'].collect { |match|
       match['id']
     }
