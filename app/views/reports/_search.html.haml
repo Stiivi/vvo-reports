@@ -2,6 +2,9 @@
 
 - if params[:action] == "create"
   %p.notice Zvoľte si výsledky pre vytvorenie prehľadu
+- else
+  - if params[:current_cut]
+    %p.notice Prostredníctvom tohoto formulára spresníte práve zobrazený prehľad
 
 
 - form_for :report, :url => reports_path, :html => {:class => "reports-search"} do |f|
@@ -48,11 +51,9 @@
     %h2 Kriteria vyhodnotenia
     = f.select :kriteria_vyhodnotenia, options_for_select(@kriteria_vyhodnotenia, @param_report[:kriteria_vyhodnotenia])
   
-  - if params[:action] == "new"
-    = f.submit "Vyhľadať"
-  - elsif params[:action] == "create"
-    = f.hidden_field :show_report, :value => "", :class => "show-report"
-    
-    = f.submit "Zopakovať vyhľadávanie", :class => "repeat-search-button"
+  = f.hidden_field :show_report, :value => "", :class => "show-report"
+
+  = f.submit "Vyhľadať", :class => "repeat-search-button"
+  - if params[:controller] == "reports" && params[:action] == "create"
     = f.submit "Zobraziť prehľad", :class => "show-report-button"
-    
+

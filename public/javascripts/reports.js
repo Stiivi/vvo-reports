@@ -30,4 +30,10 @@ $(document).ready(function(){
   
   update_search_form()
   $("form.reports-search div.results input[type=radio]").click(update_search_form)
+  
+  $("div.results a.show-results").click(function(){
+    $(this).parents("div.results:first").find("div.result").removeClass('hidden')
+    $(this).hide();
+    return false;
+  })
 });
