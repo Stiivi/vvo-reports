@@ -48,6 +48,7 @@ class ReportsController < ApplicationController
     @results = {}
     @param_report = {}
     prepare_date_picker
+    prepare_dimension_pickers
   end
   
   def create
@@ -55,6 +56,7 @@ class ReportsController < ApplicationController
     @result_counts = {}
     @param_report = params[:report] || {}
     prepare_date_picker
+    prepare_dimension_pickers
     
     show_report = @param_report.delete(:show_report)
     unless show_report.blank?
@@ -113,6 +115,15 @@ class ReportsController < ApplicationController
     @months = @months.collect.with_index do |month, i|
       [month, i==0?nil:i.to_s]
     end
+  end
+  
+  def prepare_dimension_pickers
+    @postupy = [nil] + 
+      @cube.whole.dimension_values_at_path(:druh_postupu, []).
+        collect { |p| [p[:"druh_postupu.druh_postupu"]]*2}
+    @kriteria_vyhodnotenia = [nil] +
+      @cube.whole.dimension_values_at_path(:kriteria_vyhodnotenia, []).
+        collect { |p| [p[:"kriteria_vyhodnotenia.kriteria_vyhodnotenia"]]*2}
   end
   
   def report_default
