@@ -1,16 +1,19 @@
-.status
-  - @slicer.cuts.each do |dim, path|
-    .breadcrumb.clearfix
-      .main
-        %a.cancel{:href => url_for(params.merge(:cut => @slicer.without(dim).to_param))}
-          = image_tag "cancel_white.png"
-        %span= dim.label
-      - levels = dim.default_hierarchy.levels[0..(path.count-1)]
-      - html_class = "first"
-      - levels.each do |level|
-        %div{:class => html_class}
-          %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param))}
-            - detail = @slice.dimension_detail_at_path(dim, path)
-            %p= detail[level.short_description_field.to_sym]
-        - html_class = "middle"
-      .last
+.status.clearfix
+  .fl
+    - @slicer.cuts.each do |dim, path|
+      .breadcrumb.clearfix
+        .main
+          %a.cancel{:href => url_for(params.merge(:cut => @slicer.without(dim).to_param))}
+            = image_tag "cancel_white.png"
+          %span= dim.label
+        - levels = dim.default_hierarchy.levels[0..(path.count-1)]
+        - html_class = "first"
+        - levels.each do |level|
+          %div{:class => html_class}
+            %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param))}
+              - detail = @slice.dimension_detail_at_path(dim, path)
+              %p= detail[level.short_description_field.to_sym]
+          - html_class = "middle"
+        .last
+  .fr
+    %a{:href => new_report_path(:current_cut => params[:cut]), :class => "button simple"} Pridať podmienky

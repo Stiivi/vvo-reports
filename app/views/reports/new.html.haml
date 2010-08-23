@@ -6,6 +6,8 @@
 
 - form_for :report, :url => reports_path, :html => {:class => "reports-search"} do |f|
   
+  = hidden_field_tag :current_cut, params[:current_cut]
+  
   %div
     %h2 Obstarávateľ
     = f.text_field :obstaravatel, :value => @param_report[:obstaravatel]
