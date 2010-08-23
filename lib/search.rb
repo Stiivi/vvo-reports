@@ -24,9 +24,9 @@ module Search
   def prepare_dimension_pickers
     @postupy = [nil] + 
       @cube.whole.dimension_values_at_path(:druh_postupu, []).
-        collect { |p| [p[:"druh_postupu.druh_postupu"]]*2}
+        collect { |p| [p[:"druh_postupu.druh_postupu_desc"], p[:"druh_postupu.druh_postupu_code"]]}
     @kriteria_vyhodnotenia = [nil] +
       @cube.whole.dimension_values_at_path(:kriteria_vyhodnotenia, []).
-        collect { |p| [p[:"kriteria_vyhodnotenia.kriteria_vyhodnotenia"]]*2}
+        collect { |p| [p[:"kriteria_vyhodnotenia.kriteria_vyhodnotenia_desc"], p[:"kriteria_vyhodnotenia.kriteria_vyhodnotenia_code"]]}
   end
 end

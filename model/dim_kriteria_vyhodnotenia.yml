@@ -1,11 +1,13 @@
 name: kriteria_vyhodnotenia
-label: Druh postupu
+label: Kriteria vyhodnotenia
 table: dm_kriteria_vyhodnotenia
 levels:
     kriteria_vyhodnotenia:
         label: kriteria_vyhodnotenia
         fields:
-            - kriteria_vyhodnotenia.kriteria_vyhodnotenia
+            - kriteria_vyhodnotenia.kriteria_vyhodnotenia_code
+            - kriteria_vyhodnotenia.kriteria_vyhodnotenia_desc
+            - kriteria_vyhodnotenia.kriteria_vyhodnotenia_sdesc
 hierarchies:
     default:
         levels:

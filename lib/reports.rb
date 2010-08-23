@@ -102,7 +102,7 @@ module Reports
     table.add_column(:percent, "Podiel", :podiel, { :precision => 2} )
     
     result.rows.each { |row|
-        table.add_row([[row[:"druh_postupu.druh_postupu"], row[:"druh_postupu.druh_postupu"]], row[:zmluva_hodnota_sum], row[:podiel]])
+        table.add_row([[row[:"druh_postupu.druh_postupu_code"], row[:"druh_postupu.druh_postupu_desc"]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     return table
   end

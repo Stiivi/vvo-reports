@@ -3,5 +3,11 @@ object_name: dm_druh_postupu
 label: Druh postupu
 fields:
     -
-        name: druh_postupu
+        name: druh_postupu_code
+        label: Kod druhu postupu
+    -
+        name: druh_postupu_desc
         label: Druh postupu
+    -
+        name: druh_postupu_sdesc
+        label: Druh postupu (skratene)

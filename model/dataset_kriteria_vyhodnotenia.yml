@@ -3,5 +3,11 @@ object_name: dm_kriteria_vyhodnotenia
 label: Kriteria vyhodnotenia
 fields:
     -
-        name: kriteria_vyhodnotenia
+        name: kriteria_vyhodnotenia_code
+        label: Kod kriteria vyhodnotenia
+    -
+        name: kriteria_vyhodnotenia_desc
         label: Kriteria vyhodnotenia
+    -
+        name: kriteria_vyhodnotenia_sdesc
+        label: Kriteria vyhodnotenia (skratene)
