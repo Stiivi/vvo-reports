@@ -47,12 +47,14 @@ class ReportsController < ApplicationController
   def new
     @results = {}
     @param_report = {}
+    prepare_date_picker
   end
   
   def create
     @results = {}
     @result_counts = {}
     @param_report = params[:report] || {}
+    prepare_date_picker
     
     show_report = @param_report.delete(:show_report)
     unless show_report.blank?
@@ -69,6 +71,7 @@ class ReportsController < ApplicationController
         @results[dimension_name.to_sym] = nil
         next
       end
+      next if dimension_name == 'date'
       dimension = @cube.dimension_with_name(dimension_name)
       raise "No dimension with name #{dimension_name}" unless dimension
       search = SphinxSearch.new(query, dimension)
@@ -96,6 +99,21 @@ class ReportsController < ApplicationController
   # user asked for.
   
   protected
+  
+  def prepare_date_picker
+    date_dim = @cube.dimension_with_name(:date)
+    slice = @cube.whole
+    @years = [nil] + slice.dimension_values_at_path(:date, []).to_a.
+      collect { |k| [k[:"date.year"].to_s]*2 }
+    months_hash = slice.dimension_values_at_path(:date, [:all]).to_a
+    @months = []
+    months_hash.each do |m|
+      @months[m[:"date.month"]] = m[:"date.month_name"]
+    end
+    @months = @months.collect.with_index do |month, i|
+      [month, i==0?nil:i.to_s]
+    end
+  end
   
   def report_default
     @limit = 5

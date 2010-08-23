@@ -30,6 +30,14 @@
     = render :partial => "results", :locals => {:dimension => :geography, :form => f}
   %br  
   
+  %div
+    %h2 Dátum
+    %select{:name => "report[date][year]", :id => "report_date_year"}
+      = options_for_select(@years, (@param_report[:date]||{})[:year])
+    %select{:name => "report[date][month]", :id => "report_date_month"}
+      = options_for_select(@months, (@param_report[:date]||{})[:month])
+    = f.hidden_field :date_path, :class => "date"
+  
   - if params[:action] == "new"
     = f.submit "Vyhľadať"
   - elsif params[:action] == "create"
