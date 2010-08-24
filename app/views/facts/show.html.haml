@@ -85,11 +85,11 @@
 
     %dl.clearfix
       %dt Druh postupu
-      %dd= link_to(@fact[:'druh_postupu.druh_postupu'], report_path("postup", :cut => "druh_postupu:#{@fact[:'druh_postupu.druh_postupu']}"))
+      %dd= link_to(@fact[:'druh_postupu.druh_postupu_desc'], report_path("postup", :cut => "druh_postupu:#{@fact[:'druh_postupu.druh_postupu_code']}"))
 
     %dl.clearfix
       %dt Kritéria vyhodnotenia
-      %dd= link_to(@fact[:'kriteria_vyhodnotenia.kriteria_vyhodnotenia'], report_path("all", :cut => "kriteria_vyhodnotenia:#{@fact['kriteria_vyhodnotenia.kriteria_vyhodnotenia']}"))
+      %dd= link_to(@fact[:'kriteria_vyhodnotenia.kriteria_vyhodnotenia_desc'], report_path("all", :cut => "kriteria_vyhodnotenia:#{@fact[:'kriteria_vyhodnotenia.kriteria_vyhodnotenia_code']}"))
 
     %dl.clearfix
       %dt Predmet obstarávania (CPV)
