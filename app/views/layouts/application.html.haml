@@ -3,7 +3,9 @@
   %head
     %title Verejné obstarávania
     = stylesheet_link_tag "blueprint", "inscription", "application"
-    = javascript_include_tag 'jquery.js', 'application.js', 'reports.js'
+    = stylesheet_link_tag '/fancybox/jquery.fancybox-1.3.1.css'
+    = javascript_include_tag 'jquery.js', 'inscription.js', 'application.js', 'reports.js'
+    = javascript_include_tag '/fancybox/jquery.mousewheel-3.0.2.pack.js', '/fancybox/jquery.fancybox-1.3.1.js'
     %script{:src => "http://www.google.com/jsapi", :type => "text/javascript"}
     :javascript
       google.load('visualization', '1', {'packages':['piechart']});

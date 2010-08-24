@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $("form.reports-search input.show-report-button").click(function(){
+  $("form.reports-search input.show-report-button").live('click', function(){
     var form = $(this).parents("form:first");
     form.find("input.show-report").val('true');
     var year = form.find("select#report_date_year").val();
@@ -14,7 +14,7 @@ $(document).ready(function(){
     // form.submit();
   });
   
-  $("form.reports-search input.repeat-search-button").click(function(){
+  $("form.reports-search input.repeat-search-button").live('click', function(){
     $(this).parents('form:first').find('div.results input[type=radio]').attr('checked', false)
   })
   
@@ -31,9 +31,19 @@ $(document).ready(function(){
   update_search_form()
   $("form.reports-search div.results input[type=radio]").click(update_search_form)
   
-  $("div.results a.show-results").click(function(){
+  $("div.results a.show-results").live('click', function(){
     $(this).parents("div.results:first").find("div.result").removeClass('hidden')
     $(this).hide();
     return false;
+  })
+  
+  $("a.fancybox").click(function(){
+    $.fancybox.showActivity();
+  })
+  $("form.fancybox").live('submit', function(){
+    $(this).addClass("ajax")
+    $.fancybox.showActivity();
+    $(this).submit()
+    return false
   })
 });

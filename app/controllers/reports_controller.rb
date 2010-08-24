@@ -47,6 +47,10 @@ class ReportsController < ApplicationController
   
   def new
     prepare_search
+    respond_to do |wants|
+      wants.html
+      wants.js
+    end
   end
   
   def create
@@ -65,7 +69,12 @@ class ReportsController < ApplicationController
         param = "#{dimension_name}:#{value}"
         slicer.update_from_param(param)
       end
-      return redirect_to report_path(:all, :cut => slicer.to_param)
+      respond_to do |wants|
+        path = report_path(:all, :cut => slicer.to_param)
+        wants.html { return redirect_to path }
+        wants.js { return render :text => "window.location = '#{path}'" }
+      end
+      
     end
     
     params[:report].each do |dimension_name, query|
