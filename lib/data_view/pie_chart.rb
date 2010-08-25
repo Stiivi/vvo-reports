@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module DataView
   class PieChart
     def initialize(data, options)
@@ -50,16 +52,21 @@ module DataView
     end
     
     def format_value_for_legend(value)
-      result = []
-      inserted = false
+      lines = []
+      words_so_far = []
       value.split(' ').each_with_index do |word, index|
-        if result.join(' ').length >= 32
-          result.insert(result.length-1, "\n") unless inserted
-          inserted = true
+        if (words_so_far.clone<<word).join(' ').length >= 32
+          lines << words_so_far.join(' ')
+          words_so_far = []
         end
-        result << word
+        words_so_far << word
       end
-      result.join(' ')
+      lines << words_so_far.join(' ')
+      if lines.length > 2
+        lines = lines[0..1]
+        lines[-1] += " …"
+      end
+      lines.join("\n")
     end
   end
 end
