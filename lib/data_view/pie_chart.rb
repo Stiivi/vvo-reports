@@ -13,7 +13,9 @@ module DataView
       color_center = ColorCenter.instance
       
       @data.rows.each_index do |row|
-        labels = @data.formatted_value_at(row, @options[:labels])
+        labels = format_value_for_legend(
+          @data.formatted_value_at(row, @options[:labels])
+        )
         label_id = @data.value_at(row, @options[:labels])
         series = @data.value_at(row, @options[:series])
         colors << "#" + color_center.color_for_string(label_id)
@@ -45,6 +47,19 @@ module DataView
       result = chart_container.to_s + javascript_element.to_s
       
       result
+    end
+    
+    def format_value_for_legend(value)
+      result = []
+      inserted = false
+      value.split(' ').each_with_index do |word, index|
+        if result.join(' ').length >= 32
+          result.insert(result.length-1, "\n") unless inserted
+          inserted = true
+        end
+        result << word
+      end
+      result.join(' ')
     end
   end
 end
