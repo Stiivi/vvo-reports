@@ -28,7 +28,7 @@ class FactsController < ApplicationController
     @slice = @slicer.to_slice
     total = @slice.aggregate(:zmluva_hodnota).summary[:record_count]
     
-    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => total)
+    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => DEFAULT_PAGE_SIZE, :total => total)
     if params[:sort]
       sort_field = params[:sort]
       sort_direction = params[:dir] || "asc"

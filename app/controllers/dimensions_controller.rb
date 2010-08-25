@@ -34,7 +34,7 @@ class DimensionsController < ApplicationController
     # Prepare paginator & sort
     query = @cube.whole.dimension_values_at_path(@dimension, @path)
     total = query.count
-    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 10, :total => total)
+    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => DEFAULT_PAGE_SIZE, :total => total)
     
     options = {:order_by => @description_field,
                :page_size => @paginator.page_size,

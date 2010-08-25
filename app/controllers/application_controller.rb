@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  DEFAULT_PAGE_SIZE = 30
+  
   protect_from_forgery
   layout 'application'
   
