@@ -1,5 +1,5 @@
 .search
-  - form_tag search_dimension_path(@dimension_name) do
+  - form_tag search_dimension_path(@dimension_name), :method => "get" do
     .clearfix
       .search_legend.fl= @dimension.label
       .search_field.fl

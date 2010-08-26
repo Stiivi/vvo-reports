@@ -283,6 +283,12 @@ input.search_button:active { background-position: 0 -49px; }
 
 div.search input.large { width: 620px; }
 
+table.search_results tr td a { color: #313131; font-size: 12px; }
+
+table.search_results tr td a:hover { text-decoration: none; }
+
+table.search_results tr td a em { font-weight: normal; font-style: normal; background-color: #fbfb67; }
+
 
 
 /* @end */

@@ -13,6 +13,7 @@ Vvo::Application.routes.draw do |map|
   resources :dimensions do
     member do
       post :search
+      get :search
     end
   end
   

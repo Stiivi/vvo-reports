@@ -4,7 +4,7 @@ class SphinxSearch
   INDEX_NAME = "dimensions"
   
   attr_reader :results, :total_found
-  attr_accessor :limit
+  attr_accessor :limit, :order
   
   def initialize(query, dimension = nil)
     @query = query
@@ -29,7 +29,11 @@ class SphinxSearch
     }
     connection = Brewery::workspace.connection
     dataset = connection[:idx_dimensions]
-    @results = dataset.filter(:id => document_ids).all
+    if @order == "alphabet"
+      @results = dataset.filter(:id => document_ids).order_by(:value).all
+    else
+      @results = dataset.filter(:id => document_ids).all
+    end
   end
   
   # def create_search_with_string(string)
