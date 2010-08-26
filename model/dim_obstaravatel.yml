@@ -8,7 +8,7 @@ levels:
             - obstaravatel.account_sector_code
             - obstaravatel.account_sector
     organisation:
-        label: Spoločnosť
+        label: Organizácia
         fields:
             - obstaravatel.ico
             - obstaravatel.name
