@@ -41,7 +41,7 @@ ul.nav { position: absolute; left: 40px; top: 9px; }
 
 ul.nav li { float: left; }
 
-ul.nav li a { color: #adadad; font-weight: bold; text-decoration: none; font-size: 12px; }
+ul.nav li a { color: #6e6e6e; font-weight: bold; text-decoration: none; font-size: 12px; }
 
 #content { padding: 20px 40px; background-image: url(../images/container_background.png); }
 
@@ -292,3 +292,5 @@ table.search_results tr td a em { font-weight: normal; font-style: normal; backg
 
 
 /* @end */
+
+div.chart { text-align: center; }

@@ -25,7 +25,7 @@ module DataView
       end
       
       chart_container_id = "chart_#{self.object_id}"
-      chart_container = Html::Element.new("div", "", :id => chart_container_id)
+      chart_container = Html::Element.new("div", "", :id => chart_container_id, :class => "chart")
       
       colors_json = colors.to_json
       
@@ -38,7 +38,7 @@ module DataView
           table.addColumn('number', 'series');
           table.addRows(json_data);
           var chart = new google.visualization.PieChart(document.getElementById('#{chart_container_id}'));
-          chart.draw(table, {width: 450, height: 240, is3D: true, legend: 'none', colors: #{colors_json}});
+          chart.draw(table, {width: 350, height: 150, is3D: true, legend: 'none', colors: #{colors_json}});
         });
       })();
       HERE
