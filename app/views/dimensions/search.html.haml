@@ -3,12 +3,15 @@
 - if @results.present?
 
   .clearfix
-    %a.tab{:class => params[:order] == "relevance" ? "active" : "", |
-           :href => url_for(params.merge({:order => "relevance"}))} |
-      Zoradiť podľa relevancie
-    %a.tab{:class => params[:order] == "alphabet" ? "active" : "", |
-           :href => url_for(params.merge({:order => "alphabet"}))}  |
-      Zoradiť podľa abecedy
+    .fl.tab_label
+      Zoradiť podľa:
+    .tabs.clearfix.fl
+      %a.tab{:class => params[:order] == "relevance" ? "active" : "", |
+             :href => url_for(params.merge({:order => "relevance"}))} |
+        Relevancie
+      %a.tab{:class => params[:order] == "alphabet" ? "active" : "", |
+             :href => url_for(params.merge({:order => "alphabet"}))}  |
+        Abecedy
 
   %br
 

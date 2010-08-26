@@ -202,6 +202,8 @@ a.tab:first-child { -webkit-border-top-right-radius: 0px; -webkit-border-bottom-
 
 a.tab:last-child { -webkit-border-top-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; }
 
+.tab_label { margin-right: 10px; font-size: 13px; color: #6f6f6f; padding-top: 5px; }
+
 
 
 /* @end */
