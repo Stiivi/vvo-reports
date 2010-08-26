@@ -17,20 +17,14 @@
     #container
       #navigation
         %ul.nav.clearfix
-          %li
-            %a{:href => report_path('default')} Úvod
-          %li
-            %a{:href => report_path('all')} Celkový Prehľad
-          %li
-            %a{:href => dimension_path('obstaravatel')} Obstarávatelia
-          %li
-            %a{:href => dimension_path('dodavatel')} Dodávatelia
-          %li
-            %a{:href => dimension_path('cpv')} Typy tovarov
-          %li
-            %a{:href => dimension_path('geography')} Regióny
-          %li
-            %a{:href => new_report_path} Vyhľadávanie
+          = navigation_link('Úvod', report_path('default'))
+          = navigation_link('Celkový Prehľad', report_path('all'))
+          = navigation_link('Obstarávatelia', dimension_path('obstaravatel'))
+          = navigation_link('Dodávatelia', dimension_path('dodavatel'))
+          = navigation_link('Typy tovarov', dimension_path('cpv'))
+          = navigation_link('Regióny', dimension_path('geography'))
+          = navigation_link('Vyhľadávanie', new_report_path)
+          
       #content
         = yield
       #footer
