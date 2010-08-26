@@ -44,9 +44,9 @@ module ApplicationHelper
      date_dim = @cube.dimension_with_name(:date)
      slice = @cube.whole
 
-     values = slice.dimension_values_at_path(date_dim, [])
+     values = slice.dimension_values_at_path(date_dim, [], :order_by => "date.year")
      years = values.collect { | row | [row[:"date.year"].to_s, row[:"date.year"].to_s] }
-     years.insert(0, ["‹ Rok ›", nil])
+     years.insert(0, ["všetky", nil])
 
      if selected_year
         year = selected_year
@@ -54,13 +54,14 @@ module ApplicationHelper
         year = :all
      end
      
-     values = slice.dimension_values_at_path(date_dim, [year])
+     # values = slice.dimension_values_at_path(date_dim, [year])
+     values = slice.dimension_values_at_path(date_dim, [year], :order_by => "date.month")
      months = values.collect { | row | [ row[:"date.month_name"].to_s, row[:"date.month"].to_s ] }
-     months.insert(0, ["‹ Mesiac ›", nil])
+     months.insert(0, ["všetky", nil])
 
      years_select = select_tag(:"date[0]", options_for_select(years, selected_year), :class => "year")
      months_select = select_tag(:"date[1]", options_for_select(months, selected_month), :class => "month")
 
-     return years_select + " " + months_select
+     return { :years => years_select, :months => months_select }
    end
 end

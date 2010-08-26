@@ -134,7 +134,9 @@ table.data_table a.sort.desc { padding-right: 10px; background: url(../images/so
 	font-size: 11px;
 }
 
+.details dt { float: left; font-size: 15px; color: #8d8d8d; font-weight: normal; width: 200px; }
 
+.details dd { float: left; font-size: 15px; color: #3c3c3c; }
 
 /* @end */
 
