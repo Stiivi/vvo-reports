@@ -2,7 +2,22 @@
   .fl
     %h1
       %em Dodávateľ:
-      = @detail[:name]
+      = @detail[:"dodavatel.name"]
+    .details
+      %table.narrow#supplier
+        %tr
+          %th IČO
+          %td= @detail[:'dodavatel.ico']
+        %tr
+          %th Adresa
+          %td
+            = @detail[:'dodavatel.address']
+        %tr
+          - datum_vzniku = @detail[:'dodavatel.date_start']
+          %th Dátum vzniku
+          %td
+            = @detail[:'dodavatel.date_start']
+            = "(pred #{distance_of_time_in_words(datum_vzniku, Date.today)})"
   .fr.clearfix
     = render :partial => "reports/buttons"
 

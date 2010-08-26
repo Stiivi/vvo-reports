@@ -86,12 +86,16 @@
           %th Dátum vzniku
           %td
             = @fact[:'dodavatel.date_start']
-      -# %p== Spoločnosť vznikla pred #{distance_of_time_in_words(datum_vzniku, datum_oznamenia)} od dátumu zverejnenia.
+        %tr
+          %th
+          %td
+            = "(pred #{distance_of_time_in_words(datum_vzniku, datum_oznamenia)} od dátumu zverejnenia)"
 
 .details
   %h2 Predmet obstaobstarávania
   %table.narrow#cpv
     - for cpv in @cpv_view
-      %tr
-        %th= cpv[:label]
-        %td= link_to(cpv[:value], report_path("cpv", :cut => "cpv:#{cpv[:path]}"))
+      - if cpv[:key]
+        %tr
+          %th= cpv[:label]
+          %td= link_to(cpv[:value], report_path("cpv", :cut => "cpv:#{cpv[:path]}"))

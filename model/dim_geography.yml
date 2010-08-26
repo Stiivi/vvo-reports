@@ -1,5 +1,5 @@
 name: geography
-label: Geografia
+label: Región
 table: dm_geography
 levels:
     okres:

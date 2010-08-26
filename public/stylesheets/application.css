@@ -134,7 +134,7 @@ table.data_table a.sort.desc { padding-right: 10px; background: url(../images/so
 	font-size: 11px;
 }
 
-.details dt { float: left; font-size: 15px; color: #8d8d8d; font-weight: normal; width: 200px; }
+.details dt { float: left; font-size: 15px; color: #424242; font-weight: normal; width: 200px; }
 
 .details dd { float: left; font-size: 15px; color: #3c3c3c; }
 
@@ -190,7 +190,7 @@ a.button.highlighted { background-image: url(../images/button_highligted.png); b
 
 a.button.blue { background-image: url(../images/button_blue.png); display: block; border: 1px solid #88a8cd; color: #6286b0; font-size: 11px; text-transform: uppercase; font-weight: bold; padding: 5px 8px; text-shadow: #c6d2df 0 1px 0; }
 
-a.button.simple { display: block; border: 1px solid #cecece; color: #767676; font-size: 11px; font-weight: bold; padding: 5px 8px 4px; background: url(../images/button_simple.png) 0 -1px; }
+a.button.simple { display: block; border: 1px solid #cecece; color: #424242; font-size: 11px; font-weight: bold; padding: 5px 8px 4px; background: url(../images/button_simple.png) 0 -1px; }
 
 a.button.simple:active { background-position: 0 -25px; }
 

@@ -91,20 +91,23 @@ sk:
                 one: 'minútou'
                 other: '%{count} minútami'
             about_x_hours:
-                one: 'asi hodinou'
-                other: 'asi %{count} hodinami'
+                one: 'necelou hodinou'
+                other: 'približne %{count} hodinami'
             x_days:
                 one: '24 hodinami'
                 other: '%{count} dňami'
             about_x_months:
-                one: 'asi mesiacom'
-                other: 'asi %{count} mesiacmi'
+                one: 'necelým mesiacom'
+                other: 'približne %{count} mesiacmi'
             x_months:
                 one: 'mesiacom'
                 other: '%{count} mesiacmi'
+            almost_x_years:
+                one: 'takmer rokom'
+                other: 'takmer %{count} rokmi'
             about_x_years:
-                one: 'asi rokom'
-                other: 'asi %{count} rokmi'
+                one: 'necelým rokom'
+                other: 'približne %{count} rokmi'
             over_x_years:
                 one: 'pred viac ako rokom'
                 other: 'viac ako %{count} rokmi'

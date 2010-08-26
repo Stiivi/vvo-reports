@@ -63,10 +63,15 @@ class FactsController < ApplicationController
     @cpv_path = []
     @cpv_view = []
     levels.each { |level|
-        @cpv_path << @fact[level.key_field.to_sym]
+        key = @fact[level.key_field.to_sym]
+        @cpv_path << (key ? key : '*')
+
+        value =  @fact[level.description_field.to_sym]
+        value = '(bez popisu)' if !value
         hash = { :label => level.label.capitalize,
                  :path => @cpv_path.join('-'),
-                 :value => @fact[level.description_field.to_sym]}
+                 :value => value,
+                 :key => key}
         @cpv_view << hash
     }
     @cpv_view.reverse!
