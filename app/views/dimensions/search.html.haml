@@ -1,8 +1,23 @@
 = render :partial => "search"
 
+- if @results.present?
 
-%ul
-  - @results.each do |result|
-    %li
-      = link_to result[:value], result[:link]
-      = "(#{result[:level_obj].label})"
+  .clearfix
+    %a.tab{:class => params[:order] == "relevance" ? "active" : "", |
+           :href => url_for(params.merge({:order => "relevance"}))} |
+      Zoradiť podľa relevancie
+    %a.tab{:class => params[:order] == "alphabet" ? "active" : "", |
+           :href => url_for(params.merge({:order => "alphabet"}))}  |
+      Zoradiť podľa abecedy
+
+  %br
+
+  %table.search_results
+    - @results.each do |result|
+      %tr
+        %td
+          = link_to highlight_query(result[:value], @query), result[:link]
+          = "(#{result[:level_obj].label})"
+
+- else
+  .note Žiadne výsledky

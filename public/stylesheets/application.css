@@ -37,11 +37,13 @@ div.links a { color: #808080; }
 
 #navigation { background-image: url(../images/navigation_background.png); height: 45px; text-align: left; position: relative; }
 
-ul.nav { position: absolute; left: 40px; top: 9px; }
+ul.nav { position: absolute; left: 30px; top: 9px; }
 
-ul.nav li { float: left; }
+ul.nav li { float: left; padding-right: 12px; padding-left: 12px; }
 
-ul.nav li a { color: #adadad; font-weight: bold; text-decoration: none; font-size: 12px; }
+ul.nav li.active { background-color: #fbfbfb; -webkit-border-radius: 3px; -moz-border-radius: 3px; border: 1px solid #ddd; }
+
+ul.nav li a { color: #6e6e6e; font-weight: bold; text-decoration: none; font-size: 12px; }
 
 #content { padding: 20px 40px; background-image: url(../images/container_background.png); }
 
@@ -283,6 +285,14 @@ input.search_button:active { background-position: 0 -49px; }
 
 div.search input.large { width: 620px; }
 
+table.search_results tr td a { color: #313131; font-size: 12px; }
+
+table.search_results tr td a:hover { text-decoration: none; }
+
+table.search_results tr td a em { font-weight: normal; font-style: normal; background-color: #fbfb67; }
+
 
 
 /* @end */
+
+div.chart { text-align: center; }

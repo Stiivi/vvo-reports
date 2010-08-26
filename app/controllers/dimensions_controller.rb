@@ -47,7 +47,11 @@ class DimensionsController < ApplicationController
   end
   
   def search
+    @query = params[:query]
     search = SphinxSearch.new(params[:query], @dimension)
+    # Order
+    params[:order] ||= "relevance"
+    search.order = params[:order]
     search.process
     @results = search.results
 
