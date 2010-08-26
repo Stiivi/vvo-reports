@@ -56,5 +56,19 @@ class FactsController < ApplicationController
     @id = params[:id]
     
     @fact = @cube.fact(@id)
+    
+    dim = @cube.dimension_with_name('cpv')
+    levels = dim.default_hierarchy.levels
+
+    @cpv_path = []
+    @cpv_view = []
+    levels.each { |level|
+        @cpv_path << @fact[level.key_field.to_sym]
+        hash = { :label => level.label.capitalize,
+                 :path => @cpv_path.join('-'),
+                 :value => @fact[level.description_field.to_sym]}
+        @cpv_view << hash
+    }
+    @cpv_view.reverse!
   end
 end

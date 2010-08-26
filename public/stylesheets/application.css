@@ -63,7 +63,9 @@ ul.nav li a { color: #6e6e6e; font-weight: bold; text-decoration: none; font-siz
 
 table.data_table { border: 1px solid #e1e5e8; -webkit-border-radius: 3px; -moz-border-radius: 3px;  }
 
-table.data_table th { background-color: #81a3ca; padding: 7px 12px; font-size: 12px; color: #fff; text-shadow: #6782a2 0 1px 0; }
+table.data_table th { background-color: #81a3ca; font-size: 12px; color: #fff; text-shadow: #6782a2 0 1px 0;
+	padding: 6px 12px;
+}
 
 table.data_table th a { font-size: 12px; color: #fff; text-shadow: #6782a2 0 1px 0; text-decoration: none; }
 
@@ -73,7 +75,9 @@ table.data_table th:first-child { -webkit-border-top-left-radius: 3px; -moz-bord
 
 table.data_table th:last-child { -webkit-border-top-right-radius: 3px; -moz-border-radius-topright: 3px; }
 
-table.data_table td { padding: 7px 12px; }
+table.data_table td {
+	padding: 6px 12px;
+}
 
 /* Particular columns */
 
@@ -89,7 +93,8 @@ table.data_table tr.even td .full { background-color: #e5ecf9; }
 
 table.data_table tr:hover td .stripped { display: none; }
 
-table.data_table tr:hover td .full { display: inline; }
+table.data_table tr:hover td .full { display: inline;
+}
 
 /* @group Sorting */
 
@@ -113,11 +118,21 @@ table.data_table a.sort.desc { padding-right: 10px; background: url(../images/so
 
 /* @group Details */
 
-.details dd {  }
+.unknown {
+	font-style: italic;
+}
 
-.details dt { float: left; font-size: 15px; color: #8d8d8d; font-weight: normal; width: 200px; }
+.details table th {
+	width: 200px;
+}
 
-.details dd { float: left; font-size: 15px; color: #3c3c3c; }
+.details table.narrow th {
+	width: 100px;	
+}
+
+.details {
+	font-size: 11px;
+}
 
 
 

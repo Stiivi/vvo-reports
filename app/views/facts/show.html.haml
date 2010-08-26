@@ -4,93 +4,94 @@
   .fr.clearfix
     %a.button{:href => facts_path(:cut => params[:cut])} Späť
 
-.details.status
-  %dl.clearfix
-    %dt Názov zákazky
-    %dd= @fact[:'zakazka_nazov']
-  %dl.clearfix
-    %dt Hodnota zmluvy
-    %dd= number_to_currency(@fact[:'zmluva_hodnota'])
-  %dl.clearfix
-    %dt Počet zmlúv vrámci zákazky:
-    %dd= @fact[:'pocet_zmluv']
-  %dl.clearfix
-    %dt Celková hodnota zákazky:
-    %dd= number_to_currency(@fact[:'zakazka_hodnota'])
-  %dl.clearfix
-    %dt Podiel tejto zmluvy
-    %dd= number_to_percentage(@fact[:'zmluva_hodnota']/@fact[:'zakazka_hodnota']*100, :precision => 1)
-  %dl.clearfix
-    %dt Zdroj informacie
-    %dd= link_to('oznámenie vo vestníku verejného obstarávania ›', @fact[:'source_url'])
+.details.clearfix
+  %table#summary
+    %tr
+      %th Názov zákazky
+      - if @fact[:'zakazka_nazov']
+        %td= @fact[:'zakazka_nazov']
+      - else
+        %td.unknown Nezistený (pozrite v oznámení vo vestníku)
+    %tr
+      %th Hodnota zmluvy
+      %td= number_to_currency(@fact[:'zmluva_hodnota'])
+    %tr
+      %th Počet zmlúv vrámci zákazky
+      %td= @fact[:'pocet_zmluv']
+    - if @fact[:'pocet_zmluv'] > 1
+      %tr
+        %th Celková hodnota zákazky
+        %td= number_to_currency(@fact[:'zakazka_hodnota'])
+      %tr
+        %th Podiel tejto zmluvy
+        %td
+          = number_to_percentage(@fact[:'zmluva_hodnota']/@fact[:'zakazka_hodnota']*100, :precision => 1)
+          = "z celkovej hodnoty zákazky"
+    %tr
+      %th Zdroj informacie
+      %td= link_to('oznámenie vo vestníku verejného obstarávania ›', @fact[:'source_url'])
 
 .details
-
-  .clearfix
-    .fl.small_box
-      %h2 Obstarávateľ
-
-      %dl.clearfix
-        %dt Názov
-        %dd
-          = link_to(@fact[:'obstaravatel.name'], report_path("procurer", :object_id => @fact[:'obstaravatel.ico']))
-
-      %dl.clearfix
-        %dt Adresa
-        %dd= @fact[:'obstaravatel.address']
-
-      %dl.clearfix
-        %dt Sektor
-        %dd= link_to(@fact[:'obstaravatel.account_sector'], report_path("all", :cut => "obstaravatel:#{@fact[:'obstaravatel.account_sector_code']}"))
-        
-        
-    .fr.small_box
-      %h2 Dodávateľ
-  
-      %dl.clearfix
-        %dt Názov
-        %dd= link_to(@fact[:'dodavatel.name'], report_path("supplier", :object_id => @fact[:'dodavatel.ico']))
-  
-      %dl.clearfix
-        %dt IČO
-        %dd= @fact[:'dodavatel.ico']
-    
-      %dl.clearfix
-        %dt Adresa
-        %dd
-          = @fact[:'dodavatel.address']
-      
-      - datum_oznamenia = @fact[:'vestnik_datum']
-      - datum_vzniku = @fact[:'dodavatel.date_start']
-  
-      %dl.clearfix
-        %dt Dátum vzniku
-        %dd
-          = @fact[:'dodavatel.date_start']
-      -# %p== Spoločnosť vznikla pred #{distance_of_time_in_words(datum_vzniku, datum_oznamenia)} od dátumu zverejnenia.
-
-  .clearfix.details.status
-    %h2 Oznámenie
-
-    %dl.clearfix
-      %dt Číslo vestníka
-      %dd= @fact[:'vestnik_cislo']
-
-    %dl.clearfix
-      %dt Dátum oznámenia
-      %dd
+  %h2 Oznámenie
+  %table#bulletin
+    %tr
+      %th Číslo vestníka
+      %td= @fact[:'vestnik_cislo']
+    %tr
+      %th Dátum oznámenia
+      %td
         == #{@fact[:"date.day"]}.
         %a{:href => report_path("all", :cut => "date:#{@fact[:'date.year']}-#{@fact[:'date.month']}")}= @fact[:'date.month_name']
         %a{:href => report_path("all", :cut => "date:#{@fact[:'date.year']}")}= @fact[:'date.year']
+    %tr
+      %th Druh postupu
+      %td= link_to(@fact[:'druh_postupu.druh_postupu_desc'], report_path("postup", :cut => "druh_postupu:#{@fact[:'druh_postupu.druh_postupu_code']}"))
+    %tr
+      %th Kritéria vyhodnotenia
+      %td= link_to(@fact[:'kriteria_vyhodnotenia.kriteria_vyhodnotenia_desc'], report_path("all", :cut => "kriteria_vyhodnotenia:#{@fact[:'kriteria_vyhodnotenia.kriteria_vyhodnotenia_code']}"))
+    
+.details
+  .clearfix
+    .fl.small_box
+      %h2 Obstarávateľ
+      %table.narrow#procurer
+        %tr
+          %th Názov
+          %td
+            = link_to(@fact[:'obstaravatel.name'], report_path("procurer", :object_id => @fact[:'obstaravatel.ico']))
+        %tr
+          %th Adresa
+          %td= @fact[:'obstaravatel.address']
+        %tr
+          %th Sektor
+          %td= link_to(@fact[:'obstaravatel.account_sector'], report_path("all", :cut => "obstaravatel:#{@fact[:'obstaravatel.account_sector_code']}"))
+        
+    .fr.small_box
+      %h2 Dodávateľ
+      - datum_oznamenia = @fact[:'vestnik_datum']
+      - datum_vzniku = @fact[:'dodavatel.date_start']
+  
+      %table.narrow#supplier
+        %tr
+          %th Názov
+          %td= link_to(@fact[:'dodavatel.name'], report_path("supplier", :object_id => @fact[:'dodavatel.ico']))
+        %tr
+          %th IČO
+          %td= @fact[:'dodavatel.ico']
+        %tr
+          %th Adresa
+          %td
+            = @fact[:'dodavatel.address']
+        %tr
+          %th Dátum vzniku
+          %td
+            = @fact[:'dodavatel.date_start']
+      -# %p== Spoločnosť vznikla pred #{distance_of_time_in_words(datum_vzniku, datum_oznamenia)} od dátumu zverejnenia.
 
-    %dl.clearfix
-      %dt Druh postupu
-      %dd= link_to(@fact[:'druh_postupu.druh_postupu_desc'], report_path("postup", :cut => "druh_postupu:#{@fact[:'druh_postupu.druh_postupu_code']}"))
-
-    %dl.clearfix
-      %dt Kritéria vyhodnotenia
-      %dd= link_to(@fact[:'kriteria_vyhodnotenia.kriteria_vyhodnotenia_desc'], report_path("all", :cut => "kriteria_vyhodnotenia:#{@fact[:'kriteria_vyhodnotenia.kriteria_vyhodnotenia_code']}"))
-
-    %dl.clearfix
-      %dt Predmet obstarávania (CPV)
-      %dd= link_to(@fact[:'cpv.description'], report_path("cpv", :cut => "cpv:*-*-*-*-#{@fact[:'cpv.cpv_code']}"))
+.details
+  %h2 Predmet obstaobstarávania
+  %table#cpv
+    - for cpv in @cpv_view
+      %tr
+        %th= cpv[:label]
+        %td= link_to(cpv[:value], report_path("cpv", :cut => "cpv:#{cpv[:path]}"))

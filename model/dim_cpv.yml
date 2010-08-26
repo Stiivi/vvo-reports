@@ -28,7 +28,7 @@ levels:
             - cpv.cpv_category_desc
         description_field: cpv.cpv_category_desc
     detail:
-        label: detail
+        label: predmet
         fields:
             - cpv.cpv_code
             - cpv.description
