@@ -28,7 +28,7 @@
       #navigation
         %ul.nav.clearfix
           = navigation_link('Úvod', report_path('default'))
-          = navigation_link('Celkový Prehľad', report_path('all'))
+          = navigation_link('Celkový Prehľad', report_path('all'), /reports\/((?!default).)/)
           = navigation_link('Obstarávatelia', dimension_path('obstaravatel'))
           = navigation_link('Dodávatelia', dimension_path('dodavatel'))
           = navigation_link('Predmety', dimension_path('cpv'))
