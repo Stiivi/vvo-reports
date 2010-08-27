@@ -30,12 +30,34 @@ palettes:
       - 8B8F81
       - D26D7C
     specific_colors:
-      ostatne: "B6B6AA"
+      ostatne: "eaeaea"
   druh_postupu:
     colors: *default_colors
     specific_colors:
-      verejná súťaž: 56a736
-      rokovacie konanie bez zverejnenia: d84409
-      užšia súťaž: d87409
-      "*unknown": "979797"
-      rokovacie konanie so zverejnením: 46892c
+      verejna: "56a736"
+      bez: d84409
+      uzsia: e4811e
+      unknown: "424242"
+      dialog: "f2dc55"
+      new: "979797"
+      so: 46892c
+  apple:
+    colors: &default_colors
+      - 446a9c
+      - 72a65b
+      - e8b152
+      - c44142
+      - 824f8c
+      - 6f8eb8
+      - 94bf82
+      - eec682
+      - d37172
+      - a478ad
+      - 597caa
+      - 82b26e
+      - ebbb6a
+      - cb585a
+      - 93639c
+    specific_colors:
+      ostatne: "eaeaea"
+      
