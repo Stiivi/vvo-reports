@@ -25,4 +25,6 @@ Vvo::Application.routes.draw do |map|
   
   # Root path
   root :to => "reports#index"
+  
+  match '/:anything', :to => "global#not_found", :constraints => { :anything => /.*/ }
 end

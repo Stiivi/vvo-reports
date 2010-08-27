@@ -1,0 +1,3 @@
+class GlobalController < ApplicationController
+  
+end

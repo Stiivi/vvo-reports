@@ -46,6 +46,22 @@ class ApplicationController < ActionController::Base
        order += 1
      end
      return order
-   end
-  
+  end
+
+  rescue_from Exception, :with => :rescue_exception if Rails.env == "production"
+
+  protected
+
+  def rescue_exception(e)
+    Rails.logger.error "---------------------------"
+    Rails.logger.error "ERROR TYPE: " + e.class.name
+    Rails.logger.error "ERROR MESSAGE: " + e.message
+    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error "---------------------------"
+    render :template => "global/exception"
+  end
+  # 
+  # def not_found
+  #   render :text => "hmm"
+  # end
 end
