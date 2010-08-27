@@ -36,21 +36,17 @@ module DataView
           color_el[:style] = "background-color: ##{color}"
         end
 
+        left[:title] = data_cell.formatted_value
         
         if @link
-          a_element = left.new_child(:a, data_cell.formatted_value)
+          a_element = left.new_child(:a, truncate_string(data_cell.formatted_value))
           cut_path = cut_path(data_cell.value)
           url = path(cut_path)
           a_element[:href] = url
           data_element = a_element
         else
-          data_element = left.new_child(:span, data_cell.formatted_value)
+          data_element = left.new_child(:span, truncate_string(data_cell.formatted_value))
         end
-        
-        stripped_data_element = data_element.clone
-        data_element[:class] = "full"
-        stripped_data_element[:class] = "stripped"
-        truncate_text_in(stripped_data_element)
         
         # Now we need to add special (+) button to add this cut to current
         # slice.
@@ -106,10 +102,11 @@ module DataView
         url = @controller.url_for(params)
       end
       
-      def truncate_text_in(element)
-        element.text ||= ""
-        if element.text.length > TRUNCATED_LENGTH
-          element.text = element.text[0, TRUNCATED_LENGTH] + " &hellip;"
+      def truncate_string(string)
+        if string.length > TRUNCATED_LENGTH
+          return string[0, TRUNCATED_LENGTH] + " &hellip;"
+        else
+          string
         end
       end
     end
