@@ -59,7 +59,6 @@ module DataView
       
       def cut_path(value)
         if cut = @slicer.cut_for_dimension(@dimension)
-          puts cut.inspect
           dimension = cut[0]
           path = cut[1].clone
           if dimension.levels.count <= path.count
@@ -68,13 +67,10 @@ module DataView
             path << value
           end
         else
-          path = if @level == 0
-            [value]
-          else
-            (["*"]*@level + [value])
-          end
+          path = @level == 0 ? [value] : (["*"]*@level + [value])
         end
-        
+        # FIXME: this is temporary hack
+        path = path.collect { | elem | elem == :all ? '*' : elem }
         path = path.join("-")
         path
       end
