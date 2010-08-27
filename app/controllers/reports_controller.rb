@@ -118,7 +118,7 @@ class ReportsController < ApplicationController
     # current_month = "2009-6"
     @slicer.update_from_param("date:#{current_month}")
     @slice = @slicer.to_slice
-raise @slicer.inspect    
+
     load_all_views(@slice) do
       @dodavatelia = top_10_dodavatelia(@slice, :sum => true)
       @obstaravatelia = top_10_obstaravatelia(@slice, :sum => true)
