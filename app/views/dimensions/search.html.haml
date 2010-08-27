@@ -1,17 +1,20 @@
 = render :partial => "search"
 
 - if @results.present?
-
+  
   .clearfix
-    .fl.tab_label
-      Zoradiť podľa:
-    .tabs.clearfix.fl
-      %a.tab{:class => params[:order] == "relevance" ? "active" : "", |
-             :href => url_for(params.merge({:order => "relevance"}))} |
-        Relevancie
-      %a.tab{:class => params[:order] == "alphabet" ? "active" : "", |
-             :href => url_for(params.merge({:order => "alphabet"}))}  |
-        Abecedy
+    %h1.fl== Počet záznamov: #{@total_found}
+
+    .clearfix.fr
+      .fl.tab_label
+        Zoradiť podľa:
+      .tabs.clearfix.fl
+        %a.tab{:class => params[:order] == "relevance" ? "active" : "", |
+               :href => url_for(params.merge({:order => "relevance"}))} |
+          Relevancie
+        %a.tab{:class => params[:order] == "alphabet" ? "active" : "", |
+               :href => url_for(params.merge({:order => "alphabet"}))}  |
+          Abecedy
 
   %br
 

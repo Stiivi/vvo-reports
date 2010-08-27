@@ -55,6 +55,7 @@ class DimensionsController < ApplicationController
     search.order = params[:order]
     search.process
     @results = search.results
+    @total_found = search.total_found
 
     slicer = Brewery::CubeSlicer.new(@cube)
 
