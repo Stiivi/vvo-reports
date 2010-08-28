@@ -100,7 +100,10 @@ class ReportsController < ApplicationController
       end
     end
     
-    render :action => "new"
+    respond_to do |wants|
+      wants.html { render :action => "new" }
+      wants.js
+    end
   end
   
   # raise @data.to_yaml

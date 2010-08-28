@@ -1,3 +1,13 @@
+var update_search_form = function(){
+  var disabled = false
+  $("form.reports-search div.results").each(function(){
+    if($(this).find('input[type=radio]').length > 0 && $(this).find('input[type=radio]:checked').length == 0) {
+      disabled = true
+    }
+  })
+  $("form.reports-search input.show-report-button").attr('disabled', disabled)
+}
+
 $(document).ready(function(){
   $("form.reports-search input.show-report-button").live('click', function(){
     var form = $(this).parents("form:first");
@@ -18,18 +28,8 @@ $(document).ready(function(){
     $(this).parents('form:first').find('div.results input[type=radio]').attr('checked', false)
   })
   
-  var update_search_form = function(){
-    var disabled = false
-    $("form.reports-search div.results").each(function(){
-      if($(this).find('input[type=radio]').length > 0 && $(this).find('input[type=radio]:checked').length == 0) {
-        disabled = true
-      }
-    })
-    $("form.reports-search input.show-report-button").attr('disabled', disabled)
-  }
-  
   update_search_form()
-  $("form.reports-search div.results input[type=radio]").click(update_search_form)
+  $("form.reports-search div.results input[type=radio]").live('change', update_search_form)
   
   $("div.results a.show-results").live('click', function(){
     $(this).parents("div.results:first").find("div.result").removeClass('hidden')
@@ -45,5 +45,40 @@ $(document).ready(function(){
     $.fancybox.showActivity();
     $(this).submit()
     return false
-  })
+  });
+  
+  
+  Autosubmit.setup();
 });
+
+/** Autosubmit **/
+var Autosubmit = function(){};
+Autosubmit.setup = function() {
+  var autosubmitTimeout = null;
+  $("form.autosubmit input").live('keyup', function(){
+    var trigger = this;
+    var form = $(this).parents("form:first");
+    clearTimeout(autosubmitTimeout);
+    autosubmitTimeout = setTimeout(function(){
+      $(trigger).addClass("loading");
+      Autosubmit.submit(form, trigger);
+    }, 500);
+  });
+};
+Autosubmit.submit = function(form, trigger){
+  var path = $(form).attr("action");
+  var method = $(form).attr("method");
+  $(trigger).parents("div:first").find('div.results input[type=radio]').attr('checked', false)
+  var data = $(form).serialize();
+  data += "&dimension=" + $(trigger).attr('data-dimension');
+  $.ajax({
+    type: method,
+    url: path,
+    dataType: 'script',
+    data: data,
+    complete: function(){
+      $(trigger).removeClass("loading");
+      update_search_form();
+    }
+  })
+}

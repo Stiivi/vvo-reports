@@ -292,6 +292,10 @@ a.active span.icon_facts { display: block; background: url(../images/report_icon
 
 /* @group Search */
 
+form.reports-search input { padding: 5px 30px 5px 5px; }
+
+form.reports-search input.loading { background: url(../images/input_loader.gif) no-repeat 185px 4px; }
+
 div.search {  }
 
 div.search div.search_legend { color: #8d8d8d; font-size: 15px; width: 119px; padding-top: 13px; }

@@ -1,0 +1,1 @@
+$("#results_<%= params[:dimension] %>").html("<%= escape_javascript(render(:partial => "results", :locals => {:dimension => params[:dimension].to_sym })) %>");
