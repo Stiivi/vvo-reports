@@ -49,7 +49,7 @@ class ListsController < ApplicationController
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
+      @table.add_row([[row[:"dodavatel.ico"], row[:"dodavatel.name"]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
   end
   
@@ -64,7 +64,7 @@ class ListsController < ApplicationController
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[:ico], row[:name]], row[:zmluva_hodnota_sum], row[:podiel]])
+      @table.add_row([[row[:"obstaravatel.ico"], row[:"obstaravatel.name"]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
   end
   
