@@ -21,6 +21,7 @@
       = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
     .right_column
       %h2 Druhy postupov
+      - @druhy_postupov_table.as_html # it will cause colors to reload
       = @druhy_postupov_chart.as_html
       
 - else
