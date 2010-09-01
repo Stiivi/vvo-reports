@@ -1,17 +1,12 @@
 h1. Kontakt
 
-*Transparency International Slovensko
+*Transparency International Slovensko*
 Bajkalská 25
 827 18 Bratislava
-Slovenská republika*
+Slovenská republika
 
-tel./fax: (00421 2) 5341 7207
+tel./fax: +421 2 5341 7207
 e-mail: "tis@transparency.sk":mailto:tis@transparency.sk
 web: "www.transparency.sk":http://www.transparency.sk
-IČO:  31817823
+IČO: 31817823
 
-Právna protikorupčná poradňa:
-tel.: (00421 2) 5823 3396
-fax: (00421 2) 5341 7207
-e-mail: poradna@transparency.sk
-web: www.poradnatis.sk
