@@ -1,1 +1,5 @@
 h1. Právne informácie
+
+Všetky informácie, údaje a elektronické obrázky, grafy a tabuľky, ktoré obsahuje tento portál sú predmetom duševného vlastníctva TIS a nesmú byť reprodukované, použité, upravované a/alebo ďalej spracované bez výslovného odkazu na tento server ako zdroj informácií. 
+
+Akékoľvek zásahy do technického alebo vecného charakteru tohto servera sú výslovne zakázané. Použitie mimo osobnej potreby bez súhlasu alebo odvolania sa na TIS je neoprávneným zásahom do práv TIS a súčasne môže byť neoprávneným zásahom do práv subjektov, ktorých dáta, dokumenty, texty a iné diela a/alebo iné nehmotné statky sú súčasťou obsahu tohto servera.
