@@ -343,3 +343,12 @@ table.search_results tr td a em { font-weight: normal; font-style: normal; backg
 /* @end */
 
 div.chart { text-align: center; }
+
+/* @group Dimension Table */
+
+table.dimension {  }
+
+table.dimension td { padding: 5px; }
+
+
+/* @end */
