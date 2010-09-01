@@ -49,6 +49,8 @@ class DimensionsController < ApplicationController
   
   def search
     @query = params[:query]
+    return redirect_to dimension_path(@dimension.name) if @query.blank?
+    
     search = SphinxSearch.new(params[:query], @dimension)
     # Order
     params[:order] ||= "relevance"
