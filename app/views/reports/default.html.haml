@@ -1,6 +1,6 @@
 .header.clearfix
   .fl
-    %h1 Verejné obstarávania
+    %h1== Prehľad pre #{l(Date.today, :format => '%B %Y')}
 
 - unless @pocet_zmluv == 0
   .clearfix
