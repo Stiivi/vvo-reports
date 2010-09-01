@@ -70,15 +70,21 @@ Autosubmit.submit = function(form, trigger){
   var method = $(form).attr("method");
   $(trigger).parents("div:first").find('div.results input[type=radio]').attr('checked', false)
   var data = $(form).serialize();
-  data += "&dimension=" + $(trigger).attr('data-dimension');
+  var dimension = $(trigger).attr('data-dimension');
   $.ajax({
     type: method,
     url: path,
-    dataType: 'script',
+    dataType: 'json',
     data: data,
-    complete: function(){
+    success: function(data){
       $(trigger).removeClass("loading");
-      update_search_form();
+      var data_for_dimension = data[dimension];
+      var autocomplete_element = $(".autocomplete."+dimension);
+      for(match in data_for_dimension) {
+        var match = $("<a />").attr('href', '#').text(data_for_dimension[match].value);
+        autocomplete_element.append(match);
+      }
+      // update_search_form();
     }
   })
 }

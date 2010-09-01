@@ -314,6 +314,20 @@ table.search_results tr td a:hover { text-decoration: none; }
 
 table.search_results tr td a em { font-weight: normal; font-style: normal; background-color: #fbfb67; }
 
+#default_search { margin: auto; background-color: #f8f8f8; padding: 15px; border: 1px solid #e2e2e2; }
+
+#default_search .fl, #default_search .fr { width: 420px; }
+
+#default_search .fl { margin-right: 15px;}
+
+#default_search .fr {  }
+
+.search_dimension { position: relative; }
+
+.search_dimension .autocomplete { background-color: #f7f7f7; position: absolute; top: 61px; padding: 5px; width: 196px; border: 1px solid #d1d3d3; z-index: 10; }
+
+.search_dimension .autocomplete a { display: block; }
+
 
 
 /* @end */

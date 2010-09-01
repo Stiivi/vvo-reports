@@ -103,6 +103,9 @@ class ReportsController < ApplicationController
     respond_to do |wants|
       wants.html { render :action => "new" }
       wants.js
+      wants.json do
+        render :json => @results
+      end
     end
   end
   

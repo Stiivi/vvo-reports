@@ -9,29 +9,17 @@
   
   = hidden_field_tag :current_cut, params[:current_cut]
   
-  %div
-    %h2 Obstarávateľ
-    = f.text_field :obstaravatel, :value => @param_report[:obstaravatel], :autocomplete => "off", :"data-dimension" => "obstaravatel"
-    #results_obstaravatel= render :partial => "results", :locals => {:dimension => :obstaravatel}
-  %br
-  
-  %div
-    %h2 Dodávateľ
-    = f.text_field :dodavatel, :value => @param_report[:dodavatel], :autocomplete => "off", :"data-dimension" => "dodavatel"
-    #results_dodavatel= render :partial => "results", :locals => {:dimension => :dodavatel}
-  %br
-    
-  %div
-    %h2 Typ tovaru
-    = f.text_field :cpv, :value => @param_report[:cpv], :autocomplete => "off", :"data-dimension" => "cpv"
-    #results_cpv= render :partial => "results", :locals => {:dimension => :cpv}
-  %br
-    
-  %div
-    %h2 Región
-    = f.text_field :geography, :value => @param_report[:geography], :autocomplete => "off", :"data-dimension" => "geography"
-    #results_geography= render :partial => "results", :locals => {:dimension => :geography}
-  %br  
+  - {:obstaravatel => 'Obstarávateľ',     |
+     :dodavatel => 'Dodávateľ',           |
+     :cpv => 'Typ tovaru',                |
+     :geography => 'Región'}.each do |dimension, dimension_name| |
+    %div.search_dimension
+      %h2= dimension_name
+      = f.text_field dimension, :value => @param_report[dimension], :autocomplete => "off", :"data-dimension" => dimension.to_s
+      %div.autocomplete{:class => dimension.to_s}
+      %div{:id => "results_#{dimension.to_s}"}
+        = render :partial => "results", :locals => {:dimension => dimension}
+      %br
   
   %div
     %h2 Dátum
