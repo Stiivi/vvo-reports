@@ -25,8 +25,8 @@ class ReportsController < ApplicationController
     # Update from params
     if params[:cut]
       @slicer.update_from_param(params[:cut])
-    end    
-
+    end
+    
     @slice = @slicer.to_slice
 
     # Report template name. 
