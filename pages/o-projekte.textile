@@ -1,14 +1,10 @@
 h1. O Projekte
 
-Verejný sektor každoročne vynakladá pomerne veľkú časť verejných financií na nákup tovarov, služieb a stavebných prác, pričom nemalá časť z týchto prostriedkov je použitých v režime zákona o verejnom obstarávaní. Verejné obstarávanie je pritom podľa prieskumov verejnej mienky jednou z oblastí značne citlivých na korupčné praktiky, považujeme preto za nevyhnutné venovať pozornosť sledovaniu alokovania verejných zákaziek a analýze transparentnosti trhu.
-
 Primárnym cieľom tohto portálu je zvýšenie transparentnosti vo verejnom obstarávaní sprístupnením a sprehľadnením informácií a dát o verejnom obstarávaní na elektronickom portáli. 
 
 Prostredníctvom priebežného zhromažďovania všetkých dostupných dát k verejnému obstarávaniu je zmyslom uľahčiť prístup širokej verejnosti k prehľadným informáciám o uchádzačoch, zadávaných zákazkách, najvyužívanejších metódach verejného obstarávania, či aktualizovaným štatistikám.
 
 Portál obsahuje informácie o nadlimitných, podlimitných a podprahových zákazkách verejného obstarávania sťahovaných vo forme surových dát z portálu "Vestník verejného obstarávania":http://www.e-vestnik.sk/, ktorý spravuje "Úrad pre verejné obstarávanie":http://www.uvo.gov.sk/.
-
-Tento portál má za cieľ byť užitočným zdrojom informácií pre novinárov, analytikov, študentov či zainteresovaných občanov, ktorí sa zaujímajú o túto problematiku.
 
 h2. Dáta
 
