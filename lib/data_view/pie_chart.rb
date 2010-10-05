@@ -27,7 +27,26 @@ module DataView
       chart_container_id = "chart_#{self.object_id}"
       chart_container = Html::Element.new("div", "", :id => chart_container_id, :class => "chart")
       
-      colors_json = colors.to_json
+      chart_options = {
+        width: 350,
+        height: 150,
+        is3D: true,
+        legend: 'none',
+        colors: colors
+      }
+      
+      if @options[:legend]
+        chart_options.merge!({
+          legend: 'left',
+          legendTextStyle: {
+            color: 'black',
+            fontName: 'Arial',
+            fontSize: '15px'
+          },
+          width: 1000,
+          height: 300
+        })
+      end
       
       javascript_code = <<-HERE
       (function(){
@@ -38,7 +57,7 @@ module DataView
           table.addColumn('number', 'series');
           table.addRows(json_data);
           var chart = new google.visualization.PieChart(document.getElementById('#{chart_container_id}'));
-          chart.draw(table, {width: 350, height: 150, is3D: true, legend: 'none', colors: #{colors_json}});
+          chart.draw(table, #{chart_options.to_json});
         });
       })();
       HERE
