@@ -11,7 +11,7 @@
 
 %table.data_table
   %tr
-    %th Nazov
+    %th= sort_link "Názov", :"obstaravatel.name"
     %th.tr.hodnota Suma
     %th.tr Podiel
   - @table.rows.each_index do |row|

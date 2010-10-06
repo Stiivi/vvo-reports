@@ -11,7 +11,7 @@
 
 %table.data_table
   %tr
-    %th Typ tovaru
+    %th= sort_link "Názov", @description_field
     %th.tr.hodnota Suma
     %th.tr Podiel
   - @table.rows.each_index do |row|
