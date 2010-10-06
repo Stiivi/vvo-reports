@@ -1,7 +1,6 @@
 module NavigationHelper
   def navigation_link(label, path, matcher = nil)
     link = link_to label, path
-    puts "PROCESSING NAVIGATION ITEM #{[request.path, path].inspect}"
     if matcher && matcher =~ request.path
       html_class = "active"
     elsif !matcher && request.path.include?(path)

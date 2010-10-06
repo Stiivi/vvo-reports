@@ -6,7 +6,7 @@
   display: none; }
 
 .fl {
-  float: left; }
+  float: left !important; }
 
 .fr {
   float: right !important; }

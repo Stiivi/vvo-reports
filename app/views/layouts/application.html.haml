@@ -25,15 +25,20 @@
     #header
       %a.header{:href => '/'}
     #container
-      #navigation
+      #navigation.clearfix
         %ul.nav.clearfix
           = navigation_link('Úvod', report_path('default'), /^(\/|\/reports\/default)$/)
-          = navigation_link('Celkový Prehľad', report_path('all'), /reports\/((?!default).)/)
+          = navigation_link('Celkový Prehľad', report_path('all'), /reports\/((?!default|new).)/)
           = navigation_link('Obstarávatelia', dimension_path('obstaravatel'))
           = navigation_link('Dodávatelia', dimension_path('dodavatel'))
           = navigation_link('Predmety', dimension_path('cpv'))
           = navigation_link('Regióny', dimension_path('geography'))
-          = navigation_link('Vyhľadávanie', new_report_path)
+          
+        %ul.nav.secondary.clearfix
+          %li{:class => request.path == new_report_path ? "active" : ""}
+            = link_to "Vyhľadávanie", new_report_path
+            = image_tag "magnifying_glass_alt_12x12.png"
+            
           
       #content
         = yield
