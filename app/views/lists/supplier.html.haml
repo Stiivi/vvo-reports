@@ -12,7 +12,7 @@
 %table.data_table
   %tr
     %th= sort_link "Názov", :"dodavatel.name"
-    %th.tr.hodnota Suma
+    %th.tr.hodnota= sort_link "Suma", :zmluva_hodnota_sum
     %th.tr Podiel
   - @table.rows.each_index do |row|
     %tr
