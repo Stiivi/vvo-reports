@@ -46,6 +46,8 @@ class ListsController < ApplicationController
         render :action => type
       end
       format.csv do
+        filename = "#{type}-#{Date.today}.csv"
+        response.headers["Content-Disposition"] = "attachment; filename=#{filename}"
         render :text => table_as_csv(@table)
       end
     end
