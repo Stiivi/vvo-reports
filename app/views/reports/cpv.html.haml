@@ -9,15 +9,14 @@
 
 .clearfix
   .left_column.clearfix
-    %h2.fl Obstáravatelia
-    .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param, :report => "cpv"), :class => "button simple"
+    %h2 Obstáravatelia
     = @obstaravatelia_table.as_html
+    = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button simple"
+    
   .right_column.clearfix
-    %h2.fl Dodávatelia
-    .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param, :report => "cpv"), :class => "button simple"
+    %h2 Dodávatelia
     = @dodavatelia_table.as_html
+    = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
 
 .clearfix
   .left_column
@@ -30,10 +29,10 @@
 
 .clearfix
   .left_column.clearfix
-    %h2.fl Typy tovarov
-    .clearfix.fr
-      = link_to "Zobraziť všetko", list_path("cpv", :cut => @slicer.to_param), :class => "button simple"
+    %h2 Typy tovarov
     = @typy_tovarov_table.as_html
+    = link_to "Zobraziť všetko", list_path("cpv", :cut => @slicer.to_param), :class => "button simple"
+    
   .right_column
     %h2 Typy tovarov (graf)
     = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
