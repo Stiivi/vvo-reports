@@ -43,7 +43,7 @@ module DataView
             fontName: 'Arial',
             fontSize: '15px'
           },
-          width: 1000,
+          width: 938,
           height: 300
         })
       end
