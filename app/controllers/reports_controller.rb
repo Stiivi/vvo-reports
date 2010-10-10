@@ -86,16 +86,15 @@ class ReportsController < ApplicationController
       dimension = @cube.dimension_with_name(dimension_name)
       raise "No dimension with name #{dimension_name}" unless dimension
       search = SphinxSearch.new(query, dimension)
+
+      # FIXME: @vojto why? at least put notice on site
       search.limit = 50
       search.process
       @result_counts[dimension.name.to_sym] = search.total_found
       @results[dimension.name.to_sym] = search.results.collect do |result|
-        level = dimension.levels.get(result[:level_id])
-        level_order = find_level_order(dimension, level)
-        param = ['*'] * level_order
-        value = CGI::escape(result[:level_key].to_s)
-        param.push(value)
-        result[:path] = param.join('-')
+        sanitized_path = CGI::escape(result[:path].to_s)
+        result[:path] = sanitized_path
+        # FIXME: verify this (changed by @stiivi)
         result
       end
     end
