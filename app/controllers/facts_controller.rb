@@ -45,8 +45,20 @@ class FactsController < ApplicationController
                              :order_direction => sort_direction )
       }
       format.csv {
-        @facts = @slice.facts
-        render :text => @facts.to_csv
+        dataset = @slice.facts
+        
+        self.response_body = proc { |response, output|
+          output.write(CSV.generate_line(dataset.columns))
+          # For now, this downloads all data at once.
+          # This is of course not what we need, but first we should
+          # get this working.
+          # It doesn't work at the moment, because of Sequel error when
+          # calling something like `dataset.collect` from inside the proc.
+          data = dataset.collect {|line| line.values }
+          data.each do |line|
+            output.write(CSV.generate_line(line))
+          end
+        }
       }
     end
     
@@ -75,5 +87,13 @@ class FactsController < ApplicationController
         @cpv_view << hash
     }
     @cpv_view.reverse!
+  end
+  
+  protected
+  
+  def render_csv_from_dataset_to_output(dataset, output)
+    total = dataset.count
+    step_size = 200
+    step_count = ceil(total.to_f / step_size.to_f)
   end
 end
