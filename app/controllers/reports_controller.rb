@@ -73,8 +73,6 @@ class ReportsController < ApplicationController
       respond_to do |wants|
         if params[:current_path]
           path = params[:current_path] + "?cut=" + slicer.to_param
-          puts "GENERATING PATH"
-          puts path
         else
           path = report_path(:all, :cut => slicer.to_param)
         end
