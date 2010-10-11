@@ -1,0 +1,2 @@
+brewery --force initialize
+brewmodel load model

@@ -63,13 +63,9 @@ class DimensionsController < ApplicationController
 
     @results.each do |result|
       level = @dimension.levels.get(result[:level_id])
-      level_order = find_level_order(@dimension, level)
 
-      param = ['*'] * level_order
-      value = CGI::escape(result[:level_key].to_s)
-      param.push(value)
-      param_string = param.join('-')
-      param = "#{@dimension.name}:#{param_string}"
+      sanitized_path = CGI::escape(result[:path].to_s)
+      param = "#{@dimension.name}:#{sanitized_path}"
 
       slicer.update_from_param(param)
 
