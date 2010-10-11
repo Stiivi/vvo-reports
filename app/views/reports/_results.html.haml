@@ -3,6 +3,7 @@
     - unless @results[dimension].empty?
       - @results[dimension].each_with_index do |result, index|
         %div.result{:class => index > 9 ? "hidden" : ""}
+          = result.to_yaml
           = radio_button_tag "report[#{dimension}]", result[:path], false, :id => "#{dimension}_#{result[:level_key]}"
           %label{:for => "#{dimension}_#{result[:level_key]}"}= result[:value]
           %br
