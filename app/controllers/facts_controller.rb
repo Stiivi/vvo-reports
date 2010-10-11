@@ -36,7 +36,7 @@ class FactsController < ApplicationController
       sort_field = DEFAULT_SORT_FIELD
       sort_direction = DEFAULT_SORT_DIRECTION
     end
-        
+
     respond_to do |format|
       format.html {
         @facts = @slice.facts(:page => @paginator.page-1,
@@ -45,18 +45,16 @@ class FactsController < ApplicationController
                              :order_direction => sort_direction )
       }
       format.csv {
-        dataset = @slice.facts
-        
+        all_fields = @cube.all_fields
         self.response_body = proc { |response, output|
-          output.write(CSV.generate_line(dataset.columns))
-          # For now, this downloads all data at once.
-          # This is of course not what we need, but first we should
-          # get this working.
-          # It doesn't work at the moment, because of Sequel error when
-          # calling something like `dataset.collect` from inside the proc.
-          data = dataset.collect {|line| line.values }
-          data.each do |line|
-            output.write(CSV.generate_line(line))
+          output.write(CSV.generate_line(all_fields))
+          facts = @slice.facts
+          facts.each do |fact|
+            row = []
+            all_fields.each {|field|
+                row << fact[field]
+            }
+            output.write(CSV.generate_line(row))
           end
         }
       }
