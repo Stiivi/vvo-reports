@@ -1,3 +1,9 @@
+GIT
+  remote: http://github.com/Stiivi/brewery.git
+  revision: bb4695a
+  specs:
+    brewery (0.3.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -32,7 +38,6 @@ GEM
     addressable (2.2.1)
     arel (0.4.0)
       activesupport (>= 3.0.0.beta)
-    brewery (0.3.0)
     builder (2.1.2)
     data_objects (0.10.2)
       addressable (~> 2.1)
@@ -108,7 +113,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
-  brewery
+  brewery!
   data_objects
   dm-is-list
   dm-migrations
@@ -116,6 +121,6 @@ DEPENDENCIES
   dm-types
   haml
   pg
-  rails (= 3.0.0.rc)
+  rails
   sequel
   typhoeus
