@@ -62,7 +62,6 @@ class ReportsController < ApplicationController
     show_report = @param_report.delete(:show_report)
     unless show_report.blank?
       slicer = Brewery::CubeSlicer.new(@cube)
-      raise @param_report.to_yaml
       @param_report.each do |dimension_name, value|
         if params[:current_cut]
           slicer.update_from_param(params[:current_cut])
