@@ -62,15 +62,15 @@ class ReportsController < ApplicationController
     show_report = @param_report.delete(:show_report)
     unless show_report.blank?
       slicer = Brewery::CubeSlicer.new(@cube)
+      if params[:current_cut]
+        slicer.update_from_param(params[:current_cut])
+      end
       @param_report.each do |dimension_name, value|
-        if params[:current_cut]
-          slicer.update_from_param(params[:current_cut])
-        end
         param = "#{dimension_name}:#{value}"
         slicer.update_from_param(param)
       end
       respond_to do |wants|
-        if params[:current_path]
+        if params[:current_path].present?
           path = params[:current_path] + "?cut=" + slicer.to_param
         else
           path = report_path(:all, :cut => slicer.to_param)
