@@ -16,4 +16,4 @@
           - html_class = "middle"
         .last
   .fr
-    %a{:href => new_report_path(:current_cut => params[:cut]), :class => "button simple ajax fancybox"} Pridať podmienky
+    %a{:href => new_report_path(:current_cut => params[:cut], :current_path => request.path), :class => "button simple ajax fancybox"} Pridať podmienky

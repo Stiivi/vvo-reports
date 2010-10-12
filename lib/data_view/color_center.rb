@@ -37,7 +37,7 @@ module DataView
       if @last_index >= @available_colors.size
         @last_index = 0
       end
-      result = @available_colors[@last_index]
+      result = @available_colors[@last_index].to_s
       @last_index += 1
       result
     end
@@ -48,13 +48,15 @@ module DataView
       @available_colors = palette["colors"]
       @specific_colors = palette["specific_colors"] || {}
       if @specific_colors
-        # available_colors = available_colors - specific_colors
         @specific_colors.each do |str, color|
           @available_colors.delete(color)
         end
       end
-      
       @last_index = 0
+    end
+    
+    def reset_generated_colors
+      @generated_colors = {}
     end
   end
 end
