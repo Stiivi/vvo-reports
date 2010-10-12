@@ -7,12 +7,12 @@ module DataView
       @options = options
       raise "Missing option :labels" unless options.has_key?(:labels)
       raise "Missing option :series" unless options.has_key?(:labels)
+      @color_list = ColorList.new(@options[:color_list] || 'default')
     end
     
     def as_html
       data_for_chart = []
       colors = []
-      color_center = ColorCenter.instance
       
       @data.rows.each_index do |row|
         labels = format_value_for_legend(
@@ -20,7 +20,7 @@ module DataView
         )
         label_id = @data.value_at(row, @options[:labels])
         series = @data.value_at(row, @options[:series])
-        colors << "#" + color_center.color_for_string(label_id)
+        colors << "#" + @color_list.color_at(row)
         data_for_chart << [labels, series.to_f]
       end
       

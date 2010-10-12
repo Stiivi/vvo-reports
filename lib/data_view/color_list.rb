@@ -1,8 +1,5 @@
 module DataView
   class ColorList
-    # FIXME: this is causing ActionView::Template::Error (DataView is not missing constant ColorCenter!)
-    # include Singleton
-
     attr_reader :default_color
     
     @@lists = nil
@@ -16,7 +13,7 @@ module DataView
         if !@@lists
             ColorList::load_lists
         end
-        @list = @@lists[list_name]
+        @list = @@lists[list_name.to_s]
         if !@list
             raise ArgumentError, "No color list with name #{list_name}"
         end

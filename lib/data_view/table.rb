@@ -41,7 +41,7 @@ module DataView
                            @data.formatted_value_at(row, col),
                            :class => @data.columns[col].identifier)
           if presenter = presenter_at(row, col)
-            presenter.present(cell_element, @data.rows[row][col])
+            presenter.present(cell_element, @data.rows[row][col], row)
           end
         end
       end

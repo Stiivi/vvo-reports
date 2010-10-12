@@ -9,9 +9,6 @@ class ReportsController < ApplicationController
   include Search
   
   before_filter :initialize_model, :set_limit
-  before_filter do
-    DataView::ColorCenter.instance.reset_generated_colors
-  end
   
   # The only two methods Rails need. Will find and display
   # report.
@@ -243,10 +240,13 @@ class ReportsController < ApplicationController
       DataView::Presenter::Report.new({
         :dimension => :druh_postupu, 
         :report => :postup, 
-        :color_palette => :druh_postupu
+        :color_list => 'druh_postupu'
       }.merge(presenter_opts))
     )
-    @druhy_postupov_chart = DataView::PieChart.new(@druhy_postupov, {:labels => 0, :series => 1})
+    @druhy_postupov_chart = DataView::PieChart.new(
+      @druhy_postupov,
+      {:labels => 0, :series => 1, :color_list => 'druh_postupu'}
+    )
       
     @posledny_rok = posledny_rok(slice)
   end

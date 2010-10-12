@@ -17,22 +17,17 @@ module DataView
         @link = options[:link]
         @legend = options.has_key?(:legend) ? options[:legend] : true
         @report = options[:report]
-        @color_palette = options[:color_palette]
+        @color_list = ColorList.new(options[:color_list] || 'default')
       end
       
-      def prepare(table_view)
-        color_center = ColorCenter.instance
-        color_center.reset(@color_palette||:default)
-      end
-      
-      def present(html_cell, data_cell)
+      def present(html_cell, data_cell, index)
         wrap = html_cell.new_child(:div, "", :class => "clearfix")
         left = wrap.new_child(:div, "", :class => "fl")
         right = wrap.new_child(:div, "", :class => "fr")
         
         if @legend
           color_el = left.new_child(:span, "&nbsp;", :class => "color")
-          color = ColorCenter.instance.color_for_string(data_cell.value)
+          color = @color_list.color_at(index)
           color_el[:style] = "background-color: ##{color}"
         end
 
