@@ -9,6 +9,9 @@ class ReportsController < ApplicationController
   include Search
   
   before_filter :initialize_model, :set_limit
+  before_filter do
+    DataView::ColorCenter.instance.reset_generated_colors
+  end
   
   # The only two methods Rails need. Will find and display
   # report.
