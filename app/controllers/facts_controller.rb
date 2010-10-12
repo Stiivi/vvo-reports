@@ -97,6 +97,5 @@ class FactsController < ApplicationController
         output.write(CSV.generate_line(values))
       end
     end
-    output.flush
   end
 end
