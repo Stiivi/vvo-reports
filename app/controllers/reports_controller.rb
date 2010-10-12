@@ -70,7 +70,11 @@ class ReportsController < ApplicationController
         slicer.update_from_param(param)
       end
       respond_to do |wants|
-        path = report_path(:all, :cut => slicer.to_param)
+        if params[:current_path]
+          path = params[:current_path] + "?cut=" + slicer.to_param
+        else
+          path = report_path(:all, :cut => slicer.to_param)
+        end
         wants.html { return redirect_to path }
         wants.js { return render :text => "window.location = '#{path}'" }
       end
@@ -88,6 +92,7 @@ class ReportsController < ApplicationController
       search = SphinxSearch.new(query, dimension)
 
       # FIXME: @vojto why? at least put notice on site
+      #        ^ It's more fun when they don't know.
       search.limit = 50
       search.process
       @result_counts[dimension.name.to_sym] = search.total_found
@@ -95,6 +100,7 @@ class ReportsController < ApplicationController
         sanitized_path = CGI::escape(result[:path].to_s)
         result[:path] = sanitized_path
         # FIXME: verify this (changed by @stiivi)
+        
         result
       end
     end

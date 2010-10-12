@@ -7,6 +7,7 @@
 
 - form_for :report, :url => reports_path, :html => {:class => "reports-search autosubmit"} do |f|
   
+  = hidden_field_tag :current_path, params[:current_path]
   = hidden_field_tag :current_cut, params[:current_cut]
   
   %div
