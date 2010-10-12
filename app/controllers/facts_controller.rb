@@ -45,17 +45,8 @@ class FactsController < ApplicationController
                              :order_direction => sort_direction )
       }
       format.csv {
-        all_fields = @cube.all_fields
         self.response_body = proc { |response, output|
-          output.write(CSV.generate_line(all_fields))
-          facts = @slice.facts
-          facts.each do |fact|
-            row = []
-            all_fields.each {|field|
-                row << fact[field]
-            }
-            output.write(CSV.generate_line(row))
-          end
+          render_csv_from_dataset_to_output(@slice.facts, output)
         }
       }
     end
@@ -90,8 +81,22 @@ class FactsController < ApplicationController
   protected
   
   def render_csv_from_dataset_to_output(dataset, output)
+    all_fields = @cube.all_fields
+    # Meh? We can as well just ask dataset about its
+    # fields.
+    output.write(CSV.generate_line(all_fields))
     total = dataset.count
-    step_size = 200
-    step_count = ceil(total.to_f / step_size.to_f)
+    step_size = 10
+    step_count = (total.to_f / step_size.to_f).ceil
+    step_count.times do |step|
+      subset = dataset.limit(step_size, step*step_size)
+      subset.each do |row|
+        values = all_fields.collect { |field|
+          row[field]
+        }
+        output.write(CSV.generate_line(values))
+      end
+    end
+    output.flush
   end
 end
