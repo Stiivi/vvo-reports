@@ -47,7 +47,7 @@
     = f.select :druh_postupu, options_for_select(@postupy, @param_report[:druh_postupu])
     
   %div
-    %h2 Kriteria vyhodnotenia
+    %h2 Kritéria vyhodnotenia
     = f.select :kriteria_vyhodnotenia, options_for_select(@kriteria_vyhodnotenia, @param_report[:kriteria_vyhodnotenia])
   
   = f.hidden_field :show_report, :value => "", :class => "show-report"
