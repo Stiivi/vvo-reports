@@ -27,4 +27,6 @@ $(document).ready(function(){
   });
   
   $("input.autofocus:first").focus();
+  
+  $("a.tip").tipsy({gravity: 'w', fade: true});
 });

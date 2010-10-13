@@ -9,8 +9,10 @@
 
 = render :partial => "reports/slicer"
 
-= link_to "Stiahnuť CSV", :format => "csv", :cut => params[:cut]
-%br
+.clearfix
+  %a.button.simple.tip{:href => url_for(:format => "csv", :cut => params[:cut]), :title => "Stiahnúť práve zobrazovanú tabuľku vo formáte CSV."}
+    Stiahnuť CSV
+    = image_tag "download.png"
 %br
 
 %table.data_table
