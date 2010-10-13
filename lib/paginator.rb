@@ -8,7 +8,7 @@ class Paginator
   end
   
   def total_pages
-    @total.to_i / @page_size.to_i
+    (@total.to_f / @page_size.to_f).ceil
   end
   
   def paginate?

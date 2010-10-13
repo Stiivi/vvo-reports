@@ -7,7 +7,7 @@
         %li= link_to "‹ Predchádzajúca", update_params(:page => @paginator.page-1)
       - unless @paginator.page >= @paginator.total_pages
         %li= link_to "Ďalšia ›", update_params(:page => @paginator.page+1)
-      - unless @page == @paginator.total_pages
+      - unless @paginator.page == @paginator.total_pages
         %li= link_to "Posledná", update_params(:page => @paginator.total_pages)
     .fr
       == Stránka #{@paginator.page}/#{@paginator.total_pages}
