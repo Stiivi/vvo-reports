@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
     
     @model = Brewery::LogicalModel.model_with_name("verejne_obstaravania")
     @cube = @model.cube_with_name("zmluvy")
+    @cube.view = "mft_vvo_zmluvy"
   end
   
   # FIXME: Move to a class for generating paths generally
