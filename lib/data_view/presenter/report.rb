@@ -86,6 +86,7 @@ module DataView
       end
       
       def truncate_string(string)
+        string ||= ""
         if string.length > TRUNCATED_LENGTH
           return string[0, TRUNCATED_LENGTH] + " &hellip;"
         else
