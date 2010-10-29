@@ -34,10 +34,10 @@ class ListsController < ApplicationController
     end
     
     # Sorting
-    if params[:sort]
-      @aggregate_options[:order_by] = params[:sort]
-      @aggregate_options[:order_direction] = params[:dir] || "asc"
-    end
+    @aggregate_options.merge!({
+      :order_by => params[:sort] ||= "zmluva_hodnota_sum",
+      :order_direction => params[:dir] ||= "desc"
+    })
     
     self.send(type)
     
