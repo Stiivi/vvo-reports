@@ -1,5 +1,5 @@
 class Paginator
-  attr_reader :page, :total, :page_size
+  attr_accessor :page, :total, :page_size
   
   def initialize(options)
     @page = options[:page] || 1
@@ -13,5 +13,13 @@ class Paginator
   
   def paginate?
     @total > @page_size
+  end
+  
+  def offset
+    (@page-1) * @page_size
+  end
+  
+  def limit
+    @page_size
   end
 end

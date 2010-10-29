@@ -24,6 +24,8 @@
         %td
           = link_to highlight_query(result[:value], @query), result[:link]
           = "(#{result[:level_obj].label})"
+          
+  = render :partial => "global/pagination"
 
 - else
   .note Žiadne výsledky

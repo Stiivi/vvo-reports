@@ -52,12 +52,18 @@ class DimensionsController < ApplicationController
     return redirect_to dimension_path(@dimension.name) if @query.blank?
     
     search = SphinxSearch.new(params[:query], @dimension)
+    # Pagination
+    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => DEFAULT_PAGE_SIZE)
+    search.offset = @paginator.offset
+    search.limit = @paginator.limit
     # Order
     params[:order] ||= "relevance"
     search.order = params[:order]
+    # Process
     search.process
     @results = search.results
     @total_found = search.total_found
+    @paginator.total = search.total_found
 
     slicer = Brewery::CubeSlicer.new(@cube)
 
