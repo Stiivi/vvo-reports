@@ -58,7 +58,7 @@
         %tr
           %th Názov
           %td
-            = link_to(@fact[:'obstaravatel.name'], report_path("procurer", :object_id => @fact[:'obstaravatel.ico']))
+            = link_to(@fact[:'obstaravatel.name'], report_path("procurer", :cut => "obstaravatel:#{@fact[:'obstaravatel.account_sector_code']}-#{@fact[:'obstaravatel.ico']}"))
         %tr
           %th Adresa
           %td= @fact[:'obstaravatel.address']
@@ -74,7 +74,7 @@
       %table.narrow#supplier
         %tr
           %th Názov
-          %td= link_to(@fact[:'dodavatel.name'], report_path("supplier", :object_id => @fact[:'dodavatel.ico']))
+          %td= link_to(@fact[:'dodavatel.name'], report_path("supplier", :cut => "dodavatel:#{@fact[:'dodavatel.ico']}"))
         %tr
           %th IČO
           %td= @fact[:'dodavatel.ico']
