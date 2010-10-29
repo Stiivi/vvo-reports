@@ -4,17 +4,20 @@
 
 - unless @pocet_zmluv == 0
   .clearfix
-    .left_column.clearfix
-      %h2.fl Obstáravatelia
-      .clearfix.fr
-        = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button simple"
+    .left_column
+      %h2 Obstáravatelia
       = @obstaravatelia_table.as_html
-    .right_column.clearfix
-      %h2.fl Dodávatelia
-      .clearfix.fr
-        = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
+      .clearfix
+        = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button simple"
+    .right_column
+      %h2 Dodávatelia
       = @dodavatelia_table.as_html
+      .clearfix
+        = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
     
+  %br
+  %br
+  
   .clearfix
     %h2 Typy tovarov
     = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1, :legend => true}).as_html
