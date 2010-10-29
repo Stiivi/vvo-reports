@@ -155,6 +155,7 @@ module Brewery
       path = path.join(PATH_SEPARATOR)
       param = "#{dimension.name}#{DIMENSION_SEPARATOR}#{path}"
       self.update_from_param(param)
+      self
     end
     
     
