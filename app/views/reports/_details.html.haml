@@ -4,8 +4,11 @@
       %dl.clearfix
         %dt Hodnota zmlúv
         %dd
-          €
-          = number_to_human(@hodnota_zmluv)
+          - if @hodnota_zmluv == 0
+            0
+          - else
+            €
+            = number_to_human(@hodnota_zmluv)
       %dl.clearfix
         %dt Počet zmlúv
         %dd= number_with_delimiter(@pocet_zmluv, :delimiter => " ")

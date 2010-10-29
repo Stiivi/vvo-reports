@@ -211,7 +211,7 @@ class ReportsController < ApplicationController
       {:col => [:firma], :row => :all},
       DataView::Presenter::Report.new({:report => :supplier, :dimension => :dodavatel}.merge(presenter_opts))
     )
-    if @dodavatelia.rows.last.first.value.to_s == "ostatne"
+    if @dodavatelia.rows.last && @dodavatelia.rows.last.first.value.to_s == "ostatne"
       @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
         DataView::Presenter::Remainder.new(:list => 'procurer'))
     end
@@ -227,7 +227,7 @@ class ReportsController < ApplicationController
       DataView::Presenter::Report.new({:report => :procurer, :dimension => :obstaravatel, :level => 1, :link => :report}.merge(presenter_opts)))
     @obstaravatelia_table.add_cell_presenter({:col => [:suma], :row => :all}, 
                                              DataView::Presenter::HumanNumber.new)
-    if @obstaravatelia.rows.last.first.value == "ostatne"
+    if @obstaravatelia.rows.last && @obstaravatelia.rows.last.first.value == "ostatne"
       @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
         DataView::Presenter::Remainder.new(:list => 'supplier'))
     end
@@ -241,7 +241,7 @@ class ReportsController < ApplicationController
       DataView::Presenter::Report.new({:dimension => :cpv, :report => :cpv}.merge(presenter_opts)))
     @typy_tovarov_table.add_cell_presenter({:col => [:suma], :row => :all}, 
                                            DataView::Presenter::HumanNumber.new)
-    if @typy_tovarov.rows.last.first.value == "ostatne"
+    if @typy_tovarov.rows.last && @typy_tovarov.rows.last.first.value == "ostatne"
       @typy_tovarov_table.add_cell_presenter({:col => :first, :row => :last}, 
         DataView::Presenter::Remainder.new(:list => 'cpv'))
     end
@@ -259,7 +259,7 @@ class ReportsController < ApplicationController
     )
     @druhy_postupov_table.add_cell_presenter({:col => [:suma], :row => :all}, 
                                              DataView::Presenter::HumanNumber.new)
-    if @druhy_postupov.rows.last.first.value == "ostatne"
+    if @druhy_postupov.rows.last && @druhy_postupov.rows.last.first.value == "ostatne"
       @druhy_postupov_table.add_cell_presenter({:col => :first, :row => :last}, 
         DataView::Presenter::Remainder.new(:list => 'postup'))
     end
