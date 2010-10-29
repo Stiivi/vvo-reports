@@ -132,12 +132,16 @@ class ReportsController < ApplicationController
       @obstaravatelia = top_10_obstaravatelia(@slice, :sum => true)
     end
     
+    @total_presenter = DataView::Presenter::Report.new(:link => false)
+    
     @dodavatelia_table.add_cell_presenter({:col => :first, :row => [5, 6]}, 
-      @remainder_presenter)
+      DataView::Presenter::Remainder.new(:list => 'supplier'))
+    @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, @total_presenter)
+    
       
     @obstaravatelia_table.add_cell_presenter({:col => :first, :row => [5, 6]}, 
-      @remainder_presenter)
-    # raise @dodavatelia_table.data.rows.count.to_s
+      DataView::Presenter::Remainder.new(:list => 'procurer'))
+    @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, @total_presenter)
   end
   
   def report_all
@@ -200,9 +204,6 @@ class ReportsController < ApplicationController
     
     yield if block_given?
     
-    # This presenter will be shared across all tables.
-    @remainder_presenter = DataView::Presenter::Report.new(:link => false)
-    
     # Dodavatelia
     @dodavatelia ||= top_10_dodavatelia(slice)
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
@@ -212,7 +213,7 @@ class ReportsController < ApplicationController
     )
     if @dodavatelia.rows.last.first.value.to_s == "ostatne"
       @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
-        @remainder_presenter)
+        DataView::Presenter::Remainder.new(:list => 'procurer'))
     end
     
     @dodavatelia_table.add_cell_presenter({:col => [:suma], :row => :all}, 
@@ -228,7 +229,7 @@ class ReportsController < ApplicationController
                                              DataView::Presenter::HumanNumber.new)
     if @obstaravatelia.rows.last.first.value == "ostatne"
       @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
-        @remainder_presenter)
+        DataView::Presenter::Remainder.new(:list => 'supplier'))
     end
     @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
       
@@ -242,7 +243,7 @@ class ReportsController < ApplicationController
                                            DataView::Presenter::HumanNumber.new)
     if @typy_tovarov.rows.last.first.value == "ostatne"
       @typy_tovarov_table.add_cell_presenter({:col => :first, :row => :last}, 
-        @remainder_presenter)
+        DataView::Presenter::Remainder.new(:list => 'cpv'))
     end
     
     # Druhy postupov
@@ -260,7 +261,7 @@ class ReportsController < ApplicationController
                                              DataView::Presenter::HumanNumber.new)
     if @druhy_postupov.rows.last.first.value == "ostatne"
       @druhy_postupov_table.add_cell_presenter({:col => :first, :row => :last}, 
-        @remainder_presenter)
+        DataView::Presenter::Remainder.new(:list => 'postup'))
     end
     @druhy_postupov_chart = DataView::PieChart.new(
       @druhy_postupov,

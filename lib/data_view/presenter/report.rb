@@ -42,14 +42,6 @@ module DataView
         else
           data_element = left.new_child(:span, truncate_string(data_cell.formatted_value))
         end
-        
-        # Now we need to add special (+) button to add this cut to current
-        # slice.
-        # base_url = @controller.request.env['PATH_INFO']
-        #         button = right.new_child(:a, "")
-        #         button.new_child(:img, "", :src => "/images/plus_blue.png")
-        #         report_template = @controller.params[:id] || "all"
-        #         button[:href] = @controller.report_path(report_template, :cut => current_slicer.to_param, :object_id => @controller.params[:object_id])
       end
       
       def cut_path(value)
