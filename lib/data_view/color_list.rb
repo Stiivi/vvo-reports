@@ -35,5 +35,8 @@ module DataView
         return @indexed_colors[index % @indexed_color_count]
     end
     
+    def color_with_name_or_index(name, index)
+        @named_colors[name] || color_at(index) 
+    end
   end
 end

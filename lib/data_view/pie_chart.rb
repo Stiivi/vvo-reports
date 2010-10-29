@@ -20,7 +20,10 @@ module DataView
         )
         label_id = @data.value_at(row, @options[:labels])
         series = @data.value_at(row, @options[:series])
-        colors << "#" + @color_list.color_at(row)
+        colors << "#" + @color_list.color_with_name_or_index(
+          @data.value_at(row, @options[:labels]), 
+          row
+        )
         data_for_chart << [labels, series.to_f]
       end
       

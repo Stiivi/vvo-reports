@@ -27,7 +27,7 @@ module DataView
         
         if @legend
           color_el = left.new_child(:span, "&nbsp;", :class => "color")
-          color = @color_list.color_at(index)
+          color = @color_list.color_with_name_or_index(data_cell.value, index)
           color_el[:style] = "background-color: ##{color}"
         end
 
