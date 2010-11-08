@@ -5,25 +5,38 @@ require 'riddle/1.10'
 class SphinxSearch
   INDEX_NAME = "dimensions"
   
-  attr_reader :results, :total_found
+  attr_reader :results, :total_found, :conditions
   attr_accessor :limit, :offset, :order
   
-  def initialize(query, dimension = nil)
+  def initialize(query)
     @query = query
-    @dimension = dimension
     @offset = 0
     @limit = 30
+    @conditions = {}
+  end
+  
+  def self.new_with_dimension(query, dimension)
+    alter_ego = self.new(query)
+    alter_ego.conditions[:dimension_id] = dimension.id
+    alter_ego
   end
   
   def process
     client = Riddle::Client.new
     
+    # Limit
     client.offset = @offset
     client.limit = @limit
     
+    # Order
     if @order == "alphabet"
       client.sort_mode = :attr_asc
       client.sort_by = 'description_value_ordinal'
+    end
+    
+    # Conditions
+    @conditions.each do |field, value|
+      client.filters << Riddle::Client::Filter.new(field.to_s, [value])
     end
     
     result = client.query(@query)

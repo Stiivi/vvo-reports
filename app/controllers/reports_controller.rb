@@ -89,7 +89,7 @@ class ReportsController < ApplicationController
       next if dimension_name == 'date'
       dimension = @cube.dimension_with_name(dimension_name)
       raise "No dimension with name #{dimension_name}" unless dimension
-      search = SphinxSearch.new(query, dimension)
+      search = SphinxSearch.new_with_dimension(query, dimension)
 
       # FIXME: @vojto why? at least put notice on site
       #        ^ It's more fun when they don't know.
