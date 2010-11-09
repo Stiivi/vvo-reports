@@ -51,7 +51,7 @@ class DimensionsController < ApplicationController
     @query = params[:query]
     return redirect_to dimension_path(@dimension.name) if @query.blank?
     
-    search = SphinxSearch.new(params[:query], @dimension)
+    search = SphinxSearch.new_with_dimension(params[:query], @dimension)
     # Pagination
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => DEFAULT_PAGE_SIZE)
     search.offset = @paginator.offset
