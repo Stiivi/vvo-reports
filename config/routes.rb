@@ -7,7 +7,11 @@
 
 Vvo::Application.routes.draw do |map|
   # Main paths
-  resources :reports
+  resources :reports do
+    collection do
+      post :search
+    end
+  end
   resources :lists
   resources :facts
   resources :dimensions do

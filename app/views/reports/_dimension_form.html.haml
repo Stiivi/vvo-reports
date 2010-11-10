@@ -1,0 +1,5 @@
+%div.search_dimension
+  %h2= dimension_name
+  = form.text_field "#{dimension}_name", :value => "", :autocomplete => "off", :"data-dimension" => dimension.to_s
+  = form.hidden_field "#{dimension}", :"data-dimension" => dimension.to_s
+  %div.autocomplete{:class => dimension.to_s}

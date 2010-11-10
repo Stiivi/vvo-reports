@@ -351,9 +351,13 @@ table.search_results tr td a em { font-weight: normal; font-style: normal; backg
 
 .search_dimension { position: relative; }
 
-.search_dimension .autocomplete { background-color: #f7f7f7; position: absolute; top: 61px; padding: 5px; width: 196px; border: 1px solid #d1d3d3; z-index: 10; }
+.search_dimension .autocomplete { background-color: #f7f7f7; position: absolute; top: 61px; width: 206px; border: 1px solid #d1d3d3; z-index: 10; display: none; }
 
-.search_dimension .autocomplete a { display: block; }
+.search_dimension .autocomplete a { display: block; border-bottom: 1px solid #ccc; padding: 5px; }
+
+.search_dimension input:focus { outline: none; }
+
+.search_dimension input.selected { background-color: #d8e0fe; font-weight: bold; }
 
 
 
