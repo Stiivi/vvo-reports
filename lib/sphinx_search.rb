@@ -1,74 +1,66 @@
 # encoding: utf-8
 
+require 'riddle/1.10'
+
 class SphinxSearch
   INDEX_NAME = "dimensions"
   
-  attr_reader :results, :total_found
-  attr_accessor :limit, :order
+  attr_reader :results, :total_found, :conditions
+  attr_accessor :limit, :offset, :order
   
-  def initialize(query, dimension = nil)
+  def initialize(query)
     @query = query
-    @dimension = dimension
+    @offset = 0
+    @limit = 30
+    @conditions = {}
+  end
+  
+  def self.new_with_dimension(query, dimension)
+    alter_ego = self.new(query)
+    alter_ego.conditions[:dimension_id] = dimension.id
+    alter_ego
   end
   
   def process
-    sphinx_client = Sphinx::Client.new
-    if @dimension
-      sphinx_client.SetFilter('dimension_id', [@dimension.id])
+    client = Riddle::Client.new
+    
+    # Limit
+    client.offset = @offset
+    client.limit = @limit
+    
+    # Order
+    if @order == "alphabet"
+      client.sort_mode = :attr_asc
+      client.sort_by = 'description_value_ordinal'
     end
-    if @limit
-      sphinx_client.SetLimits(0, @limit)
+    
+    # Conditions
+    @conditions.each do |field, value|
+      client.filters << Riddle::Client::Filter.new(field.to_s, [value])
     end
-    @result = {}
-    query = @query.force_encoding('utf-8')
-    converted_query = Iconv.conv('us-ascii//translit', 'utf-8', query).gsub(/'/, '')
-    result = sphinx_client.Query(converted_query, INDEX_NAME)
-    @total_found = result['total_found']
-    document_ids= result['matches'].collect { |match|
-      match['id']
-    }
+    
+    result = client.query(@query)
+    
+    document_ids = result[:matches].collect do |match|
+      match[:doc]
+    end
+    
     connection = Brewery::workspace.connection
     dataset = connection[:idx_dimensions]
+    
+    query = dataset.filter(:id => document_ids) #.limit(@limit, @offset)
+    # Problem here. Order at two places. This is because Sphinx
+    # returns list of IDs which are in correct order, but SQL won't
+    # use that order and it will mess it up. So I have to reorder 
+    # by description value again.
+    # I have no idea what happens when I use default ordering option
+    # called "Relevance". I suppose as long as client thinks it's Relevance
+    # it doesn't matter that it's actually random mess.
     if @order == "alphabet"
-      @results = dataset.filter(:id => document_ids).order_by(:value).all
-    else
-      @results = dataset.filter(:id => document_ids).all
+      query = query.order_by(:description_value)
     end
+    @results = query.all
+    @total_found = result[:total_found]    
   end
   
-  # def create_search_with_string(string)
-  #   search = Search.new
-  #   search.query_string = string
-  #   search.search_type = "text"
-  #   
-  #   query = SearchQuery.query_with_string(string, :scope=>'global', :object=>nil)
-  #   search.query = query
-  #   query.save
-  #   search.save
-  #   search
-  # end
-  # 
-  # def perform_search(search)
-  #   # TODO. If can't use Sphinx, return false or something.
-  #   
-  #   sphinx_client = Sphinx::Client.new
-  #   
-  #   all_results = []
-  #   
-  #   datasets = DatasetDescription.all
-  #   datasets.each do |dataset|
-  #     sphinx_client.SetLimits(0, 10)
-  #     results = sphinx_client.Query(search.query_string, "index_#{dataset.identifier}")
-  #     results['matches'].each do |r|
-  #       all_results << {:table_name => dataset.identifier, :record_id => r['id'], :search_query_id => search.query.id}
-  #     end
-  #   end
-  #   
-  #   values = all_results.collect{|r|"('#{r[:table_name]}', #{r[:record_id]}, #{r[:search_query_id]})"}.join(",")
-  #   
-  #   sql_query = "INSERT INTO search_results(table_name, record_id, search_query_id) VALUES #{values}"
-  #   
-  #   DatasetDescription.connection.execute(sql_query)
-  #   
-  # end
 end

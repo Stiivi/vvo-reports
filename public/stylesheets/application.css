@@ -3,6 +3,31 @@
 	http://localhost:3001/stylesheets/application.css?1
 */
 
+/* @group Plugins */
+
+/* @group Tipsy */
+
+.tipsy { padding: 5px; font-size: 11px; position: absolute; z-index: 100000; }
+  .tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: center; }
+  .tipsy-inner { border-radius: 3px; -moz-border-radius:3px; -webkit-border-radius:3px; }
+  .tipsy-arrow { position: absolute; background: url('../images/tipsy.gif') no-repeat top left; width: 9px; height: 5px; }
+  .tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -4px; }
+    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; }
+    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; }
+  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -4px; background-position: bottom left; }
+    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; background-position: bottom left; }
+    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; background-position: bottom left; }
+  .tipsy-e .tipsy-arrow { top: 50%; margin-top: -4px; right: 0; width: 5px; height: 9px; background-position: top right; }
+  .tipsy-w .tipsy-arrow { top: 50%; margin-top: -4px; left: 0; width: 5px; height: 9px; }
+
+
+
+/* @end */
+
+
+
+/* @end */
+
 /* @group Typo */
 
 body { font: 11px "Lucida Grande"; }
@@ -25,11 +50,11 @@ a.light { color: #a8aeb2; text-decoration: none; }
 
 body { background: #ececec url(../images/background.png) repeat-x; }
 
-#header { background: url(../images/logo.png) no-repeat 15px 0; text-align: right; width: 996px; margin: 10px auto auto; height: 40px; }
+#header { background: url(../images/logo.png) no-repeat 15px 0; text-align: right; width: 996px; margin: 10px auto auto; height: 45px; }
 
 div.links { padding-top: 10px; padding-right: 24px; color: #bec5c9; }
 
-div.links a { color: #808080; }
+div.links a { color: #424242; }
 
 #header a.header { display: block; height: 35px; width: 370px; }
 
@@ -38,6 +63,8 @@ div.links a { color: #808080; }
 #navigation { background-image: url(../images/navigation_background.png); height: 45px; text-align: left; position: relative; }
 
 ul.nav { position: absolute; left: 30px; top: 9px; }
+
+ul.nav.secondary { right: 20px; left: inherit; }
 
 ul.nav li { float: left; padding-right: 12px; padding-left: 12px; }
 
@@ -266,7 +293,7 @@ ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
 
 table.data_table th.suma { width: 100px; }
 
-table.data_table th.podiel { width: 50px; }
+table.data_table th.podiel { width: 53px; }
 
 table.data_table td.suma { text-align: right;}
 
@@ -298,7 +325,7 @@ form.reports-search input.loading { background: url(../images/input_loader.gif) 
 
 div.search {  }
 
-div.search div.search_legend { color: #8d8d8d; font-size: 15px; width: 119px; padding-top: 13px; }
+div.search div.search_legend { color: #424242; font-size: 15px; width: 119px; padding-top: 13px; }
 
 input.large { border: 1px solid #eeeeee; color: #3c3c3c; font-size: 17px; background: url(../images/input_large_background.png) repeat-x; padding-right: 10px; padding-left: 10px; }
 
@@ -332,4 +359,37 @@ table.search_results tr td a em { font-weight: normal; font-style: normal; backg
 
 /* @end */
 
+/* @group Textile */
+
+.textile * li {
+	list-style-type: square;
+	list-style-position: outside;
+	padding-left: 0;
+	margin-left: 28px;
+}
+
+.textile {
+	font-size: 12px;
+	line-height: 150%;
+	width: 600px;
+	text-align: justify;
+}
+
+.textile h1 {
+	padding-bottom: 15px;
+}
+
+
+
+/* @end */
+
 div.chart { text-align: center; }
+
+/* @group Dimension Table */
+
+table.dimension {  }
+
+table.dimension td { padding: 5px; }
+
+
+/* @end */

@@ -25,4 +25,8 @@ $(document).ready(function(){
   $("form.submit-on-change select").change(function(){
     $(this).parents("form:first").submit();
   });
+  
+  $("input.autofocus:first").focus();
+  
+  $("a.tip").tipsy({gravity: 'w', fade: true});
 });

@@ -48,6 +48,9 @@ module Brewery
         dimension, value = d.split(DIMENSION_SEPARATOR)
         return false unless dimension && value
         dimension = @cube.dimension_with_name(dimension)
+        if !dimension
+            raise ArgumentError, "no dimension specified in parameter \'#{param_string}\'"
+        end
         path = value.split(PATH_SEPARATOR).collect { |v|
           v == "*" ? :all : v
         }
@@ -152,6 +155,7 @@ module Brewery
       path = path.join(PATH_SEPARATOR)
       param = "#{dimension.name}#{DIMENSION_SEPARATOR}#{path}"
       self.update_from_param(param)
+      self
     end
     
     

@@ -25,8 +25,8 @@ class ReportsController < ApplicationController
     # Update from params
     if params[:cut]
       @slicer.update_from_param(params[:cut])
-    end    
-
+    end
+    
     @slice = @slicer.to_slice
 
     # Report template name. 
@@ -62,15 +62,19 @@ class ReportsController < ApplicationController
     show_report = @param_report.delete(:show_report)
     unless show_report.blank?
       slicer = Brewery::CubeSlicer.new(@cube)
+      if params[:current_cut]
+        slicer.update_from_param(params[:current_cut])
+      end
       @param_report.each do |dimension_name, value|
-        if params[:current_cut]
-          slicer.update_from_param(params[:current_cut])
-        end
         param = "#{dimension_name}:#{value}"
         slicer.update_from_param(param)
       end
       respond_to do |wants|
-        path = report_path(:all, :cut => slicer.to_param)
+        if params[:current_path].present?
+          path = params[:current_path] + "?cut=" + slicer.to_param
+        else
+          path = report_path(:all, :cut => slicer.to_param)
+        end
         wants.html { return redirect_to path }
         wants.js { return render :text => "window.location = '#{path}'" }
       end
@@ -85,17 +89,18 @@ class ReportsController < ApplicationController
       next if dimension_name == 'date'
       dimension = @cube.dimension_with_name(dimension_name)
       raise "No dimension with name #{dimension_name}" unless dimension
-      search = SphinxSearch.new(query, dimension)
+      search = SphinxSearch.new_with_dimension(query, dimension)
+
+      # FIXME: @vojto why? at least put notice on site
+      #        ^ It's more fun when they don't know.
       search.limit = 50
       search.process
       @result_counts[dimension.name.to_sym] = search.total_found
       @results[dimension.name.to_sym] = search.results.collect do |result|
-        level = dimension.levels.get(result[:level_id])
-        level_order = find_level_order(dimension, level)
-        param = ['*'] * level_order
-        value = CGI::escape(result[:level_key].to_s)
-        param.push(value)
-        result[:path] = param.join('-')
+        sanitized_path = CGI::escape(result[:path].to_s)
+        result[:path] = sanitized_path
+        # FIXME: verify this (changed by @stiivi)
+        
         result
       end
     end
@@ -130,12 +135,16 @@ class ReportsController < ApplicationController
       @obstaravatelia = top_10_obstaravatelia(@slice, :sum => true)
     end
     
-    @dodavatelia_table.add_cell_presenter({:col => :first, :row => [5]}, 
-      @remainder_presenter)
+    @total_presenter = DataView::Presenter::Report.new(:link => false)
+    
+    @dodavatelia_table.add_cell_presenter({:col => :first, :row => [5, 6]}, 
+      DataView::Presenter::Remainder.new(:list => 'supplier'))
+    @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, @total_presenter)
+    
       
-    @obstaravatelia_table.add_cell_presenter({:col => :first, :row => [5]}, 
-      @remainder_presenter)
-    # raise @dodavatelia_table.data.rows.count.to_s
+    @obstaravatelia_table.add_cell_presenter({:col => :first, :row => [5, 6]}, 
+      DataView::Presenter::Remainder.new(:list => 'procurer'))
+    @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, @total_presenter)
   end
   
   def report_all
@@ -198,9 +207,6 @@ class ReportsController < ApplicationController
     
     yield if block_given?
     
-    # This presenter will be shared across all tables.
-    @remainder_presenter = DataView::Presenter::Report.new(:link => false)
-    
     # Dodavatelia
     @dodavatelia ||= top_10_dodavatelia(slice)
     @dodavatelia_table = DataView::Table.new(@dodavatelia)
@@ -208,8 +214,13 @@ class ReportsController < ApplicationController
       {:col => [:firma], :row => :all},
       DataView::Presenter::Report.new({:report => :supplier, :dimension => :dodavatel}.merge(presenter_opts))
     )
-    @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
-      @remainder_presenter)
+    if @dodavatelia.rows.last && @dodavatelia.rows.last.first.value.to_s == "ostatne"
+      @dodavatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
+        DataView::Presenter::Remainder.new(:list => 'procurer'))
+    end
+    
+    @dodavatelia_table.add_cell_presenter({:col => [:suma], :row => :all}, 
+                                          DataView::Presenter::HumanNumber.new)
     @dodavatelia_chart = DataView::PieChart.new(@dodavatelia, {:labels => 0, :series => 1})
       
     # Obstaravatelia
@@ -217,8 +228,12 @@ class ReportsController < ApplicationController
     @obstaravatelia_table = DataView::Table.new(@obstaravatelia)
     @obstaravatelia_table.add_cell_presenter({:col => [:org], :row => :all},
       DataView::Presenter::Report.new({:report => :procurer, :dimension => :obstaravatel, :level => 1, :link => :report}.merge(presenter_opts)))
-    @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
-        @remainder_presenter)
+    @obstaravatelia_table.add_cell_presenter({:col => [:suma], :row => :all}, 
+                                             DataView::Presenter::HumanNumber.new)
+    if @obstaravatelia.rows.last && @obstaravatelia.rows.last.first.value == "ostatne"
+      @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
+        DataView::Presenter::Remainder.new(:list => 'supplier'))
+    end
     @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
       
     # Typy tovarov
@@ -227,8 +242,12 @@ class ReportsController < ApplicationController
     @typy_tovarov_table.add_cell_presenter(
       {:col => [0], :row => :all},
       DataView::Presenter::Report.new({:dimension => :cpv, :report => :cpv}.merge(presenter_opts)))
-    @typy_tovarov_table.add_cell_presenter({:col => :first, :row => :last}, 
-        @remainder_presenter)
+    @typy_tovarov_table.add_cell_presenter({:col => [:suma], :row => :all}, 
+                                           DataView::Presenter::HumanNumber.new)
+    if @typy_tovarov.rows.last && @typy_tovarov.rows.last.first.value == "ostatne"
+      @typy_tovarov_table.add_cell_presenter({:col => :first, :row => :last}, 
+        DataView::Presenter::Remainder.new(:list => 'cpv'))
+    end
     
     # Druhy postupov
     @druhy_postupov = druh_postupu(slice)
@@ -238,10 +257,19 @@ class ReportsController < ApplicationController
       DataView::Presenter::Report.new({
         :dimension => :druh_postupu, 
         :report => :postup, 
-        :color_palette => :druh_postupu
+        :color_list => 'druh_postupu'
       }.merge(presenter_opts))
     )
-    @druhy_postupov_chart = DataView::PieChart.new(@druhy_postupov, {:labels => 0, :series => 1})
+    @druhy_postupov_table.add_cell_presenter({:col => [:suma], :row => :all}, 
+                                             DataView::Presenter::HumanNumber.new)
+    if @druhy_postupov.rows.last && @druhy_postupov.rows.last.first.value == "ostatne"
+      @druhy_postupov_table.add_cell_presenter({:col => :first, :row => :last}, 
+        DataView::Presenter::Remainder.new(:list => 'postup'))
+    end
+    @druhy_postupov_chart = DataView::PieChart.new(
+      @druhy_postupov,
+      {:labels => 0, :series => 1, :color_list => 'druh_postupu'}
+    )
       
     @posledny_rok = posledny_rok(slice)
   end

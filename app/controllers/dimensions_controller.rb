@@ -49,25 +49,29 @@ class DimensionsController < ApplicationController
   
   def search
     @query = params[:query]
-    search = SphinxSearch.new(params[:query], @dimension)
+    return redirect_to dimension_path(@dimension.name) if @query.blank?
+    
+    search = SphinxSearch.new_with_dimension(params[:query], @dimension)
+    # Pagination
+    @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => DEFAULT_PAGE_SIZE)
+    search.offset = @paginator.offset
+    search.limit = @paginator.limit
     # Order
     params[:order] ||= "relevance"
     search.order = params[:order]
+    # Process
     search.process
     @results = search.results
     @total_found = search.total_found
+    @paginator.total = search.total_found
 
     slicer = Brewery::CubeSlicer.new(@cube)
 
     @results.each do |result|
       level = @dimension.levels.get(result[:level_id])
-      level_order = find_level_order(@dimension, level)
 
-      param = ['*'] * level_order
-      value = CGI::escape(result[:level_key].to_s)
-      param.push(value)
-      param_string = param.join('-')
-      param = "#{@dimension.name}:#{param_string}"
+      sanitized_path = CGI::escape(result[:path].to_s)
+      param = "#{@dimension.name}:#{sanitized_path}"
 
       slicer.update_from_param(param)
 

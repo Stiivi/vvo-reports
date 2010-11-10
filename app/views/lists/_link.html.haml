@@ -1,3 +1,6 @@
-= link_to "Stiahnuť CSV", :cut => params[:cut], :format => "csv"
+.clearfix
+  %a.button.simple.tip{:href => url_for(:cut => params[:cut], :format => "csv"), :title => "Stiahnúť tabuľku vo formáte CSV."}
+    Stiahnuť CSV
+    = image_tag "download.png"
 %br
 %br

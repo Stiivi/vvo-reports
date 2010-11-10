@@ -17,22 +17,17 @@ module DataView
         @link = options[:link]
         @legend = options.has_key?(:legend) ? options[:legend] : true
         @report = options[:report]
-        @color_palette = options[:color_palette]
+        @color_list = ColorList.new(options[:color_list] || 'default')
       end
       
-      def prepare(table_view)
-        color_center = ColorCenter.instance
-        color_center.reset(@color_palette||:default)
-      end
-      
-      def present(html_cell, data_cell)
+      def present(html_cell, data_cell, index)
         wrap = html_cell.new_child(:div, "", :class => "clearfix")
         left = wrap.new_child(:div, "", :class => "fl")
         right = wrap.new_child(:div, "", :class => "fr")
         
         if @legend
           color_el = left.new_child(:span, "&nbsp;", :class => "color")
-          color = ColorCenter.instance.color_for_string(data_cell.value)
+          color = @color_list.color_with_name_or_index(data_cell.value, index)
           color_el[:style] = "background-color: ##{color}"
         end
 
@@ -47,14 +42,6 @@ module DataView
         else
           data_element = left.new_child(:span, truncate_string(data_cell.formatted_value))
         end
-        
-        # Now we need to add special (+) button to add this cut to current
-        # slice.
-        # base_url = @controller.request.env['PATH_INFO']
-        #         button = right.new_child(:a, "")
-        #         button.new_child(:img, "", :src => "/images/plus_blue.png")
-        #         report_template = @controller.params[:id] || "all"
-        #         button[:href] = @controller.report_path(report_template, :cut => current_slicer.to_param, :object_id => @controller.params[:object_id])
       end
       
       def cut_path(value)
@@ -99,6 +86,7 @@ module DataView
       end
       
       def truncate_string(string)
+        string ||= ""
         if string.length > TRUNCATED_LENGTH
           return string[0, TRUNCATED_LENGTH] + " &hellip;"
         else

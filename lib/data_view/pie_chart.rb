@@ -7,12 +7,12 @@ module DataView
       @options = options
       raise "Missing option :labels" unless options.has_key?(:labels)
       raise "Missing option :series" unless options.has_key?(:labels)
+      @color_list = ColorList.new(@options[:color_list] || 'default')
     end
     
     def as_html
       data_for_chart = []
       colors = []
-      color_center = ColorCenter.instance
       
       @data.rows.each_index do |row|
         labels = format_value_for_legend(
@@ -20,14 +20,36 @@ module DataView
         )
         label_id = @data.value_at(row, @options[:labels])
         series = @data.value_at(row, @options[:series])
-        colors << "#" + color_center.color_for_string(label_id)
+        colors << "#" + @color_list.color_with_name_or_index(
+          @data.value_at(row, @options[:labels]), 
+          row
+        )
         data_for_chart << [labels, series.to_f]
       end
       
       chart_container_id = "chart_#{self.object_id}"
       chart_container = Html::Element.new("div", "", :id => chart_container_id, :class => "chart")
       
-      colors_json = colors.to_json
+      chart_options = {
+        width: 350,
+        height: 150,
+        is3D: true,
+        legend: 'none',
+        colors: colors
+      }
+      
+      if @options[:legend]
+        chart_options.merge!({
+          legend: 'left',
+          legendTextStyle: {
+            color: 'black',
+            fontName: 'Arial',
+            fontSize: '15px'
+          },
+          width: 938,
+          height: 300
+        })
+      end
       
       javascript_code = <<-HERE
       (function(){
@@ -38,7 +60,7 @@ module DataView
           table.addColumn('number', 'series');
           table.addRows(json_data);
           var chart = new google.visualization.PieChart(document.getElementById('#{chart_container_id}'));
-          chart.draw(table, {width: 350, height: 150, is3D: true, legend: 'none', colors: #{colors_json}});
+          chart.draw(table, #{chart_options.to_json});
         });
       })();
       HERE

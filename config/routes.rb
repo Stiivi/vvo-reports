@@ -24,7 +24,7 @@ Vvo::Application.routes.draw do |map|
   resources :pages
   
   # Root path
-  root :to => "reports#index"
+  root :to => "reports#show", :id => "default"
   
   match '/:anything', :to => "global#not_found", :constraints => { :anything => /.*/ }
 end

@@ -1,1 +1,5 @@
 h1. Právne informácie
+
+Portál umožňuje sťahovanie vybraných dát v CSV formáte, pričom pri ich použití, reprodukcii, ďalšom spracovaní a tvorbe nových aplikácií vás žiadame uvádzať tento server ako zdroj informácií.
+
+Akékoľvek zásahy do technického alebo vecného charakteru tohto servera sú výslovne zakázané. Použitie mimo osobnej potreby bez súhlasu alebo odvolania sa na TIS je neoprávneným zásahom do práv TIS a súčasne môže byť neoprávneným zásahom do práv subjektov, ktorých dáta, dokumenty, texty a iné diela a/alebo iné nehmotné statky sú súčasťou obsahu tohto servera.

@@ -2,10 +2,10 @@
 
 = render :partial => "search"
 
-%table
+%table.dimension
   - @data.each do |row|
     - path = @path.clone.push(row[@level.key_field.to_sym]).join('-')
-    %tr
+    %tr{:class => cycle("even", "odd")}
       %td
         - if @level_number+1 == @levels.count
           = row[@description_field.to_sym]

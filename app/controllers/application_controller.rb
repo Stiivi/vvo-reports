@@ -6,7 +6,13 @@ class ApplicationController < ActionController::Base
   
   helper_method :create_report_path,
                 :additional_params
+  after_filter :clean_up
   
+  def clean_up
+    # FIXME: this is hack to remove zombie connections
+    Brewery::Workspace.destroy_default_workspace
+  end
+
   def create_report_path(opts)
     if opts[:report]
       opts.merge({:controller => "reports", :action => "show"})
@@ -32,6 +38,7 @@ class ApplicationController < ActionController::Base
     
     @model = Brewery::LogicalModel.model_with_name("verejne_obstaravania")
     @cube = @model.cube_with_name("zmluvy")
+    @cube.view = "mft_vvo_zmluvy"
   end
   
   # FIXME: Move to a class for generating paths generally

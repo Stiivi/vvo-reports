@@ -36,7 +36,7 @@ class FactsController < ApplicationController
       sort_field = DEFAULT_SORT_FIELD
       sort_direction = DEFAULT_SORT_DIRECTION
     end
-        
+
     respond_to do |format|
       format.html {
         @facts = @slice.facts(:page => @paginator.page-1,
@@ -45,8 +45,9 @@ class FactsController < ApplicationController
                              :order_direction => sort_direction )
       }
       format.csv {
-        @facts = @slice.facts
-        render :text => @facts.to_csv
+        self.response_body = proc { |response, output|
+          render_csv_from_dataset_to_output(@slice.facts, output)
+        }
       }
     end
     
@@ -75,5 +76,26 @@ class FactsController < ApplicationController
         @cpv_view << hash
     }
     @cpv_view.reverse!
+  end
+  
+  protected
+  
+  def render_csv_from_dataset_to_output(dataset, output)
+    all_fields = @cube.all_fields
+    # Meh? We can as well just ask dataset about its
+    # fields.
+    output.write(CSV.generate_line(all_fields))
+    total = dataset.count
+    step_size = 10
+    step_count = (total.to_f / step_size.to_f).ceil
+    step_count.times do |step|
+      subset = dataset.limit(step_size, step*step_size)
+      subset.each do |row|
+        values = all_fields.collect { |field|
+          row[field]
+        }
+        output.write(CSV.generate_line(values))
+      end
+    end
   end
 end

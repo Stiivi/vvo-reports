@@ -20,30 +20,46 @@ class ListsController < ApplicationController
     @slice.add_computed_field(:podiel) { |record|
       record[:zmluva_hodnota_sum] / hodnota_zmluv
     }
+
+    # Options
+    @aggregate_options = {}
     
+    # Paginator
     @paginator = Paginator.new(:page => (params[:page]||1).to_i, :page_size => 20, :total => @total)
-    @page_size = @paginator.page_size
-    @current_page = @paginator.page-1
-    if params[:format] == "csv"
-      @page_size, @current_page = nil, nil
+    unless params[:format] == "csv"
+      @aggregate_options.merge!({
+        :page_size => @paginator.page_size,
+        :page => @paginator.page-1
+      })
     end
     
+    # Sorting
+    @aggregate_options.merge!({
+      :order_by => params[:sort] ||= "zmluva_hodnota_sum",
+      :order_direction => params[:dir] ||= "desc"
+    })
+    
     self.send(type)
+    
     respond_to do |format|
       format.html do
         render :action => type
       end
       format.csv do
+        filename = "#{type}-#{Date.today}.csv"
+        response.headers["Content-Disposition"] = "attachment; filename=#{filename}"
         render :text => table_as_csv(@table)
       end
     end
   end
   
   def supplier
-    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => :dodavatel, 
-  		                        :row_levels => [:organisation],
-  		                        :page_size => @page_size,
-  		                        :page => @current_page })
+    aggregate_options = @aggregate_options.merge({
+      :row_dimension => :dodavatel, 
+      :row_levels => [:organisation]
+    })
+    result = @slice.aggregate(:zmluva_hodnota, aggregate_options)
+
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Firma", :firma)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
@@ -54,10 +70,11 @@ class ListsController < ApplicationController
   end
   
   def procurer
-    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => :obstaravatel, 
-  		                        :row_levels => [:organisation],
-  		                        :page_size => @page_size,
-  		                        :page => @current_page })
+    aggregate_options = @aggregate_options.merge({
+      :row_dimension => :obstaravatel, 
+      :row_levels => [:organisation]
+    })
+    result = @slice.aggregate(:zmluva_hodnota, aggregate_options)
     
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Obstaravatel", :firma)
@@ -80,13 +97,14 @@ class ListsController < ApplicationController
       end
     end
     levels_to_select.collect! { |l| l.name }
-    description_field = level.description_field.to_sym
+    @description_field = description_field = level.description_field.to_sym
     key_field = level.key_field.to_sym
     
-    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => @dimension.name, 
-  		                        :row_levels => levels_to_select,
-  		                        :page_size => @page_size,
-  		                        :page => @current_page })
+    aggregate_options = @aggregate_options.merge({
+      :row_dimension => @dimension.name, 
+      :row_levels => levels_to_select
+    })
+    result = @slice.aggregate(:zmluva_hodnota, aggregate_options)
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Typ tovaru", description_field)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
@@ -97,16 +115,17 @@ class ListsController < ApplicationController
   end
   
   def postup
-    result = @slice.aggregate(:zmluva_hodnota, {:row_dimension => :druh_postupu, 
-  		                        :row_levels => [:druh_postupu],
-  		                        :page_size => @page_size,
-  		                        :page => @current_page })
+    aggregate_options = @aggregate_options.merge({
+      :row_dimension => :druh_postupu, 
+      :row_levels => [:druh_postupu]
+    })
+    result = @slice.aggregate(:zmluva_hodnota, aggregate_options)
     @table = Brewery::DataTable.new
     @table.add_column(:text, "Druh postupu", :druh_postupu)
     @table.add_column(:currency, "Suma", :suma, {:precision => 0, :currency => '€'})
     @table.add_column(:percent, "Podiel", :podiel, { :precision => 2 } )
     result.rows.each { |row|
-        @table.add_row([[row[:druh_postupu], row[:druh_postupu]], row[:zmluva_hodnota_sum], row[:podiel]])
+        @table.add_row([[row[:"druh_postupu.druh_postupu_code"], row[:"druh_postupu.druh_postupu_desc"]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
   end
   

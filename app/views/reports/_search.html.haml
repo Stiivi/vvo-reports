@@ -7,6 +7,7 @@
 
 - form_for :report, :url => reports_path, :html => {:class => "reports-search autosubmit"} do |f|
   
+  = hidden_field_tag :current_path, params[:current_path]
   = hidden_field_tag :current_cut, params[:current_cut]
   
   - {:obstaravatel => 'Obstarávateľ',     |
@@ -34,10 +35,10 @@
     = f.select :druh_postupu, options_for_select(@postupy, @param_report[:druh_postupu])
     
   %div
-    %h2 Kriteria vyhodnotenia
+    %h2 Kritéria vyhodnotenia
     = f.select :kriteria_vyhodnotenia, options_for_select(@kriteria_vyhodnotenia, @param_report[:kriteria_vyhodnotenia])
   
   = f.hidden_field :show_report, :value => "", :class => "show-report"
 
-  = f.submit "Vyhľadať", :class => "repeat-search-button"
-  = f.submit "Zobraziť prehľad", :class => "show-report-button", :disabled => params[:action] == "new" ? true : false
+  =# f.submit "Vyhľadať", :class => "repeat-search-button"
+  = f.submit "Vyhľadať", :class => "show-report-button"

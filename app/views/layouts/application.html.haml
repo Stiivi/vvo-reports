@@ -1,10 +1,10 @@
 !!!
 %html
   %head
-    %title Verejné obstarávania
+    %title Otvorený vestník verejného obstarávania
     = stylesheet_link_tag "blueprint", "inscription", "application"
     = stylesheet_link_tag '/fancybox/jquery.fancybox-1.3.1.css'
-    = javascript_include_tag 'jquery.js', 'inscription.js', 'application.js', 'reports.js'
+    = javascript_include_tag 'jquery.js', 'jquery.tipsy.js', 'inscription.js', 'application.js', 'reports.js'
     = javascript_include_tag '/fancybox/jquery.mousewheel-3.0.2.pack.js', '/fancybox/jquery.fancybox-1.3.1.js'
     = csrf_meta_tag
 
@@ -12,15 +12,20 @@
     #header
       %a.header{:href => '/'}
     #container
-      #navigation
+      #navigation.clearfix
         %ul.nav.clearfix
-          = navigation_link('Úvod', report_path('default'))
-          = navigation_link('Celkový Prehľad', report_path('all'), /reports\/((?!default).)/)
+          = navigation_link('Úvod', report_path('default'), /^(\/|\/reports\/default)$/)
+          = navigation_link('Celkový Prehľad', report_path('all'), /reports\/((?!default|new).)/)
           = navigation_link('Obstarávatelia', dimension_path('obstaravatel'))
           = navigation_link('Dodávatelia', dimension_path('dodavatel'))
           = navigation_link('Predmety', dimension_path('cpv'))
           = navigation_link('Regióny', dimension_path('geography'))
-          = navigation_link('Vyhľadávanie', new_report_path)
+          
+        %ul.nav.secondary.clearfix
+          %li{:class => request.path == new_report_path ? "active" : ""}
+            = link_to "Vyhľadávanie", new_report_path
+            = image_tag "magnifying_glass_alt_12x12.png"
+            
           
       #content
         = yield
