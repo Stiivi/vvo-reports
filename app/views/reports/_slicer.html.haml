@@ -8,11 +8,11 @@
           %span= dim.label
         - levels = dim.default_hierarchy.levels[0..(path.count-1)]
         - levels.each do |level|
-          %div.middle
-            - detail = @slice.dimension_detail_at_path(dim, path)
-            - title = detail[level.short_description_field.to_sym]
-            %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param)), :title => title}
-              
-              = truncate(title, :length => 100)
+          - detail = @slice.dimension_detail_at_path(dim, path)
+          - title = detail[level.short_description_field.to_sym]
+          - if title.present?
+            %div.middle
+              %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param)), :title => title}
+                = truncate(title, :length => 100)
   .fr
     %a{:href => new_report_path(:current_cut => params[:cut], :current_path => request.path), :class => "button simple ajax fancybox"} Pridať podmienky
