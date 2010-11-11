@@ -261,21 +261,15 @@ ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
 
 .breadcrumb .fl { margin: 0px; padding: 0px; }
 
-.breadcrumb div { font-weight: bold; background-repeat: no-repeat; padding: 7px 7px 7px 12px; }
+.breadcrumb div { font-weight: bold; background-repeat: no-repeat; margin-bottom: 3px; margin-right: 2px; padding: 5px 6px 6px 12px; -webkit-border-radius: 3px; -moz-border-radius: 3px; }
 
-.breadcrumb .first, .breadcrumb .middle { padding-left: 35px; color: #8e8e8e; }
+.breadcrumb .first, .breadcrumb .middle { color: #8e8e8e; padding-left: 3px; }
 
-.breadcrumb .main { background-image: url(../images/breadcrumb_main.png); color: #fff; text-shadow: #305785 0 1px 0; padding-left: 5px; float: left; }
+.breadcrumb .main { color: #fff; padding-left: 5px; float: left; background-color: #35619b;  }
 
-.breadcrumb .main a.cancel { position: relative; top: -1px; }
+.breadcrumb .main a.cancel { position: relative; top: 0px; }
 
-.breadcrumb .main span { position: relative; top: -2px; }
-
-.breadcrumb .first { background-image: url(../images/breadcrumb_first.png); float: left; }
-
-.breadcrumb .middle { background-image: url(../images/breadcrumb_middle.png);white-space: nowrap; overflow: hidden; float: left; }
-
-.breadcrumb .last { background-image: url(../images/breadcrumb_end.png); height: 13px; width: 10px; display: block; float: left; }
+.breadcrumb .middle { white-space: nowrap; overflow: hidden; float: left; background-color: #fff; border: 1px solid #ccc; }
 
 .breadcrumb span.truncated { display: inline; }
 
