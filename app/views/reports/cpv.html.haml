@@ -1,8 +1,9 @@
-.header.clearfix
-  %h1.fl
+= render :partial => "reports/buttons"
+
+.header
+  %h1
     %em CPV:
-    = @detail[:cpv_division_desc]
-  .fr= render :partial => "reports/buttons"
+    = @detail[:"cpv.cpv_division_desc"]
     
 = render :partial => "reports/slicer"
 = render :partial => "reports/details"

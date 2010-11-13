@@ -1,19 +1,18 @@
-.header.clearfix
-  .fl
-    %h1
-      Zoznam zmlúv
-      %em= "(%s zmlúv)" % number_with_delimiter(@paginator.total, :delimiter => " ")
-      
-  .fr
-    = render :partial => "reports/buttons"
+= render :partial => "reports/buttons"
+
+.header
+  %h1
+    Zoznam zmlúv
+    %em= "(%s zmlúv)" % number_with_delimiter(@paginator.total, :delimiter => " ")
 
 = render :partial => "reports/slicer"
 
-.clearfix
-  %a.button.simple.tip{:href => url_for(:format => "csv", :cut => params[:cut]), :title => "Stiahnúť tabuľku vo formáte CSV."}
-    Stiahnuť CSV
-    = image_tag "download.png"
-%br
+- unless @facts.empty?
+  .clearfix
+    %a.button.simple.tip{:href => url_for(:format => "csv", :cut => params[:cut]), :title => "Stiahnúť tabuľku vo formáte CSV."}
+      Stiahnuť CSV
+      = image_tag "download.png"
+  %br
 
 %table.data_table
   %tr

@@ -1,14 +1,16 @@
-.header.clearfix
-  .fl
-    %h1
-      Verejné obstarávania
-      %em od 1.1.2009
-  .fr
-    = render :partial => "reports/buttons"
+= render :partial => "reports/buttons"
 
+%h1
+  Verejné obstarávania
+  %em od 1.1.2009
+
+%br  
 = render :partial => "reports/slicer"
+%br
 
 = render :partial => "reports/details"
+
+
 
 .clearfix
   .left_column.clearfix

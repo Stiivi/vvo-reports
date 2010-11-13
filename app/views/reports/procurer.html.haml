@@ -1,5 +1,7 @@
-.header.clearfix
-  %h1.fl
+= render :partial => "reports/buttons"
+
+.header
+  %h1
     %em Obstáravateľ:
     = @detail[:'obstaravatel.name']
   .details    
@@ -10,7 +12,6 @@
       %tr
         %th Sektor
         %td= link_to(@detail[:'obstaravatel.account_sector'], report_path("all", :cut => "obstaravatel:#{@detail[:'obstaravatel.account_sector_code']}"))
-  .fr= render :partial => "reports/buttons"
     
 = render :partial => "reports/slicer"
 = render :partial => "reports/details"
