@@ -355,7 +355,9 @@ table.search_results tr td a em { font-weight: normal; font-style: normal; backg
 
 .search_dimension .autocomplete { background-color: #f7f7f7; position: absolute; top: 61px; width: 206px; border: 1px solid #d1d3d3; z-index: 10; display: none; }
 
-.search_dimension .autocomplete a { display: block; border-bottom: 1px solid #ccc; padding: 5px; }
+.search_dimension .autocomplete a { display: block; padding: 5px; text-decoration: none; font-size: 13px; color: #040404; }
+
+.search_dimension .autocomplete a:hover { background-color: #dad9ff; }
 
 .search_dimension input:focus { outline: none; }
 
