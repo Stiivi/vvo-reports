@@ -22,7 +22,7 @@ class SphinxSearch
   end
   
   def process
-    client = Riddle::Client.new
+    client = Riddle::Client.new(SPHINX_SERVER, SPHINX_PORT)
     
     # Limit
     client.offset = @offset
