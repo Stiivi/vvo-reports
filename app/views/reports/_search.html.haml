@@ -5,34 +5,19 @@
     %p.notice Prostredníctvom tohoto formulára spresníte práve zobrazený prehľad
 
 
-- form_for :report, :url => reports_path, :html => {:class => "reports-search autosubmit"} do |f|
+- form_for :report, :url => reports_path, :html => {:class => "reports-search autocomplete", :"data-autocomplete-path" => search_reports_path} do |f|
   
   = hidden_field_tag :current_path, params[:current_path]
   = hidden_field_tag :current_cut, params[:current_cut]
   
-  %div
-    %h2 Obstarávateľ
-    = f.text_field :obstaravatel, :value => @param_report[:obstaravatel], :autocomplete => "off", :"data-dimension" => "obstaravatel"
-    #results_obstaravatel= render :partial => "results", :locals => {:dimension => :obstaravatel}
-  %br
+  = render :partial => "dimension_form", :locals => {:dimension => :obstaravatel, :dimension_name => 'Obstarávateľ', :form => f}
   
-  %div
-    %h2 Dodávateľ
-    = f.text_field :dodavatel, :value => @param_report[:dodavatel], :autocomplete => "off", :"data-dimension" => "dodavatel"
-    #results_dodavatel= render :partial => "results", :locals => {:dimension => :dodavatel}
-  %br
-    
-  %div
-    %h2 Typ tovaru
-    = f.text_field :cpv, :value => @param_report[:cpv], :autocomplete => "off", :"data-dimension" => "cpv"
-    #results_cpv= render :partial => "results", :locals => {:dimension => :cpv}
-  %br
-    
-  %div
-    %h2 Región
-    = f.text_field :geography, :value => @param_report[:geography], :autocomplete => "off", :"data-dimension" => "geography"
-    #results_geography= render :partial => "results", :locals => {:dimension => :geography}
-  %br  
+  = render :partial => "dimension_form", :locals => {:dimension => :dodavatel, :dimension_name => 'Dodávateľ', :form => f}
+  
+  = render :partial => "dimension_form", :locals => {:dimension => :cpv, :dimension_name => 'Typ tovaru', :form => f}
+  
+  = render :partial => "dimension_form", :locals => {:dimension => :geography, :dimension_name => 'Región', :form => f}
+  
   
   %div
     %h2 Dátum
@@ -50,7 +35,5 @@
     %h2 Kritéria vyhodnotenia
     = f.select :kriteria_vyhodnotenia, options_for_select(@kriteria_vyhodnotenia, @param_report[:kriteria_vyhodnotenia])
   
-  = f.hidden_field :show_report, :value => "", :class => "show-report"
-
   =# f.submit "Vyhľadať", :class => "repeat-search-button"
   = f.submit "Vyhľadať", :class => "show-report-button"

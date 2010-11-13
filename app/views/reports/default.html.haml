@@ -2,6 +2,10 @@
   .fl
     %h1== Prehľad pre #{l(Date.today, :format => '%B %Y')}
 
+#default_search   
+  %h2 Vyhľadávanie
+  = render :partial => "search"
+
 - unless @pocet_zmluv == 0
   .clearfix
     .left_column
@@ -28,5 +32,3 @@
       
 - else
   .note Žiadne dáta
-  
-=# render :partial => "search"

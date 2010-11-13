@@ -54,60 +54,49 @@ class ReportsController < ApplicationController
   end
   
   def create
-    @results = {}
-    @result_counts = {}
-    @param_report = params[:report] || {}
-    prepare_date_picker
-    prepare_dimension_pickers
-    show_report = @param_report.delete(:show_report)
-    unless show_report.blank?
-      slicer = Brewery::CubeSlicer.new(@cube)
-      if params[:current_cut]
-        slicer.update_from_param(params[:current_cut])
-      end
-      @param_report.each do |dimension_name, value|
-        param = "#{dimension_name}:#{value}"
-        slicer.update_from_param(param)
-      end
-      respond_to do |wants|
-        if params[:current_path].present?
-          path = params[:current_path] + "?cut=" + slicer.to_param
-        else
-          path = report_path(:all, :cut => slicer.to_param)
-        end
-        wants.html { return redirect_to path }
-        wants.js { return render :text => "window.location = '#{path}'" }
-      end
-      
+    slicer = Brewery::CubeSlicer.new(@cube)
+    if params[:current_cut]
+      slicer.update_from_param(params[:current_cut])
     end
-    
-    params[:report].each do |dimension_name, query|
-      if query.blank?
-        @results[dimension_name.to_sym] = nil
-        next
+    params[:report].each do |dimension_name, value|
+      next if dimension_name =~ /_name$/
+      param = "#{dimension_name}:#{value}"
+      slicer.update_from_param(param)
+    end
+    respond_to do |wants|
+      if params[:current_path].present?
+        path = params[:current_path] + "?cut=" + slicer.to_param
+      else
+        path = report_path(:all, :cut => slicer.to_param)
       end
+      wants.html { return redirect_to path }
+      wants.js { return render :text => "window.location = '#{path}'" }
+    end
+  end
+  
+  def search
+    @results = {}
+    params[:report].each do |dimension_name, query|
+      next if query.blank?
       next if dimension_name == 'date'
+      dimension_name = dimension_name.to_s.sub('_name', '')
       dimension = @cube.dimension_with_name(dimension_name)
       raise "No dimension with name #{dimension_name}" unless dimension
+      query = query.split(' ').collect { |word|
+        word + "*"
+      }.join(' ')
       search = SphinxSearch.new_with_dimension(query, dimension)
-
-      # FIXME: @vojto why? at least put notice on site
-      #        ^ It's more fun when they don't know.
-      search.limit = 50
+      search.limit = 10
       search.process
-      @result_counts[dimension.name.to_sym] = search.total_found
       @results[dimension.name.to_sym] = search.results.collect do |result|
         sanitized_path = CGI::escape(result[:path].to_s)
         result[:path] = sanitized_path
-        # FIXME: verify this (changed by @stiivi)
-        
         result
       end
     end
     
-    respond_to do |wants|
-      wants.html { render :action => "new" }
-      wants.js
+    respond_to do |format|
+      format.json { render :json => @results.to_json }
     end
   end
   
