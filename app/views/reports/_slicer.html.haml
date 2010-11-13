@@ -16,7 +16,7 @@
           - if title.present?
             %div.middle
               %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param)), :title => title}
-                = truncate(title, :length => 100)
+                = truncate(title.to_s, :length => 100)
   .fr
     - unless @slicer.cuts.empty?
       %a{:href => new_report_path(:current_cut => params[:cut], :current_path => request.path), :class => "button simple ajax fancybox"} Pridať podmienky
