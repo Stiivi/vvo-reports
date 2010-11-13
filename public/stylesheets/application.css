@@ -357,11 +357,13 @@ table.search_results tr td a em { font-weight: normal; font-style: normal; backg
 
 .search_dimension .autocomplete a { display: block; padding: 5px; text-decoration: none; font-size: 13px; color: #040404; }
 
-.search_dimension .autocomplete a:hover { background-color: #dad9ff; }
+.search_dimension .autocomplete a:hover { background-color: #d3d8fe; }
 
-.search_dimension input:focus { outline: none; }
+.reports-search input:focus { outline: none; }
 
 .search_dimension input.selected { background-color: #d8e0fe; font-weight: bold; }
+
+form.dimension-search .autocomplete { width: 640px; top: 48px; }
 
 
 

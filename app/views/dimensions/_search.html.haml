@@ -1,9 +1,11 @@
 .search
-  - form_tag search_dimension_path(@dimension_name), :method => "get" do
+  - form_tag search_dimension_path(@dimension_name), :method => "get", :class => "autocomplete dimension-search", :"data-autocomplete-path" => search_reports_path do
     .clearfix
       .search_legend.fl= @dimension.label
-      .search_field.fl
-        %input.large.autofocus{:name => "query", :value => params[:query]}
+      .search_field.fl.search_dimension
+        %input{:type => "hidden", :name => "dimension", :value => @dimension_name}
+        %input.large.autofocus{:name => "query", :value => params[:query], :autocomplete => "off", :"data-dimension" => @dimension_name}
         %input.search_button{:type => "submit", :value => "Hľadať"}
+        %div.autocomplete{:class => @dimension_name}
   
 %br

@@ -64,14 +64,14 @@ Autocomplete.submit = function(form, trigger){
   var dimension = $(trigger).attr('data-dimension');
   var autocomplete_element = Autocomplete.element_for_trigger(trigger);
   $.ajax({
-    type: method,
+    type: 'POST',
     url: path,
     dataType: 'json',
     data: data,
     success: function(data){
       $(trigger).removeClass("loading");
       var data_for_dimension = data[dimension];
-      autocomplete_element.children().remove();
+      autocomplete_element.show().children().remove();
       for(match in data_for_dimension) {
         var match_data = data_for_dimension[match];
         var link = $("<a />").attr('href', '#').text(match_data.value);

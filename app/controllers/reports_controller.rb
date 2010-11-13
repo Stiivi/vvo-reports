@@ -76,6 +76,12 @@ class ReportsController < ApplicationController
   
   def search
     @results = {}
+    # <REFACTOR_ME>
+    if params[:dimension] && params[:query]
+      params[:report] ||= {}
+      params[:report]["#{params[:dimension]}_name"] = params[:query]
+    end
+    # </REFACTOR_ME>
     params[:report].each do |dimension_name, query|
       next if query.blank?
       next if dimension_name == 'date'
