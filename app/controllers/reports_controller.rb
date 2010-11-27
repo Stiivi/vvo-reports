@@ -184,7 +184,7 @@ class ReportsController < ApplicationController
     @hodnota_zmluv = result.summary[:sum].to_f
     @pocet_zmluv = result.summary[:record_count]
     slice.add_computed_field(:podiel) { |record|
-      record[:zmluva_hodnota_sum] / @hodnota_zmluv
+      record[:zmluva_hodnota_sum] / @hodnota_zmluv unless @hodnota_zmluv == 0
     }
     
     DataView::Presenter.controller = self
