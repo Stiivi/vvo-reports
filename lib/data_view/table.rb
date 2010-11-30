@@ -35,6 +35,9 @@ module DataView
       
       @data.rows.each_index do |row|
         html_class = (row % 2 == 1) ? "odd" : "even"
+        if row == @data.rows.size-1
+          html_class += " last"
+        end
         row_element = table.new_child(:tr, "", :class => html_class)
         @data.rows[row].each_index do |col|
           cell_element = row_element.new_child(:td,

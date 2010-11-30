@@ -295,7 +295,7 @@ ul.pagination li a { color: #555; font-weight: bold; font-size: 11px; }
 
 table.data_table th.suma { width: 100px; }
 
-table.data_table th.podiel { width: 53px; }
+table.data_table th.podiel { width: 54px; }
 
 table.data_table td.suma { text-align: right;}
 
@@ -412,6 +412,16 @@ div.chart { text-align: center; }
 table.dimension {  }
 
 table.dimension td { padding: 5px; }
+
+
+/* @end */
+
+/* @group Report */
+
+#report_default table tr.last td {  background-color: #d8e0ed; border-top: 1px solid #c9d2de; font-weight: bold; }
+
+#report_default table tr.last td span.color { visibility: hidden; }
+
 
 
 /* @end */

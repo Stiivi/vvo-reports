@@ -1,30 +1,31 @@
-.header.clearfix
-  .fl
-    %h1== Prehľad pre #{l(Date.today, :format => '%B %Y')}
+#report_default
+  .header.clearfix
+    .fl
+      %h1== Prehľad pre #{l(Date.today, :format => '%B %Y')}
 
-- unless @pocet_zmluv == 0
-  .clearfix
-    .left_column
-      %h2 Obstáravatelia
-      = @obstaravatelia_table.as_html
-      .clearfix
-        = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button simple"
-    .right_column
-      %h2 Dodávatelia
-      = @dodavatelia_table.as_html
-      .clearfix
-        = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
+  - unless @pocet_zmluv == 0
+    .clearfix
+      .left_column
+        %h2 Obstáravatelia
+        = @obstaravatelia_table.as_html
+        .clearfix
+          = link_to "Zobraziť všetko", list_path("procurer", :cut => @slicer.to_param), :class => "button simple"
+      .right_column
+        %h2 Dodávatelia
+        = @dodavatelia_table.as_html
+        .clearfix
+          = link_to "Zobraziť všetko", list_path("supplier", :cut => @slicer.to_param), :class => "button simple"
     
-  %br
-  %br
+    %br
+    %br
   
-  .clearfix
-    %h2 Typy tovarov
-    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1, :legend => true}).as_html
-  .clearfix
-    %h2 Druhy postupov
-    - @druhy_postupov_table.as_html
-    = DataView::PieChart.new(@druhy_postupov, {:labels => 0, :series => 1, :legend => true}).as_html
+    .clearfix
+      %h2 Typy tovarov
+      = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1, :legend => true}).as_html
+    .clearfix
+      %h2 Druhy postupov
+      - @druhy_postupov_table.as_html
+      = DataView::PieChart.new(@druhy_postupov, {:labels => 0, :series => 1, :legend => true}).as_html
       
-- else
-  .note Žiadne dáta
+  - else
+    .note Žiadne dáta
