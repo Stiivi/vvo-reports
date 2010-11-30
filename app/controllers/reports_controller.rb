@@ -191,10 +191,10 @@ class ReportsController < ApplicationController
     DataView::Presenter.slicer = @slicer
 
     # Default presenter options for all tables
-    presenter_opts = if @report_type == "all"
-      {:link => :report}
+    if @report_type == "all" || @report_type == "default"
+      presenter_opts = {:link => :report}
     else
-      {:link => :cut}
+      presenter_opts = {:link => :cut}
     end
     
     yield if block_given?
