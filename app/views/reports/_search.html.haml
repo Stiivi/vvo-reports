@@ -10,14 +10,15 @@
   = hidden_field_tag :current_path, params[:current_path]
   = hidden_field_tag :current_cut, params[:current_cut]
   
-  = render :partial => "dimension_form", :locals => {:dimension => :obstaravatel, :dimension_name => 'Obstarávateľ', :form => f}
-  
-  = render :partial => "dimension_form", :locals => {:dimension => :dodavatel, :dimension_name => 'Dodávateľ', :form => f}
-  
-  = render :partial => "dimension_form", :locals => {:dimension => :cpv, :dimension_name => 'Typ tovaru', :form => f}
-  
-  = render :partial => "dimension_form", :locals => {:dimension => :geography, :dimension_name => 'Región', :form => f}
-  
+  .search_boxes.clearfix
+    .search_box
+      = render :partial => "dimension_form", :locals => {:dimension => :obstaravatel, :dimension_name => 'Obstarávateľ', :form => f}
+
+      = render :partial => "dimension_form", :locals => {:dimension => :dodavatel, :dimension_name => 'Dodávateľ', :form => f}
+    .search_box
+      = render :partial => "dimension_form", :locals => {:dimension => :cpv, :dimension_name => 'Typ tovaru', :form => f}
+
+      = render :partial => "dimension_form", :locals => {:dimension => :geography, :dimension_name => 'Región', :form => f}  
   
   %div
     %h2 Dátum
@@ -27,13 +28,19 @@
       = options_for_select(@months, (@param_report[:date]||{})[:month])
     = f.hidden_field :date_path, :class => "date"
     
+  %br
+    
   %div
     %h2 Postup
     = f.select :druh_postupu, options_for_select(@postupy, @param_report[:druh_postupu])
     
+  %br
+    
   %div
     %h2 Kritéria vyhodnotenia
     = f.select :kriteria_vyhodnotenia, options_for_select(@kriteria_vyhodnotenia, @param_report[:kriteria_vyhodnotenia])
+  
+  %br
   
   =# f.submit "Vyhľadať", :class => "repeat-search-button"
   = f.submit "Vyhľadať", :class => "show-report-button"
