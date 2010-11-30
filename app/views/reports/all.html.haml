@@ -56,6 +56,9 @@
 %br
 %br
 
-%h2 Vývoj v priebehu roka 
+%h2
+  Vývoj v priebehu roka
+  %a{:name => "year-chart", :href => "#year-chart"}
+    = image_tag "link.png"
 
 = DataView::BarChart.new(@posledny_rok, {:labels => 0, :series => 1, :dimension => :date}).as_html
