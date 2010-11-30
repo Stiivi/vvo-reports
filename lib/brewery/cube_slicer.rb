@@ -171,6 +171,7 @@ module Brewery
       slice
     end
     
+    # <REFACTOR_ME>
     # Converts stored cuts to URL-compatible parameter.
     # @return [String] Parameter to be used in URL.
     def to_param
@@ -184,6 +185,19 @@ module Brewery
         "#{dim}#{DIMENSION_SEPARATOR}#{path}"
       end.join(CUT_SEPARATOR)
     end
+    
+    def to_a
+      @cuts.collect do |dim, path|
+        dim = dim.name
+        path = path.collect { |p| 
+          p == :all ? "*" : p
+        }.collect { |p|
+          URI.escape(p.to_s)
+        }.join(PATH_SEPARATOR)
+        [dim, path]
+      end
+    end
+    # </REFACTOR_ME>
     
     def cuts
       @cuts
