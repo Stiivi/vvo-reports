@@ -19,7 +19,9 @@ module Reports
           table.add_row([[row[:"dodavatel.ico"], row[:"dodavatel.name"]], row[:zmluva_hodnota_sum], row[:podiel]])
       }
       remainder_row = result.remainder
-      table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
+      if remainder_row[:record_count] > 0 && remainder_row[:sum] > 0
+        table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
+      end
       
       if options[:sum]
         table.add_row([["spolu", "Spolu"], result.summary[:sum], 1])
@@ -43,8 +45,10 @@ module Reports
         table.add_row([[row[:"obstaravatel.ico"], row[:"obstaravatel.name"]], row[:zmluva_hodnota_sum], row[:podiel]])
     }
     remainder_row = result.remainder
-    
-    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
+
+    if remainder_row[:record_count] > 0 && remainder_row[:sum] > 0
+      table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
+    end
     
     if options[:sum]
       table.add_row([["spolu", "Spolu"], result.summary[:sum], 1])
@@ -84,7 +88,10 @@ module Reports
     }
     
     remainder_row = result.remainder
-    table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
+
+    if remainder_row[:record_count] > 0 && remainder_row[:sum] > 0
+      table.add_row([["ostatne", "Ostatné"], remainder_row[:sum], remainder_row[:podiel]]) if remainder_row[:record_count] > 0
+    end
     
     return table
   end
