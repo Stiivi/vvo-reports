@@ -34,7 +34,7 @@ module DataView
           table.addColumn('number', '');
           table.addRows(json_data);
           var chart = new google.visualization.ColumnChart(document.getElementById('#{chart_container_id}'));
-          chart.draw(table, {width: 900, height: 240, is3D: true, labels: 'none'});
+          chart.draw(table, {width: 900, height: 240, is3D: true, legend: 'none'});
           google.visualization.events.addListener(chart, 'select', function(){
             var selection = chart.getSelection();
             var selected = selection[0];

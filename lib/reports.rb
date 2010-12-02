@@ -115,17 +115,16 @@ module Reports
   end
   
   def posledny_rok(slice)
-    current_date = Date.today
-    to_date_id = Dimension::date_key(current_date)
-    from_date_id = Dimension::date_key(current_date << 12)
-    
     year_slice = slice.dup
-    year_slice.remove_cuts_by_dimension(:date)
-    year_slice = year_slice.cut_by_range(:date, from_date_id, to_date_id)
+        
+    if date_cut_level(year_slice) == :none
+      year_slice = cut_slice_for_last_year(year_slice)
+    elsif date_cut_level(year_slice) == :month
+      year_slice = cut_slice_by_extending(year_slice)
+    end
     
     result = year_slice.aggregate(:zmluva_hodnota, {:row_dimension => :date, 
     			                        :row_levels => [:year, :month]})
-
 
     table = DataTable.new
     table.add_column(:text, "Dátum", :date)
@@ -151,5 +150,51 @@ module Reports
     level ||= dimension.levels.last
     
     level    
+  end
+  
+  protected
+  
+  def cut_slice_for_last_year(slice)
+    current_date = Date.today
+    to_date_id = Dimension::date_key(current_date)
+    from_date_id = Dimension::date_key(current_date << 12)
+    
+    slice.remove_cuts_by_dimension(:date)
+    slice = slice.cut_by_range(:date, from_date_id, to_date_id)
+    
+    slice
+  end
+  
+  def cut_slice_by_extending(slice)
+    date_cuts = slice.cuts_for_dimension(:date)
+
+    return slice unless date_cuts.length == 1
+    
+    date_path   = date_cuts.first.path
+    date_string = "%d-%02d-%02d" % [date_path[0], date_path[1]||1, date_path[2]||1]
+    date        = Date.parse(date_string)
+    
+  
+    from_date_id  = Dimension::date_key(date - 3.months)
+    to_date_id    = Dimension::date_key(date + 3.months)
+    
+    slice.remove_cuts_by_dimension(:date)
+    slice = slice.cut_by_range(:date, from_date_id, to_date_id)
+
+    slice
+  end
+  
+  def date_cut_level(slice)
+    date_cuts = slice.cuts_for_dimension(:date)
+    date_cut = date_cuts.first # Won't work if there are more than 1 cuts on date dim.
+    if date_cuts.empty?
+      :none
+    elsif date_cut.path.length == 1
+      :year
+    elsif date_cut.path.length == 2
+      :month
+    elsif date_cut.path.length == 3
+      :day
+    end
   end
 end
