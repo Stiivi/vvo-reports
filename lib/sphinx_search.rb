@@ -24,18 +24,9 @@ class SphinxSearch
   end
   
   def process
-    sphinx_server = ENV["SPHINX_SERVER"]
-    if !sphinx_server
-        sphinx_server = DEFAULT_SPHINX_SERVER
-    end
-    sphinx_port = ENV["SPHINX_PORT"]
-    if sphinx_port
-        sphinx_port = sphinx_port.to_i
-    else
-        sphinx_port = DEFAULT_SPHINX_PORT
-    end
-
-    client = Riddle::Client.new(sphinx_server, sphinx_port)
+    server = ENV["SPHINX_SERVER"] || DEFAULT_SPHINX_SERVER
+    port   = ENV["SPHINX_PORT"] || DEFAULT_SPHINX_PORT
+    client = Riddle::Client.new(server, port.to_i)
     
     # Limit
     client.offset = @offset
