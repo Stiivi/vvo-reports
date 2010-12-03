@@ -120,6 +120,10 @@ Autocomplete.select_trigger_with_match = function(trigger, match){
   var hidden_element = Autocomplete.hidden_element_for_trigger(trigger);
   var path = match.attr('data-path');
   hidden_element.val(path);
+  if ($(trigger).attr("data-autocomplete-autosubmit")) {
+    var form = $(trigger).parents("form:first");
+    form.submit();
+  }
 };
 Autocomplete.deselect_trigger = function(trigger){
   $(trigger).removeClass('selected');

@@ -4,7 +4,7 @@
       .search_legend.fl= @dimension.label
       .search_field.fl.search_dimension
         %input{:type => "hidden", :name => "dimension", :value => @dimension_name}
-        %input.large.autofocus{:name => "query", :value => params[:query], :autocomplete => "off", :"data-dimension" => @dimension_name}
+        %input.large.autofocus{:name => "query", :value => params[:query], :autocomplete => "off", :"data-dimension" => @dimension_name, :"data-autocomplete-autosubmit" => "1"}
         %input.search_button{:type => "submit", :value => "Hľadať"}
         %div.autocomplete{:class => @dimension_name}
   
