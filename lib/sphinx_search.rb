@@ -8,13 +8,14 @@ class SphinxSearch
   DEFAULT_SPHINX_PORT = 9312
   
   attr_reader :results, :total_found, :conditions
-  attr_accessor :limit, :offset, :order
+  attr_accessor :limit, :offset, :order, :dictionary
   
   def initialize(query)
     @query = query
     @offset = 0
     @limit = 30
     @conditions = {}
+    @dictionary = SearchDictionary.new
   end
   
   def self.new_with_dimension(query, dimension)
@@ -23,10 +24,16 @@ class SphinxSearch
     alter_ego
   end
   
+  def preprocess_query
+    @query = @dictionary.extend_query(@query)
+  end
+  
   def process
     server = ENV["SPHINX_SERVER"] || DEFAULT_SPHINX_SERVER
     port   = ENV["SPHINX_PORT"] || DEFAULT_SPHINX_PORT
     client = Riddle::Client.new(server, port.to_i)
+    
+    client.match_mode = :extended
     
     # Limit
     client.offset = @offset
@@ -43,6 +50,7 @@ class SphinxSearch
       client.filters << Riddle::Client::Filter.new(field.to_s, [value])
     end
     
+    preprocess_query
     result = client.query(@query)
     
     document_ids = result[:matches].collect do |match|
