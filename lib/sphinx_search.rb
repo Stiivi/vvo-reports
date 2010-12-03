@@ -52,17 +52,12 @@ class SphinxSearch
     connection = Brewery::workspace.connection
     dataset = connection[:idx_dimensions]
     
-    query = dataset.filter(:id => document_ids) #.limit(@limit, @offset)
-    # Problem here. Order at two places. This is because Sphinx
-    # returns list of IDs which are in correct order, but SQL won't
-    # use that order and it will mess it up. So I have to reorder 
-    # by description value again.
-    # I have no idea what happens when I use default ordering option
-    # called "Relevance". I suppose as long as client thinks it's Relevance
-    # it doesn't matter that it's actually random mess.
+    query = dataset.filter(:id => document_ids)
+    
     if @order == "alphabet"
       query = query.order_by(:description_value)
     end
+    
     @results = query.all
     @total_found = result[:total_found]    
   end
