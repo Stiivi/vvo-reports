@@ -36,6 +36,12 @@ var Autocomplete = function(){};
 Autocomplete.setup = function() {
   var autocompleteTimeout = null;
   var trigger = $("form.autocomplete input");
+  trigger.livequery(function(){
+    var hiddenEl = Autocomplete.hidden_element_for_trigger($(this));
+    if (hiddenEl.val()) {
+      $(this).addClass("selected");
+    }
+  });
   trigger.live('focus', function(){
     Autocomplete.show(this);
   })

@@ -40,8 +40,8 @@ module Brewery
     
     # Adds cuts from param.
     # @param [String] string to parse
-    def update_from_param(param_string)      
-      param_string = URI.unescape(param_string)
+    def update_from_param(param_string)
+      param_string = URI.unescape(param_string || "")
       cuts = param_string.split(CUT_SEPARATOR)
       
       cuts.each do |d|

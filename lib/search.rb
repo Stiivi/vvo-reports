@@ -1,9 +1,9 @@
 module Search
   def prepare_search
     @results = {}
-    @param_report = {}
     prepare_date_picker
     prepare_dimension_pickers
+    prepare_current_cut
   end
   
   def prepare_date_picker
@@ -28,5 +28,18 @@ module Search
     @kriteria_vyhodnotenia = [nil] +
       @cube.whole.dimension_values_at_path(:kriteria_vyhodnotenia, []).
         collect { |p| [p[:"kriteria_vyhodnotenia.kriteria_vyhodnotenia_desc"], p[:"kriteria_vyhodnotenia.kriteria_vyhodnotenia_code"]]}
+  end
+  
+  def prepare_current_cut
+    slicer = Brewery::CubeSlicer.new(@cube)
+    slice = slicer.to_slice
+    slicer.update_from_param(params[:current_cut])
+    @current_cut = slicer.cuts.collect do |cut|
+      dimension, path = *cut
+      level = dimension.default_hierarchy.levels[path.count-1]
+      detail = slice.dimension_detail_at_path(dimension, path)
+      title = detail[level.short_description_field.to_sym]
+      {:dimension => dimension, :path => path, :title => title}
+    end
   end
 end

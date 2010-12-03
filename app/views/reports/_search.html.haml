@@ -13,25 +13,29 @@
 
       = render :partial => "dimension_form", :locals => {:dimension => :geography, :dimension_name => 'Región', :form => f}  
   
+
+  - date_cut = @current_cut.find{|c|c[:dimension].name=="date"}
   %div
     %h2 Dátum
     %select{:name => "report[date][year]", :id => "report_date_year"}
-      = options_for_select(@years, (@param_report[:date]||{})[:year])
+      = options_for_select(@years, date_cut ? date_cut[:path][0] : nil)
     %select{:name => "report[date][month]", :id => "report_date_month"}
-      = options_for_select(@months, (@param_report[:date]||{})[:month])
+      = options_for_select(@months, date_cut ? date_cut[:path][1] : nil)
     = f.hidden_field :date_path, :class => "date"
     
   %br
-    
+  
+  - postup_cut = @current_cut.find{|c|c[:dimension].name=="druh_postupu"}
   %div
     %h2 Postup
-    = f.select :druh_postupu, options_for_select(@postupy, @param_report[:druh_postupu])
+    = f.select :druh_postupu, options_for_select(@postupy, postup_cut ? postup_cut[:path][0] : nil)
     
   %br
     
+  - krit_cut = @current_cut.find{|c|c[:dimension].name=="kriteria_vyhodnotenia"}
   %div
     %h2 Kritéria vyhodnotenia
-    = f.select :kriteria_vyhodnotenia, options_for_select(@kriteria_vyhodnotenia, @param_report[:kriteria_vyhodnotenia])
+    = f.select :kriteria_vyhodnotenia, options_for_select(@kriteria_vyhodnotenia, krit_cut ? krit_cut[:path][0] : nil)
   
   %br
   
