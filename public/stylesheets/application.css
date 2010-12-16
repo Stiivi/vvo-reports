@@ -239,11 +239,11 @@ a.tab:last-child { -webkit-border-top-left-radius: 0px; -webkit-border-bottom-le
 
 /* @group Tabs */
 
-div.tab_bar { background-color: #e6e6e6; margin: -20px 0 20px -22px; width: 950px; padding-top: 10px; padding-bottom: 0; padding-left: 10px; border-bottom: 1px solid #c9c9c9; }
+div.tab_bar { background-color: #e6e6e6; margin: -20px 0 20px -22px; width: 950px; padding-top: 10px; padding-bottom: 0; padding-left: 10px; border-bottom: 2px solid #c9c9c9; }
 
-div.tab_bar a { background: #ddd none; border: none; -webkit-border-radius: 0px; -moz-border-radius: 0px; margin-right: 5px; padding: 8px 20px; position: relative; top: 1px; border-bottom: 1px solid #ddd; }
+div.tab_bar a { background: #ddd none; border: none; -webkit-border-radius: 0px; -moz-border-radius: 0px; margin-right: 5px; padding: 8px 20px; position: relative; top: 2px; border-bottom: 1px solid #ddd; }
 
-div.tab_bar a.tab.active { background-image: none; background-color: #fff; color: #1c1c1c; border: 1px solid #c9c9c9; border-bottom: 1px solid #fff; }
+div.tab_bar a.tab.active { background-image: none; background-color: #fff; color: #1c1c1c; border: 2px solid #c9c9c9; border-bottom: 1px solid #fff; }
 
 
 
