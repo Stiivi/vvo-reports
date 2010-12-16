@@ -9,8 +9,13 @@ module Search
   def prepare_date_picker
     date_dim = @cube.dimension_with_name(:date)
     slice = @cube.whole
-    @years = [nil] + slice.dimension_values_at_path(:date, []).to_a.
-      collect { |k| [k[:"date.year"].to_s]*2 }
+    @years = [nil] + 
+      slice.dimension_values_at_path(:date, []).
+      to_a.
+      collect { |k| k[:"date.year"].to_i }.
+      sort.reverse.
+      collect { |year| [year.to_s]*2 }
+      
     months_hash = slice.dimension_values_at_path(:date, [:all]).to_a
     @months = []
     months_hash.each do |m|
