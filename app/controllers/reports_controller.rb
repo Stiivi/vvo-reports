@@ -213,7 +213,7 @@ class ReportsController < ApplicationController
     
     @dodavatelia_table.add_cell_presenter({:col => [:suma], :row => :all}, 
                                           DataView::Presenter::HumanNumber.new)
-    @dodavatelia_chart = DataView::PieChart.new(@dodavatelia, {:labels => 0, :series => 1})
+    @dodavatelia_chart = DataView::PieChart.new(@dodavatelia, {:labels => 0, :series => 1, :dimension => "dodavatel"})
       
     # Obstaravatelia
     @obstaravatelia ||= top_10_obstaravatelia(slice)
@@ -226,7 +226,7 @@ class ReportsController < ApplicationController
       @obstaravatelia_table.add_cell_presenter({:col => :first, :row => :last}, 
         DataView::Presenter::Remainder.new(:list => 'supplier'))
     end
-    @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1})
+    @obstaravatelia_chart = DataView::PieChart.new(@obstaravatelia, {:labels => 0, :series => 1, :dimension => "obstaravatel"})
       
     # Typy tovarov
     @typy_tovarov = typy_tovarov(slice)
@@ -260,7 +260,7 @@ class ReportsController < ApplicationController
     end
     @druhy_postupov_chart = DataView::PieChart.new(
       @druhy_postupov,
-      {:labels => 0, :series => 1, :color_list => 'druh_postupu'}
+      {:labels => 0, :series => 1, :color_list => 'druh_postupu', :dimension => "druh_postupu"}
     )
       
     @posledny_rok = posledny_rok(slice)

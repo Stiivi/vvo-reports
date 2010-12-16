@@ -12,7 +12,7 @@
         - levels = dim.default_hierarchy.levels[0..(path.count-1)]
         - levels.each do |level|
           - detail = @slice.dimension_detail_at_path(dim, path)
-          - title = detail[level.short_description_field.to_sym]
+          - title = detail ? detail[level.short_description_field.to_sym] : nil
           - if title.present?
             %div.middle
               %a{:href => url_for(params.merge(:cut => @slicer.clone.strip_path(dim, level).to_param)), :title => title}

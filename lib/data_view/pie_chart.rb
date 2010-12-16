@@ -7,24 +7,28 @@ module DataView
       @options = options
       raise "Missing option :labels" unless options.has_key?(:labels)
       raise "Missing option :series" unless options.has_key?(:labels)
+      raise "Missing option :dimension" unless options.has_key?(:dimension)
       @color_list = ColorList.new(@options[:color_list] || 'default')
     end
     
     def as_html
       data_for_chart = []
-      colors = []
+      links          = []
+      colors         = []
+      presenter      = Presenter::Report.new(:dimension => @options[:dimension])
       
       @data.rows.each_index do |row|
         labels = format_value_for_legend(
           @data.formatted_value_at(row, @options[:labels])
         )
-        label_id = @data.value_at(row, @options[:labels])
         series = @data.value_at(row, @options[:series])
+        data_for_chart << [labels, series.to_f]
         colors << "#" + @color_list.color_with_name_or_index(
           @data.value_at(row, @options[:labels]), 
           row
         )
-        data_for_chart << [labels, series.to_f]
+        cut_path = presenter.cut_path(@data.value_at(row, @options[:labels]))
+        links << presenter.path(cut_path)
       end
       
       chart_container_id = "chart_#{self.object_id}"
@@ -54,6 +58,7 @@ module DataView
       javascript_code = <<-HERE
       (function(){
         var json_data = #{data_for_chart.to_json};
+        var links_data = #{links.to_json};
         google.setOnLoadCallback(function(){
           var table = new google.visualization.DataTable();
           table.addColumn('string', 'Label');
@@ -61,6 +66,13 @@ module DataView
           table.addRows(json_data);
           var chart = new google.visualization.PieChart(document.getElementById('#{chart_container_id}'));
           chart.draw(table, #{chart_options.to_json});
+          google.visualization.events.addListener(chart, 'select', function(){
+            var selection = chart.getSelection();
+            var selected = selection[0];
+            if (selected) {
+              document.location = links_data[selected.row];
+            };
+          });
         });
       })();
       HERE

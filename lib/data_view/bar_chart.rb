@@ -12,10 +12,10 @@ module DataView
       data_for_chart = []
       links = []
       
+      presenter = Presenter::Report.new(:dimension => @options[:dimension])
       @data.rows.each_index do |row|
         labels = @data.formatted_value_at(row, @options[:labels])
         series = @data.value_at(row, @options[:series])
-        presenter = Presenter::Report.new(:dimension => @options[:dimension])
         link = presenter.path(@data.value_at(row, @options[:labels]))
         links << link
         data_for_chart << [labels, series.to_f]

@@ -38,7 +38,7 @@
     = link_to "Zobraziť všetko", list_path("cpv", :cut => @slicer.to_param), :class => "button simple"
   .right_column
     %h2 Typy tovarov (graf)
-    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
+    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1, :dimension => "cpv"}).as_html
 
 %br
 %br

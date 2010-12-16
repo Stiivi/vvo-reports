@@ -45,7 +45,7 @@
     
   .right_column
     %h2 Typy tovarov (graf)
-    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1}).as_html
+    = DataView::PieChart.new(@typy_tovarov, {:labels => 0, :series => 1, :dimension => "cpv"}).as_html
 
 %br
 %br
