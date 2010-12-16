@@ -1,5 +1,13 @@
 .tab_bar.clearfix
   %a.tab{:href => report_path(params[:report]||"all", :cut => @slicer.to_param), :class => params[:controller] == "reports" ? "active" : ""}
+    - if params[:controller] == "reports"
+      = image_tag "icon_reports_active.png"
+    - else
+      = image_tag "icon_reports.png"
     %span Prehľad
   %a.tab{:href => facts_path(:cut => @slicer.to_param, :report => params[:id]), :class => params[:controller] == "facts" ? "active" : ""}
+    - if params[:controller] == "facts"
+      = image_tag "icon_facts_active.png"
+    - else
+      = image_tag "icon_facts.png"
     %span Zmluvy
