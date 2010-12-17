@@ -15,23 +15,30 @@ class DataView::SimplePieChart
     
     labels         = []
     data           = []
+    sum            = 0
     
     @data.rows.each_index do |row|
       labels << truncate(
         @data.formatted_value_at(row, @options[:labels]),
-        :length => 65
+        :length => 28
       )
-      data   << @data.value_at(row, @options[:series]).to_f
-      colors << @color_list.color_with_name_or_index(
+      value   = @data.value_at(row, @options[:series]).to_f
+      sum     += value
+      data    << value
+      colors  << @color_list.color_with_name_or_index(
         @data.value_at(row, @options[:labels]), 
         row
       ).to_s
     end
     
+    data = data.collect do |value|
+      value/sum * 100
+    end
+    
     base = "http://chart.apis.google.com/chart"
     params = {}
     params[:chl] = labels.join("|")
-    params[:chs] = "920x250"
+    params[:chs] = "450x150"
     params[:cht] = "p"
     params[:chd] = "t:" + data.collect { |d| d.to_s }.join(",")
     params[:chco] = colors.join("|")

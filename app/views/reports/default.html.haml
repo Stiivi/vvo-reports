@@ -20,17 +20,14 @@
     %br
   
     .clearfix
-      %h2 Typy tovarov
-      = DataView::SimplePieChart.new(@typy_tovarov, {:labels => 0, :series => 1, :legend => true, :dimension => "cpv"}).as_html
+      .fl
+        %h2 Typy tovarov
+        = DataView::SimplePieChart.new(@typy_tovarov, {:labels => 0, :series => 1, :legend => true, :dimension => "cpv"}).as_html
+      .fr
+        %h2 Druhy postupov
+        - @druhy_postupov_table.as_html
+        = DataView::SimplePieChart.new(@druhy_postupov, {:labels => 0, :series => 1, :legend => true, :dimension => "druh_postupu"}).as_html
       
-    %br
-    %br
-    %br
-      
-    .clearfix
-      %h2 Druhy postupov
-      - @druhy_postupov_table.as_html
-      = DataView::SimplePieChart.new(@druhy_postupov, {:labels => 0, :series => 1, :legend => true, :dimension => "druh_postupu"}).as_html
       
   - else
     .note Žiadne dáta
