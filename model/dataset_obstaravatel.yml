@@ -23,3 +23,9 @@ fields:
     -
         name: account_sector_code
         label: "Sektor - kod"
+    -
+        name: offer_count_avg
+        label: Priemerný počet ponúk na zmluvu
+    -
+        name: competitiveness
+        label: Koeficient súťaživosti

@@ -1,4 +1,8 @@
 = render :partial => "reports/buttons"
+- offer_count_avg = @detail[:'obstaravatel.offer_count_avg']
+- offer_count_avg = offer_count_avg ? number_with_precision(offer_count_avg, :precision => 2) : "neznámy"
+- competitiveness = @detail[:'obstaravatel.competitiveness']
+- competitiveness = competitiveness ? number_with_precision(competitiveness, :precision => 2) : "neznámy"
 
 .header
   %h1
@@ -15,6 +19,15 @@
       %tr
         %th Sektor
         %td= link_to(@detail[:'obstaravatel.account_sector'], report_path("all", :cut => "obstaravatel:#{@detail[:'obstaravatel.account_sector_code']}"))
+      %tr
+        %th{:title => "Priemerný počet ponúk dodávateľa a jeho konkurencie na jednu vyhratú zmluvu za celé zbierané obdobie"} Priemerný počet ponúk:
+        %td
+          = offer_count_avg
+          = "(konkurenčných ponúk prijatých obstarávateľom na jednu vyhratú zmluvu za celé zbierané obdobie)"
+      %tr
+        %th{:title => "Vážený priemer počtu ponúk. Ako váha je použitá veľkosť zákazky."} Koeficient súťaživosti:
+        %td
+          = competitiveness
     
 = render :partial => "reports/slicer"
 = render :partial => "reports/details"

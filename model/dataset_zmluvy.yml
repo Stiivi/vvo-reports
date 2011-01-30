@@ -49,3 +49,12 @@ fields:
     -
         name: obstaravatel_contact_person
         label: Kontaktná osoba obstarávateľa
+    -
+        label: počet ponúk
+        name: pocet_ponuk
+    - 
+        label: predpoklad subdodávok
+        name: predpoklad_subdodavok
+    - 
+        label: typ obstarávania
+        name: document_type_code

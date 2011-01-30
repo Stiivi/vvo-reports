@@ -12,6 +12,8 @@ levels:
             - dodavatel.date_end
             - dodavatel.legal_form
             - dodavatel.ownership
+            - dodavatel.offer_count_avg
+            - dodavatel.competitiveness
 hierarchies:
     default:
         levels:

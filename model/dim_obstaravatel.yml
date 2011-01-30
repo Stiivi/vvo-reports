@@ -13,6 +13,8 @@ levels:
             - obstaravatel.ico
             - obstaravatel.name
             - obstaravatel.address
+            - obstaravatel.offer_count_avg
+            - obstaravatel.competitiveness
 hierarchies:
     default:
         levels:

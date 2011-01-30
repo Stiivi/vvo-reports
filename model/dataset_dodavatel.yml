@@ -29,3 +29,9 @@ fields:
     -
         name: ownership
         label: Druh vlastníctva
+    -
+        name: offer_count_avg
+        label: Priemerný počet ponúk na zmluvu
+    -
+        name: competitiveness
+        label: Koeficient súťaživosti
