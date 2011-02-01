@@ -1,3 +1,11 @@
+- soffer_count_avg = @fact[:'dodavatel.offer_count_avg']
+- soffer_count_avg = soffer_count_avg ? number_with_precision(soffer_count_avg, :precision => 2) : "neznámy"
+- scompetitiveness = @fact[:'dodavatel.competitiveness']
+- scompetitiveness = scompetitiveness ? number_with_precision(scompetitiveness, :precision => 2) : "neznámy"
+- poffer_count_avg = @fact[:'obstaravatel.offer_count_avg']
+- poffer_count_avg = poffer_count_avg ? number_with_precision(poffer_count_avg, :precision => 2) : "neznámy"
+- pcompetitiveness = @fact[:'obstaravatel.competitiveness']
+- pcompetitiveness = pcompetitiveness ? number_with_precision(pcompetitiveness, :precision => 2) : "neznámy"
 .header.clearfix
   .fl
     %h1 Informácie o zmluve
@@ -65,6 +73,14 @@
         %tr
           %th Sektor
           %td= link_to(@fact[:'obstaravatel.account_sector'], report_path("all", :cut => "obstaravatel:#{@fact[:'obstaravatel.account_sector_code']}"))
+        %tr
+          %th{:title => "Priemerný počet ponúk dodávateľa a jeho konkurencie na jednu vyhratú zmluvu od roku 2009 do dnes"} Priemerný počet ponúk:
+          %td{:title => "konkurenčných ponúk prijatých obstarávateľom na jednu vyhratú zmluvu od roku 2009 do dnes"}
+            = poffer_count_avg
+        %tr
+          %th{:title => "Objemom zákaziek vážený priemerný počet ponúk od roku 2009 do dnes."} Vážený priemerný počet ponúk:
+          %td
+            = pcompetitiveness
         
     .fr.small_box
       %h2 Dodávateľ
@@ -90,6 +106,14 @@
           %th
           %td
             = "(pred #{distance_of_time_in_words(datum_vzniku, datum_oznamenia)} od dátumu zverejnenia)"
+        %tr
+          %th{:title => "Priemerný počet ponúk dodávateľa a jeho konkurencie na jednu vyhratú zmluvu od roku 2009 do dnes"} Priemerný počet ponúk:
+          %td{:title => "konkurenčných ponúk prijatých obstarávateľom na jednu vyhratú zmluvu od roku 2009 do dnes"}
+            = soffer_count_avg
+        %tr
+          %th{:title => "Objemom zákaziek vážený priemerný počet ponúk od roku 2009 do dnes."} Vážený priemerný počet ponúk:
+          %td
+            = scompetitiveness
 
 .details
   %h2 Predmet obstaobstarávania

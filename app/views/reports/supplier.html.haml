@@ -23,12 +23,12 @@
           = @detail[:'dodavatel.date_start']
           = "(pred #{distance_of_time_in_words(datum_vzniku, Date.today)})"
       %tr
-        %th{:title => "Priemerný počet ponúk dodávateľa a jeho konkurencie na jednu vyhratú zmluvu za celé zbierané obdobie"} Priemerný počet ponúk:
+        %th{:title => "Priemerný počet ponúk dodávateľa a jeho konkurencie na jednu vyhratú zmluvu od roku 2009 do dnes"} Priemerný počet ponúk:
         %td
           = offer_count_avg
-          = "(ponúk dodávateľa a jeho konkurencie na jednu vyhratú zmluvu za celé zbierané obdobie)"
+          = "(ponúk dodávateľa a jeho konkurencie na jednu vyhratú zmluvu od roku 2009 do dnes)"
       %tr
-        %th{:title => "Vážený priemer počtu ponúk. Ako váha je použitá veľkosť zákazky."} Koeficient súťaživosti:
+        %th{:title => "Objemom zákaziek vážený priemerný počet ponúk od roku 2009 do dnes."} Vážený priemerný počet ponúk:
         %td
           = competitiveness
 
